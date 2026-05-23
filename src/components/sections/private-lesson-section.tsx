@@ -23,7 +23,9 @@ export function PrivateLessonSection() {
         </h2>
         <div className="max-w-[20rem] space-y-4 text-sm font-semibold leading-7 text-foreground/92 dark:text-white/88 rtl:text-right">
           {paragraphs.map((paragraph) => (
-            <p key={paragraph}>{paragraph}</p>
+            <p key={paragraph} className="whitespace-pre-line">
+              {paragraph}
+            </p>
           ))}
         </div>
       </div>
