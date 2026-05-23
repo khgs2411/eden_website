@@ -31,21 +31,9 @@ export function PrivateLessonSection() {
           </div>
           <a
             href="#lessons"
-            className="group grid grid-cols-[1fr_max-content] items-stretch rounded-md border border-accent-foreground/55 bg-accent-foreground/10 text-start shadow-[0_10px_30px_rgba(0,0,0,0.04)] backdrop-blur transition hover:-translate-y-0.5 hover:border-accent-foreground hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            className="inline-flex rounded-sm border border-accent-foreground/65 px-4 py-2.5 font-display text-xs font-bold uppercase tracking-[0.1em] text-accent-foreground shadow-[0_10px_30px_rgba(0,0,0,0.04)] backdrop-blur transition hover:-translate-y-0.5 hover:border-accent-foreground hover:text-foreground hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
-            <span className="flex flex-col justify-center px-4 py-3">
-              <span className="block font-display text-[1rem] font-bold uppercase leading-tight tracking-[0.08em] text-foreground/92">
-                {t('about.registrationCard.title')}
-              </span>
-              <span className="mt-1 block text-sm font-bold leading-6 text-muted-foreground">
-                {t('about.registrationCard.body')}
-              </span>
-            </span>
-            <span className="flex items-center justify-end border-s border-border/70 px-4">
-              <span className="rounded-sm border border-accent-foreground/65 px-3 py-2 font-display text-xs font-bold uppercase tracking-[0.1em] text-accent-foreground">
-                {t('about.registrationCard.cta')}
-              </span>
-            </span>
+            {t('about.registrationCard.cta')}
           </a>
         </div>
       </div>

@@ -44,7 +44,7 @@ const resources = {
 				contactCard: {
 					title: "שיעור פרטי או קבוצתי סגור",
 					body: "רוצות לתאם שיעור אישי, הכנה לאירוע או סדנה לקבוצה סגורה? כתבו לי ונמצא את הפורמט שמתאים לכן.",
-					cta: "ליצירת קשר",
+					cta: "להצטרפות",
 				},
 				fitCta: "למי זה מתאים?",
 				fit: {
@@ -64,7 +64,7 @@ const resources = {
 				registrationCard: {
 					title: "רוצות להצטרף?",
 					body: "חזרו למערכת השיעורים ובחרו את השיעור שמתאים לכן.",
-					cta: "להרשמה",
+					cta: "להצטרפות",
 				},
 			},
 			days: {
@@ -167,7 +167,7 @@ const resources = {
 				contactCard: {
 					title: "Private lesson or closed group",
 					body: "Want to book a personal lesson, event prep, or a workshop for a closed group? Message me and we will find the right format.",
-					cta: "Contact",
+					cta: "Join",
 				},
 				fitCta: "Who is this for?",
 				fit: {
@@ -187,7 +187,7 @@ const resources = {
 				registrationCard: {
 					title: "Ready to join?",
 					body: "Return to the lesson plan and choose the class that fits you.",
-					cta: "Sign up",
+					cta: "Join",
 				},
 			},
 			days: {
@@ -290,7 +290,7 @@ const resources = {
 				contactCard: {
 					title: "Личный урок или закрытая группа",
 					body: "Хотите личный урок, подготовку к событию или занятие для закрытой группы? Напишите мне, и мы подберем подходящий формат.",
-					cta: "Связаться",
+					cta: "Присоединиться",
 				},
 				fitCta: "Кому это подходит?",
 				fit: {
@@ -310,7 +310,7 @@ const resources = {
 				registrationCard: {
 					title: "Хотите присоединиться?",
 					body: "Вернитесь к плану уроков и выберите подходящее занятие.",
-					cta: "Запись",
+					cta: "Присоединиться",
 				},
 			},
 			days: {
