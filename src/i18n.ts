@@ -61,6 +61,11 @@ const resources = {
 			about: {
 				title: "תכירו אותי",
 				body: "היי, אני עדן - רקדנית מקצועית ומורה לריקוד\nבעלת נסיון של מעל 14 שנים בהוראת מחול\n\nבוגרת קורס מדריכי היפ-הופ בוינגייט ומסלול הכשרת רקדנים באקדמיה למחול\nמופיעה במחזות זמר והצגות בתיאטראות ברחבי הארץ,\nממקימי סצנת הבולרום בישראל, מתמחה בסגנון Vogue New Way ושופטת בתחרויות ריקוד בארץ.\nבעלת ניסיון בסגנונות מגוונים כמו ג'אז, היפהופ, בלט, מחזות זמר, ווג ואמפרוביזציה.\n\nאת השעורים שלי אני מלמדת באווירה מקצועית, פתוחה ומעצימה, עם דגש על ביטחון עצמי, ביטוי אישי והנאה.\n\nאני מאמינה שכל עוד יש בך את הרצון, יש בך גם את היכולת\nכל מה שנדרש הוא לתרגל\nזה מה שנעשה יחד, צעד צעד, בשעורי ריקוד לבוגרים\n\nאין צורך בנסיון קודם, השיעורים מתאימים לכל הרמות\nמחכה לכן.ם בסטודיו 🤍",
+				registrationCard: {
+					title: "רוצות להצטרף?",
+					body: "חזרו למערכת השיעורים ובחרו את השיעור שמתאים לכן.",
+					cta: "להרשמה",
+				},
 			},
 			days: {
 				mon: "שני",
@@ -179,6 +184,11 @@ const resources = {
 			about: {
 				title: "About Me",
 				body: "Hi, I am Eden - a professional dancer and dance teacher\nwith over 14 years of experience teaching dance\n\nI graduated from the Hip-Hop instructors course at Wingate and from a professional dancer training program at the Academy of Dance\nI perform in musicals and theatre productions in theaters across Israel,\nI am one of the founders of the ballroom scene in Israel, specialize in Vogue New Way, and judge dance competitions in Israel.\nI have experience in a wide range of styles, including jazz, hip-hop, ballet, musicals, vogue, and improvisation.\n\nI teach my classes in a professional, open, and empowering atmosphere, with an emphasis on confidence, self-expression, and enjoyment.\n\nI believe that as long as you have the desire, you also have the ability.\nAll it takes is practice.\nThat is what we will do together, step by step, in dance classes for adults.\n\nNo previous experience is needed. Classes are suitable for all levels.\nWaiting for you in the studio 🤍",
+				registrationCard: {
+					title: "Ready to join?",
+					body: "Return to the lesson plan and choose the class that fits you.",
+					cta: "Sign up",
+				},
 			},
 			days: {
 				mon: "Monday",
@@ -297,6 +307,11 @@ const resources = {
 			about: {
 				title: "Обо мне",
 				body: "Привет, я Эден - профессиональная танцовщица и преподаватель танца\nс опытом преподавания более 14 лет\n\nЯ окончила курс инструкторов по Hip-Hop в Wingate и программу подготовки танцоров в Академии танца\nВыступаю в мюзиклах и театральных постановках по всей стране,\nодна из основательниц ballroom-сцены в Израиле, специализируюсь на Vogue New Way и сужу танцевальные соревнования в Израиле.\nУ меня есть опыт в разных стилях, включая джаз, хип-хоп, балет, мюзиклы, vogue и импровизацию.\n\nСвои занятия я веду в профессиональной, открытой и поддерживающей атмосфере, с акцентом на уверенность, самовыражение и удовольствие.\n\nЯ верю, что если в тебе есть желание, значит, в тебе есть и способность.\nВсе, что нужно, - это практика.\nИменно этим мы будем заниматься вместе, шаг за шагом, на уроках танца для взрослых.\n\nПредыдущий опыт не требуется. Занятия подходят для всех уровней.\nЖду вас в студии 🤍",
+				registrationCard: {
+					title: "Хотите присоединиться?",
+					body: "Вернитесь к плану уроков и выберите подходящее занятие.",
+					cta: "Запись",
+				},
 			},
 			days: {
 				mon: "Понедельник",
