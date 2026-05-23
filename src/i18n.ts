@@ -15,7 +15,7 @@ const resources = {
 		translation: {
 			brand: "",
 			language: { label: "בחירת שפה" },
-			theme: { toggle: "החלפת מצב תצוגה" },
+			theme: { toggle: "החלפת מצב תצוגה", current: "מצב תצוגה: {{mode}}", light: "בהיר", dark: "כהה" },
 			menu: {
 				toggle: "פתיחת תפריט",
 				close: "סגירת תפריט",
@@ -138,7 +138,7 @@ const resources = {
 		translation: {
 			brand: "",
 			language: { label: "Choose language" },
-			theme: { toggle: "Toggle theme" },
+			theme: { toggle: "Toggle theme", current: "Display mode: {{mode}}", light: "Light", dark: "Dark" },
 			menu: {
 				toggle: "Toggle menu",
 				close: "Close menu",
@@ -261,7 +261,7 @@ const resources = {
 		translation: {
 			brand: "",
 			language: { label: "Выбрать язык" },
-			theme: { toggle: "Переключить тему" },
+			theme: { toggle: "Переключить тему", current: "Режим: {{mode}}", light: "Светлый", dark: "Темный" },
 			menu: {
 				toggle: "Открыть меню",
 				close: "Закрыть меню",

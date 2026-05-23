@@ -140,6 +140,20 @@ export function SiteHeader({
                 </a>
               ))}
             </nav>
+
+            <div className="border-t border-border p-4">
+              <Button
+                type="button"
+                variant="outline"
+                className="h-auto w-full justify-between px-3 py-3 text-start font-display text-sm font-bold uppercase tracking-[0.14em]"
+                aria-label={t('theme.toggle')}
+                aria-pressed={theme === 'dark'}
+                onClick={onThemeToggle}
+              >
+                <span>{t('theme.current', { mode: t(`theme.${theme}`) })}</span>
+                {theme === 'dark' ? <Sun className="size-4" /> : <Moon className="size-4" />}
+              </Button>
+            </div>
           </aside>
         </div>
       )}
