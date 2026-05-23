@@ -49,7 +49,7 @@ const resources = {
 					},
 					vogue: {
 						title: "Vogue",
-						body: "שיעור Vogue בסגנון Vogue New Way. בואו נלמד את ארבעת האלמנטים המרכיבים את הסגנון (arms controls, flexibility/tricks, pose, floor performance). נתנסה בטכניקה, פיתוח אימפרוביזציה אישית ונלמד קטעי ריקוד.\nאין צורך בנסיון קודם.",
+						body: "שעורי Vogue New Way היחידים בישראל!\nבשעור נתנסה ונלמד את ארבעת האלמנטים שמרכיבים את הסגנון, נתרגל טכניקת ידיים ייחודית, נפתח פרפורמנס וביטחון אישי ונכנס לתרבות הבולרום הצבעונית.\nאין צורך בניסיון קודם.",
 					},
 				},
 			},
@@ -162,13 +162,13 @@ const resources = {
 					},
 					vogue: {
 						title: "Vogue",
-						body: "A Vogue class in the Vogue New Way style. We will learn the four elements that shape the style (arms controls, flexibility/tricks, pose, floor performance), practice technique, develop personal improvisation, and learn choreography.\nNo previous experience is needed.",
+						body: "The only Vogue New Way classes in Israel!\nIn class we will explore and learn the four elements that shape the style, practice unique hand technique, develop performance and personal confidence, and enter the colorful world of ballroom culture.\nNo previous experience is needed.",
 					},
 				},
 			},
 			about: {
 				title: "About Me",
-				body: "Hi, I am Eden - a professional dancer and dance teacher\nwith over 14 years of experience teaching dance\n\nI graduated from the Hip Hop instructors course at Wingate and from a professional dancer training program at the Academy of Dance\nI perform in musicals and theatre productions, and lead and judge Vogue competitions in Israel\n\nI teach in a professional, open, and empowering atmosphere, with an emphasis on confidence, self-expression, and enjoyment.\nNo previous experience is needed. Classes are suitable for all levels",
+				body: "Hi, I am Eden - a professional dancer and dance teacher\nwith over 14 years of experience teaching dance\n\nI graduated from the Hip-Hop instructors course at Wingate and from a professional dancer training program at the Academy of Dance\nI perform in musicals and theatre productions in theaters across Israel,\nI am one of the founders of the ballroom scene in Israel, specialize in Vogue New Way, and judge dance competitions in Israel.\nI have experience in a wide range of styles, including jazz, hip-hop, ballet, musicals, vogue, and improvisation.\n\nI teach my classes in a professional, open, and empowering atmosphere, with an emphasis on confidence, self-expression, and enjoyment.\n\nI believe that as long as you have the desire, you also have the ability.\nAll it takes is practice.\nThat is what we will do together, step by step, in dance classes for adults.\n\nNo previous experience is needed. Classes are suitable for all levels.\nWaiting for you in the studio 🤍",
 			},
 			days: {
 				mon: "Monday",
@@ -275,13 +275,13 @@ const resources = {
 					},
 					vogue: {
 						title: "Vogue",
-						body: "Занятие Vogue в стиле Vogue New Way. Мы изучим четыре элемента стиля (arms controls, flexibility/tricks, pose, floor performance), попробуем технику, разовьем личную импровизацию и выучим танцевальные связки.\nПредыдущий опыт не нужен.",
+						body: "Единственные занятия Vogue New Way в Израиле!\nНа занятии мы познакомимся и изучим четыре элемента, из которых состоит стиль, будем практиковать уникальную технику рук, развивать перформанс и личную уверенность, а также войдем в яркую культуру ballroom.\nПредыдущий опыт не нужен.",
 					},
 				},
 			},
 			about: {
 				title: "Обо мне",
-				body: "Привет, я Эден - профессиональная танцовщица и преподаватель танца\nс опытом преподавания более 14 лет\n\nЯ окончила курс инструкторов по хип-хопу в Wingate и программу подготовки танцоров в Академии танца\nЯ танцую в мюзиклах и театральных постановках, а также веду и сужу Vogue соревнования в Израиле\n\nЯ преподаю в профессиональной, открытой и поддерживающей атмосфере, с акцентом на уверенность, самовыражение и удовольствие.\nПредыдущий опыт не требуется. Занятия подходят для всех уровней",
+				body: "Привет, я Эден - профессиональная танцовщица и преподаватель танца\nс опытом преподавания более 14 лет\n\nЯ окончила курс инструкторов по Hip-Hop в Wingate и программу подготовки танцоров в Академии танца\nВыступаю в мюзиклах и театральных постановках по всей стране,\nодна из основательниц ballroom-сцены в Израиле, специализируюсь на Vogue New Way и сужу танцевальные соревнования в Израиле.\nУ меня есть опыт в разных стилях, включая джаз, хип-хоп, балет, мюзиклы, vogue и импровизацию.\n\nСвои занятия я веду в профессиональной, открытой и поддерживающей атмосфере, с акцентом на уверенность, самовыражение и удовольствие.\n\nЯ верю, что если в тебе есть желание, значит, в тебе есть и способность.\nВсе, что нужно, - это практика.\nИменно этим мы будем заниматься вместе, шаг за шагом, на уроках танца для взрослых.\n\nПредыдущий опыт не требуется. Занятия подходят для всех уровней.\nЖду вас в студии 🤍",
 			},
 			days: {
 				mon: "Понедельник",
