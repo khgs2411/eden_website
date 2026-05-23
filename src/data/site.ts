@@ -4,6 +4,8 @@ export const navItems = [
   { key: 'privateLesson', href: '#private-lesson' },
 ] as const
 
+export const instagramUrl = 'https://www.instagram.com/edendafna?utm_source=qr&igsh=MW5scHlmMDB4ZmkyZw=='
+
 export const lessons = [
   {
     id: 'sun-12-vogue',
@@ -40,6 +42,10 @@ export const lessons = [
     style: 'Hip Hop',
     styleSubtitle: 'women',
     location: 'nessZiona',
+  },
+  {
+    id: 'private-group-contact',
+    kind: 'contact',
   },
 ] as const
 

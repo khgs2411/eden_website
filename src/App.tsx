@@ -54,6 +54,7 @@ function App() {
   }, [menuOpen])
 
   function handleLessonSelect(lesson: Lesson) {
+    if ('kind' in lesson) return
     if (lesson.style !== 'Vogue') return
 
     setActiveView('voguePricing')
