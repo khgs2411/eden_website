@@ -20,10 +20,13 @@ export function LessonCard({ lesson, onSelect }: LessonCardProps) {
       >
         <span className="flex flex-col justify-center px-4 py-3 font-display uppercase lg:border-e lg:border-border lg:px-0 lg:py-0 lg:pe-3">
           <span className="block text-[1rem] font-bold leading-tight tracking-[0.08em] text-foreground/92 lg:text-[1.25rem] lg:leading-none">
-            {t('lessons.contactCard.title')}
+            {t('lessons.contactCard.label')}
           </span>
         </span>
-        <span className="hidden content-center px-4 lg:grid lg:px-0 lg:ps-4">
+        <span className="hidden content-center gap-1 px-4 lg:grid lg:px-0 lg:ps-4">
+          <span className="font-display text-lg font-bold uppercase tracking-[0.08em] text-foreground/92">
+            {t('lessons.contactCard.title')}
+          </span>
           <span className="text-sm font-bold leading-6 text-muted-foreground">
             {t('lessons.contactCard.body')}
           </span>

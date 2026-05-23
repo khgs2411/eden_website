@@ -31,7 +31,7 @@ export function PrivateLessonSection() {
           </div>
           <a
             href="#lessons"
-            className="inline-flex rounded-sm border border-accent-foreground/65 px-4 py-2.5 font-display text-xs font-bold uppercase tracking-[0.1em] text-accent-foreground shadow-[0_10px_30px_rgba(0,0,0,0.04)] backdrop-blur transition hover:-translate-y-0.5 hover:border-accent-foreground hover:text-foreground hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            className="inline-flex max-w-full items-center justify-center rounded-sm border border-accent-foreground bg-accent-foreground px-5 py-3.5 text-center font-display text-[0.8125rem] font-bold uppercase tracking-[0.1em] text-background shadow-[0_12px_34px_rgba(0,0,0,0.12)] backdrop-blur transition hover:-translate-y-0.5 hover:opacity-90 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
             {t('about.registrationCard.cta')}
           </a>

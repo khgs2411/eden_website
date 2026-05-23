@@ -42,9 +42,10 @@ const resources = {
 				dayPrefix: "יום",
 				signupCta: "הרשמה",
 				contactCard: {
+					label: "שיעור פרטי",
 					title: "שיעור פרטי או קבוצתי סגור",
 					body: "רוצות לתאם שיעור אישי, הכנה לאירוע או סדנה לקבוצה סגורה? כתבו לי ונמצא את הפורמט שמתאים לכן.",
-					cta: "להצטרפות",
+					cta: "להרשמה",
 				},
 				fitCta: "למי זה מתאים?",
 				fit: {
@@ -165,9 +166,10 @@ const resources = {
 				dayPrefix: "",
 				signupCta: "Sign up",
 				contactCard: {
+					label: "Private lesson",
 					title: "Private lesson or closed group",
 					body: "Want to book a personal lesson, event prep, or a workshop for a closed group? Message me and we will find the right format.",
-					cta: "Join",
+					cta: "Sign up",
 				},
 				fitCta: "Who is this for?",
 				fit: {
@@ -288,9 +290,10 @@ const resources = {
 				dayPrefix: "",
 				signupCta: "Запись",
 				contactCard: {
+					label: "Личный урок",
 					title: "Личный урок или закрытая группа",
 					body: "Хотите личный урок, подготовку к событию или занятие для закрытой группы? Напишите мне, и мы подберем подходящий формат.",
-					cta: "Присоединиться",
+					cta: "Запись",
 				},
 				fitCta: "Кому это подходит?",
 				fit: {
