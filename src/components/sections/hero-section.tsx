@@ -10,6 +10,7 @@ type HeroSectionProps = {
 
 export function HeroSection({ theme }: HeroSectionProps) {
   const { t, i18n } = useTranslation()
+  const assetBase = import.meta.env.BASE_URL
   const language = i18n.resolvedLanguage ?? i18n.language ?? 'he'
   const isRtl = language.startsWith('he')
   const movementText = t('hero.movement')
@@ -54,7 +55,7 @@ export function HeroSection({ theme }: HeroSectionProps) {
     <section id="home" className="relative flex min-h-[700px] items-start overflow-visible px-7 pb-0 pt-52 lg:min-h-[760px] lg:px-12 lg:pt-60">
       <div className="absolute inset-0 z-0 overflow-hidden">
         <img
-          src={theme === 'dark' ? '/assets/image_1.jpg' : '/assets/image_3.jpg'}
+          src={`${assetBase}assets/${theme === 'dark' ? 'image_1.jpg' : 'image_3.jpg'}`}
           alt=""
           className="hero-image absolute inset-0 z-0 size-full object-cover opacity-95 grayscale dark:opacity-90"
           style={{

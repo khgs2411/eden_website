@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next'
 
 export function PrivateLessonSection() {
   const { t } = useTranslation()
+  const assetBase = import.meta.env.BASE_URL
   const paragraphs = t('about.body').split('\n\n')
 
   return (
@@ -10,7 +11,7 @@ export function PrivateLessonSection() {
       className="relative min-h-[430px] overflow-hidden px-7 pb-14 pt-8 text-foreground dark:text-white"
     >
       <img
-        src="/assets/image_2.jpg"
+        src={`${assetBase}assets/image_2.jpg`}
         alt=""
         className="absolute inset-0 size-full object-cover object-[42%_center] grayscale lg:object-[50%_center]"
       />
