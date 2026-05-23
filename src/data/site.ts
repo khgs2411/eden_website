@@ -11,6 +11,7 @@ export const lessons = [
     date: '12',
     time: '19:15 - 20:30',
     style: 'Vogue',
+    styleSubtitle: 'New Way',
     location: 'ramatGan',
   },
   {
@@ -19,6 +20,7 @@ export const lessons = [
     date: '12',
     time: '20:30 - 21:30',
     style: 'Hip Hop',
+    styleSubtitle: 'women',
     location: 'ramatGan',
   },
   {
@@ -27,6 +29,7 @@ export const lessons = [
     date: '14',
     time: '19:15 - 20:15',
     style: 'Hip Hop',
+    styleSubtitle: 'women',
     location: 'rishonLeZion',
   },
   {
@@ -35,6 +38,7 @@ export const lessons = [
     date: '15',
     time: '20:00 - 21:00',
     style: 'Hip Hop',
+    styleSubtitle: 'women',
     location: 'nessZiona',
   },
 ] as const

@@ -10,6 +10,8 @@ type LessonCardProps = {
 export function LessonCard({ lesson, onSelect }: LessonCardProps) {
   const { t } = useTranslation()
   const dayLabel = [t('lessons.dayPrefix'), t(`days.${lesson.day}`)].filter(Boolean).join(' ')
+  const styleSubtitle =
+    lesson.styleSubtitle === 'women' ? t('lessonStyleSubtitles.women') : lesson.styleSubtitle
 
   return (
     <button
@@ -31,6 +33,9 @@ export function LessonCard({ lesson, onSelect }: LessonCardProps) {
         </span>
         <span className="font-display text-lg font-bold uppercase tracking-[0.08em] text-foreground/92">
           {lesson.style}
+        </span>
+        <span className="font-display text-[0.72rem] font-bold tracking-[0.12em] text-muted-foreground">
+          {styleSubtitle}
         </span>
       </span>
       <span className="flex items-center justify-end ps-3">
