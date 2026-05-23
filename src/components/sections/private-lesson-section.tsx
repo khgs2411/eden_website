@@ -1,5 +1,7 @@
 import { useTranslation } from 'react-i18next'
 
+import { instagramUrl } from '@/data/site'
+
 export function PrivateLessonSection() {
   const { t } = useTranslation()
   const assetBase = import.meta.env.BASE_URL
@@ -30,7 +32,9 @@ export function PrivateLessonSection() {
             ))}
           </div>
           <a
-            href="#lessons"
+            href={instagramUrl}
+            target="_blank"
+            rel="noreferrer"
             className="inline-flex max-w-full items-center justify-center rounded-sm border border-accent-foreground bg-accent-foreground px-5 py-3.5 text-center font-display text-[0.8125rem] font-bold uppercase tracking-[0.1em] text-background shadow-[0_12px_34px_rgba(0,0,0,0.12)] backdrop-blur transition hover:-translate-y-0.5 hover:opacity-90 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
             {t('about.registrationCard.cta')}
