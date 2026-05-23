@@ -21,9 +21,14 @@ export function LessonCard({ lesson, onSelect }: LessonCardProps) {
         <span className="block whitespace-nowrap text-[1.25rem] font-bold leading-none tracking-[0.08em]">
           {dayLabel}
         </span>
+        <span className="mt-1 block whitespace-nowrap text-[0.72rem] font-bold tracking-[0.12em] text-muted-foreground">
+          {t(`locations.${lesson.location}`)}
+        </span>
       </span>
       <span className="grid items-center gap-1 ps-4">
-        <span className="text-[0.78rem] text-foreground/85">{lesson.time}</span>
+        <span className="font-display text-[0.72rem] font-bold tracking-[0.12em] text-muted-foreground">
+          {lesson.time}
+        </span>
         <span className="font-display text-lg font-bold uppercase tracking-[0.08em] text-foreground/92">
           {lesson.style}
         </span>

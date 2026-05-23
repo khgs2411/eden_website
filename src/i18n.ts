@@ -41,6 +41,17 @@ const resources = {
         title: 'מערכת שיעורים',
         dayPrefix: 'יום',
         signupCta: 'הרשמה',
+        fitCta: 'למי זה מתאים?',
+        fit: {
+          hipHop: {
+            title: 'Hip-Hop',
+            body: 'שיעורי היפ הופ לנשים מתאימים לכל מי שרוצה לרקוד, להשתחרר ולהנות במרחב פתוח ומאפשר.\nאין צורך בנסיון קודם. בואי כמו שאת.',
+          },
+          vogue: {
+            title: 'Vogue',
+            body: 'שיעור Vogue בסגנון Vogue New Way. בואו נלמד את ארבעת האלמנטים המרכיבים את הסגנון (arms controls, flexibility/tricks, pose, floor performance). נתנסה בטכניקה, פיתוח אימפרוביזציה אישית ונלמד קטעי ריקוד.\nאין צורך בנסיון קודם.',
+          },
+        },
       },
       about: {
         title: 'תכירו אותי',
@@ -54,6 +65,11 @@ const resources = {
         thu: 'חמישי',
         fri: 'שישי',
         sat: 'שבת',
+      },
+      locations: {
+        ramatGan: 'רמת גן',
+        rishonLeZion: 'ראשון לציון',
+        nessZiona: 'נס ציונה',
       },
       lessonPeriods: {
         morning: 'בוקר',
@@ -114,6 +130,17 @@ const resources = {
         title: 'Lesson plan',
         dayPrefix: '',
         signupCta: 'Sign up',
+        fitCta: 'Who is this for?',
+        fit: {
+          hipHop: {
+            title: 'Hip-Hop',
+            body: 'Hip-Hop classes for women are for anyone who wants to dance, release, and enjoy movement in an open, supportive space.\nNo previous experience is needed. Come as you are.',
+          },
+          vogue: {
+            title: 'Vogue',
+            body: 'A Vogue class in the Vogue New Way style. We will learn the four elements that shape the style (arms controls, flexibility/tricks, pose, floor performance), practice technique, develop personal improvisation, and learn choreography.\nNo previous experience is needed.',
+          },
+        },
       },
       about: {
         title: 'About Me',
@@ -127,6 +154,11 @@ const resources = {
         thu: 'Thursday',
         fri: 'Friday',
         sat: 'Saturday',
+      },
+      locations: {
+        ramatGan: 'Ramat Gan',
+        rishonLeZion: 'Rishon LeZion',
+        nessZiona: 'Ness Ziona',
       },
       lessonPeriods: {
         morning: 'Morning',
@@ -187,19 +219,35 @@ const resources = {
         title: 'План уроков',
         dayPrefix: '',
         signupCta: 'Запись',
+        fitCta: 'Кому это подходит?',
+        fit: {
+          hipHop: {
+            title: 'Hip-Hop',
+            body: 'Занятия Hip-Hop для женщин подходят всем, кто хочет танцевать, расслабиться и получать удовольствие в открытом и поддерживающем пространстве.\nПредыдущий опыт не нужен. Приходи такой, какая ты есть.',
+          },
+          vogue: {
+            title: 'Vogue',
+            body: 'Занятие Vogue в стиле Vogue New Way. Мы изучим четыре элемента стиля (arms controls, flexibility/tricks, pose, floor performance), попробуем технику, разовьем личную импровизацию и выучим танцевальные связки.\nПредыдущий опыт не нужен.',
+          },
+        },
       },
       about: {
         title: 'Обо мне',
         body: 'Привет, я Эден - профессиональная танцовщица и преподаватель танца\nс опытом преподавания более 14 лет\n\nЯ окончила курс инструкторов по хип-хопу в Wingate и программу подготовки танцоров в Академии танца\nЯ танцую в мюзиклах и театральных постановках, а также веду и сужу Vogue соревнования в Израиле\n\nЯ преподаю в профессиональной, открытой и поддерживающей атмосфере, с акцентом на уверенность, самовыражение и удовольствие.\nПредыдущий опыт не требуется. Занятия подходят для всех уровней',
       },
       days: {
-        mon: 'Пн',
-        sun: 'Вс',
-        tue: 'Вт',
-        wed: 'Ср',
-        thu: 'Чт',
-        fri: 'Пт',
-        sat: 'Сб',
+        mon: 'Понедельник',
+        sun: 'Воскресенье',
+        tue: 'Вторник',
+        wed: 'Среда',
+        thu: 'Четверг',
+        fri: 'Пятница',
+        sat: 'Суббота',
+      },
+      locations: {
+        ramatGan: 'Рамат-Ган',
+        rishonLeZion: 'Ришон-ле-Цион',
+        nessZiona: 'Нес-Циона',
       },
       lessonPeriods: {
         morning: 'Утро',
