@@ -10,6 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fontsource/assistant": "^5.2.9",
+    "@fontsource/caveat": "^5.2.8",
+    "@fontsource/oswald": "^5.2.8",
     "@radix-ui/react-slot": "^1.2.4",
     "@supabase/supabase-js": "^2.106.1",
     "@tailwindcss/vite": "^4.3.0",
