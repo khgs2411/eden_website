@@ -1,12 +1,6 @@
 {
   "status": "ready_for_review",
-  "summary": "Appended the new Vogue suitability copy to the who-is-this-for section and added English and Russian translations.",
-  "verification": [
-    "npm ci",
-    "npm run lint",
-    "npm run build"
-  ],
-  "changed_files": [
-    "src/i18n.ts"
-  ]
+  "summary": "Added a language selector to the mobile sidebar menu, matching the existing sidebar control style and using the shared i18n language list.",
+  "verification": ["npm ci", "npm run lint", "npm run build"],
+  "changed_files": ["src/components/layout/site-header.tsx", ".symphony/ready_for_review.json"]
 }
