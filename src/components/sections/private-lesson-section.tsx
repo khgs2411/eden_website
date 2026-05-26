@@ -1,7 +1,5 @@
 import { useTranslation } from 'react-i18next'
 
-import { instagramUrl } from '@/data/site'
-
 export function PrivateLessonSection() {
   const { t } = useTranslation()
   const assetBase = import.meta.env.BASE_URL
@@ -31,14 +29,26 @@ export function PrivateLessonSection() {
               </p>
             ))}
           </div>
-          <a
-            href={instagramUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex max-w-full items-center justify-center rounded-sm border border-accent-foreground bg-accent-foreground px-5 py-3.5 text-center font-display text-[0.8125rem] font-bold uppercase tracking-[0.1em] text-background shadow-[0_12px_34px_rgba(0,0,0,0.12)] backdrop-blur transition hover:-translate-y-0.5 hover:opacity-90 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-          >
-            {t('about.registrationCard.cta')}
-          </a>
+        </div>
+      </div>
+      <div className="relative z-10 mt-12">
+        <div className="mx-auto grid max-w-[52rem] overflow-hidden rounded-md border border-border/75 bg-card/88 text-foreground shadow-[0_18px_60px_rgba(0,0,0,0.18)] backdrop-blur-md dark:border-white/10 dark:bg-[#201729]/92 dark:text-white lg:grid-cols-[16rem_minmax(0,1fr)]">
+          <div className="flex items-center justify-center border-b border-border/75 px-6 py-7 dark:border-white/10 lg:border-b-0 lg:border-e">
+            <a
+              href="#lessons"
+              className="inline-flex min-h-14 max-w-full items-center justify-center rounded-md border border-accent-foreground/40 px-7 py-3 text-center font-display text-base font-bold uppercase tracking-[0.12em] text-accent-foreground transition hover:-translate-y-0.5 hover:border-accent-foreground hover:bg-accent-foreground hover:text-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            >
+              {t('about.registrationCard.cta')}
+            </a>
+          </div>
+          <div className="px-7 py-7 text-center lg:px-10 lg:py-8">
+            <h3 className="font-display text-4xl font-bold leading-tight text-foreground/95 dark:text-white lg:text-5xl">
+              {t('about.registrationCard.title')}
+            </h3>
+            <p className="mt-4 text-2xl font-bold leading-snug text-muted-foreground dark:text-white/72">
+              {t('about.registrationCard.body')}
+            </p>
+          </div>
         </div>
       </div>
     </section>

@@ -65,7 +65,7 @@ const resources = {
 				registrationCard: {
 					title: "רוצות להצטרף?",
 					body: "חזרו למערכת השיעורים ובחרו את השיעור שמתאים לכן.",
-					cta: "להצטרפות",
+					cta: "להרשמה",
 				},
 			},
 			days: {
@@ -189,7 +189,7 @@ const resources = {
 				registrationCard: {
 					title: "Ready to join?",
 					body: "Return to the lesson plan and choose the class that fits you.",
-					cta: "Join",
+					cta: "Sign up",
 				},
 			},
 			days: {
@@ -313,7 +313,7 @@ const resources = {
 				registrationCard: {
 					title: "Хотите присоединиться?",
 					body: "Вернитесь к плану уроков и выберите подходящее занятие.",
-					cta: "Присоединиться",
+					cta: "Запись",
 				},
 			},
 			days: {

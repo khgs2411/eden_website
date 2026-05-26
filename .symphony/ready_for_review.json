@@ -1,6 +1,6 @@
 {
 	"status": "ready_for_review",
-	"summary": "Updated the Hebrew private lesson contact card body to match the Trello image text and preserved the requested line breaks without changing the CTA or color styling.",
+	"summary": "Replaced the end-of-site standalone CTA button with a translated split CTA panel matching the Trello reference, and linked it back to the lessons schedule.",
 	"verification": ["npm run lint", "npm run build"],
-	"changed_files": ["src/i18n.ts", "src/components/lessons/lesson-card.tsx"]
+	"changed_files": ["src/components/sections/private-lesson-section.tsx", "src/i18n.ts"]
 }
