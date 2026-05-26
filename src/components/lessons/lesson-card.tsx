@@ -27,7 +27,7 @@ export function LessonCard({ lesson, onSelect }: LessonCardProps) {
           <span className="font-display text-lg font-bold uppercase tracking-[0.08em] text-foreground/92">
             {t('lessons.contactCard.title')}
           </span>
-          <span className="line-clamp-2 text-sm font-bold leading-5 text-muted-foreground">
+          <span className="whitespace-pre-line text-sm font-bold leading-5 text-muted-foreground">
             {t('lessons.contactCard.body')}
           </span>
         </span>
