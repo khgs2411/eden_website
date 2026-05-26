@@ -1,6 +1,6 @@
 {
-  "status": "ready_for_review",
-  "summary": "Added a language selector to the mobile sidebar menu, matching the existing sidebar control style and using the shared i18n language list.",
-  "verification": ["npm ci", "npm run lint", "npm run build"],
-  "changed_files": ["src/components/layout/site-header.tsx", ".symphony/ready_for_review.json"]
+	"status": "ready_for_review",
+	"summary": "Updated the Hebrew private lesson contact card body to match the Trello image text and preserved the requested line breaks without changing the CTA or color styling.",
+	"verification": ["npm run lint", "npm run build"],
+	"changed_files": ["src/i18n.ts", "src/components/lessons/lesson-card.tsx"]
 }
