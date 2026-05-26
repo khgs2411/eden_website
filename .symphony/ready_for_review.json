@@ -1,13 +1,15 @@
 {
 	"status": "ready_for_review",
-	"summary": "Fixed the private lesson contact card layout so its multiline body text is visible on mobile/tablet and the desktop card expands without clipping, while preserving the existing CTA styling and surrounding section design.",
+	"summary": "Refined the private lesson contact card so mobile uses a balanced stacked layout with visible Hebrew body text and an uncramped CTA, while preserving the existing desktop/tablet card style.",
 	"verification": [
+		"npm install",
 		"npm run lint",
 		"npm run build",
 		"npm run preview -- --host 127.0.0.1 --port 4173",
-		"Playwright Firefox screenshot check at 390x844 saved to .symphony/mobile-full.png",
-		"Playwright Firefox screenshot check at 768x1024 saved to .symphony/tablet-full.png",
-		"Playwright Firefox screenshot check at 1440x1000 saved to .symphony/desktop-full.png"
+		"npx --yes playwright install chromium",
+		"Playwright Chromium Hebrew/dark screenshot check at 390x844 saved to .symphony/mobile-full.png",
+		"Playwright Chromium Hebrew/dark screenshot check at 768x1024 saved to .symphony/tablet-full.png",
+		"Playwright Chromium Hebrew/dark screenshot check at 1440x1000 saved to .symphony/desktop-full.png"
 	],
 	"changed_files": [
 		"src/components/lessons/lesson-card.tsx",
