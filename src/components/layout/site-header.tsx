@@ -1,4 +1,4 @@
-import { Menu, Moon, Sun, X } from 'lucide-react'
+import { Globe2, Menu, Moon, Sun, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -6,6 +6,7 @@ import { LanguageMenu } from '@/components/layout/language-menu'
 import { Button } from '@/components/ui/button'
 import { navItems } from '@/data/site'
 import type { Theme } from '@/hooks/use-theme'
+import { languages, type LanguageCode } from '@/i18n'
 import type { DrawerSide } from '@/lib/locale'
 import { cn } from '@/lib/utils'
 
@@ -24,8 +25,13 @@ export function SiteHeader({
   onThemeToggle,
   theme,
 }: SiteHeaderProps) {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const [isScrolled, setIsScrolled] = useState(false)
+  const currentLanguage = (i18n.resolvedLanguage ?? i18n.language ?? 'he').split('-')[0] as LanguageCode
+
+  function handleLanguageChange(language: LanguageCode) {
+    i18n.changeLanguage(language)
+  }
 
   useEffect(() => {
     const updateScrolled = () => setIsScrolled(window.scrollY > 8)
@@ -141,7 +147,27 @@ export function SiteHeader({
               ))}
             </nav>
 
-            <div className="border-t border-border p-4">
+            <div className="grid gap-3 border-t border-border p-4">
+              <div className="rounded-md border border-border px-3 py-3">
+                <div className="flex items-center justify-between gap-3 font-display text-sm font-bold uppercase tracking-[0.14em]">
+                  <span>{t('language.label')}</span>
+                  <Globe2 className="size-4" />
+                </div>
+                <div className="mt-3 grid grid-cols-3 gap-1">
+                  {languages.map((language) => (
+                    <Button
+                      key={language.code}
+                      type="button"
+                      variant={currentLanguage === language.code ? 'default' : 'ghost'}
+                      className="h-9 px-2 text-xs font-bold"
+                      aria-pressed={currentLanguage === language.code}
+                      onClick={() => handleLanguageChange(language.code)}
+                    >
+                      {language.label}
+                    </Button>
+                  ))}
+                </div>
+              </div>
               <Button
                 type="button"
                 variant="outline"
