@@ -1,0 +1,12 @@
+{
+  "status": "ready_for_review",
+  "summary": "Appended the new Vogue suitability copy to the who-is-this-for section and added English and Russian translations.",
+  "verification": [
+    "npm ci",
+    "npm run lint",
+    "npm run build"
+  ],
+  "changed_files": [
+    "src/i18n.ts"
+  ]
+}
