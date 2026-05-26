@@ -55,7 +55,7 @@ const resources = {
 					},
 					vogue: {
 						title: "Vogue",
-						body: "שעורי Vogue New Way היחידים בישראל!\nבשעור נתנסה ונלמד את ארבעת האלמנטים שמרכיבים את הסגנון, נתרגל טכניקת ידיים ייחודית, נפתח פרפורמנס וביטחון אישי ונכנס לתרבות הבולרום הצבעונית.\nאין צורך בניסיון קודם.",
+						body: "שעורי Vogue New Way היחידים בישראל!\nבשעור נתנסה ונלמד את ארבעת האלמנטים שמרכיבים את הסגנון, נתרגל טכניקת ידיים ייחודית, נפתח פרפורמנס וביטחון אישי ונכנס לתרבות הבולרום הצבעונית.\nאין צורך בניסיון קודם.\nהשעור מתאים לכולם! בין אם אתם רקדנים מקצועיים שרוצים להוסיף טכניקה ולהתמקצע ובין אם אתם רוצים להתנסות בסגנון ייחודי וחדש.",
 					},
 				},
 			},
@@ -179,7 +179,7 @@ const resources = {
 					},
 					vogue: {
 						title: "Vogue",
-						body: "The only Vogue New Way classes in Israel!\nIn class we will explore and learn the four elements that shape the style, practice unique hand technique, develop performance and personal confidence, and enter the colorful world of ballroom culture.\nNo previous experience is needed.",
+						body: "The only Vogue New Way classes in Israel!\nIn class we will explore and learn the four elements that shape the style, practice unique hand technique, develop performance and personal confidence, and enter the colorful world of ballroom culture.\nNo previous experience is needed.\nThis class is for everyone, whether you are a professional dancer who wants to add technique and refine your craft, or you want to try a unique new style.",
 					},
 				},
 			},
@@ -303,7 +303,7 @@ const resources = {
 					},
 					vogue: {
 						title: "Vogue",
-						body: "Единственные занятия Vogue New Way в Израиле!\nНа занятии мы познакомимся и изучим четыре элемента, из которых состоит стиль, будем практиковать уникальную технику рук, развивать перформанс и личную уверенность, а также войдем в яркую культуру ballroom.\nПредыдущий опыт не нужен.",
+						body: "Единственные занятия Vogue New Way в Израиле!\nНа занятии мы познакомимся и изучим четыре элемента, из которых состоит стиль, будем практиковать уникальную технику рук, развивать перформанс и личную уверенность, а также войдем в яркую культуру ballroom.\nПредыдущий опыт не нужен.\nЭто занятие подходит всем: и профессиональным танцорам, которые хотят добавить технику и развиваться, и тем, кто хочет попробовать уникальный новый стиль.",
 					},
 				},
 			},
