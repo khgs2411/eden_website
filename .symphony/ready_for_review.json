@@ -1,6 +1,19 @@
 {
 	"status": "ready_for_review",
-	"summary": "Replaced the end-of-site standalone CTA button with a translated split CTA panel matching the Trello reference, and linked it back to the lessons schedule.",
-	"verification": ["npm run lint", "npm run build"],
-	"changed_files": ["src/components/sections/private-lesson-section.tsx", "src/i18n.ts"]
+	"summary": "Fixed the private lesson contact card layout so its multiline body text is visible on mobile/tablet and the desktop card expands without clipping, while preserving the existing CTA styling and surrounding section design.",
+	"verification": [
+		"npm run lint",
+		"npm run build",
+		"npm run preview -- --host 127.0.0.1 --port 4173",
+		"Playwright Firefox screenshot check at 390x844 saved to .symphony/mobile-full.png",
+		"Playwright Firefox screenshot check at 768x1024 saved to .symphony/tablet-full.png",
+		"Playwright Firefox screenshot check at 1440x1000 saved to .symphony/desktop-full.png"
+	],
+	"changed_files": [
+		"src/components/lessons/lesson-card.tsx",
+		".symphony/ready_for_review.json",
+		".symphony/mobile-full.png",
+		".symphony/tablet-full.png",
+		".symphony/desktop-full.png"
+	]
 }
