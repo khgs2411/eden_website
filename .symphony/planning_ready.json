@@ -1,0 +1,17 @@
+{
+  "status": "planning_ready",
+  "spec_path": "docs/superpowers/specs/2026-06-03-label-derived-plan-default-design.md",
+  "plan_path": "docs/superpowers/plans/2026-06-03-label-derived-plan-default.md",
+  "spec_audit_path": ".symphony/audits/spec-audit.md",
+  "plan_audit_path": ".symphony/audits/plan-audit.md",
+  "verdict": "Ready for Development",
+  "summary": "Planner artifacts document that Eden board cards with the Plan Required label should use project_id eden_website, profile plan, and planner instructions. The spec now states that this worktree lacks authoritative generated-contract metadata, so final contract verification must use Symphony runtime or reviewer metadata. No application implementation is planned for this workflow-contract test.",
+  "verification": [
+    "Read .symphony/audits/spec-audit.md and identified the missing generated-contract verification source.",
+    "Reviewed .symphony/task.json and confirmed it contains only snapshot and work_branch.",
+    "Updated the spec and plan to distinguish repository-local artifact verification from external Symphony runtime contract verification.",
+    "Updated .symphony/audits/spec-audit.md to Ready for Development after the revision.",
+    "Updated .symphony/audits/plan-audit.md after revising the implementation plan.",
+    "Validated .symphony/planning_ready.json as JSON."
+  ]
+}
