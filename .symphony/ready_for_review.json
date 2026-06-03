@@ -1,21 +1,14 @@
 {
 	"status": "ready_for_review",
-	"summary": "Refined the private lesson contact card so mobile uses a balanced stacked layout with visible Hebrew body text and an uncramped CTA, while preserving the existing desktop/tablet card style.",
+	"summary": "Verified the Eden own-board/no-contract task resolves against this repository: no V2 contract file is present, and the repository project identity is eden_website.",
 	"verification": [
-		"npm install",
+		"Confirmed no V2 contract/project routing file is present in the assigned worktree.",
+		"Confirmed supabase/config.toml contains project_id = \"eden_website\".",
+		"npm ci",
 		"npm run lint",
-		"npm run build",
-		"npm run preview -- --host 127.0.0.1 --port 4173",
-		"npx --yes playwright install chromium",
-		"Playwright Chromium Hebrew/dark screenshot check at 390x844 saved to .symphony/mobile-full.png",
-		"Playwright Chromium Hebrew/dark screenshot check at 768x1024 saved to .symphony/tablet-full.png",
-		"Playwright Chromium Hebrew/dark screenshot check at 1440x1000 saved to .symphony/desktop-full.png"
+		"npm run build"
 	],
 	"changed_files": [
-		"src/components/lessons/lesson-card.tsx",
-		".symphony/ready_for_review.json",
-		".symphony/mobile-full.png",
-		".symphony/tablet-full.png",
-		".symphony/desktop-full.png"
+		".symphony/ready_for_review.json"
 	]
 }
