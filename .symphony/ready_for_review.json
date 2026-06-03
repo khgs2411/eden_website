@@ -1,21 +1,13 @@
 {
 	"status": "ready_for_review",
-	"summary": "Refined the private lesson contact card so mobile uses a balanced stacked layout with visible Hebrew body text and an uncramped CTA, while preserving the existing desktop/tablet card style.",
+	"summary": "Confirmed the shared-board card labeled eden_website resolved into the Eden website repository worktree on branch eden_website/v2-test-shared-board-eden-website-label-routing-probe-Rekt. No application code changes were needed for this routing probe.",
 	"verification": [
-		"npm install",
-		"npm run lint",
-		"npm run build",
-		"npm run preview -- --host 127.0.0.1 --port 4173",
-		"npx --yes playwright install chromium",
-		"Playwright Chromium Hebrew/dark screenshot check at 390x844 saved to .symphony/mobile-full.png",
-		"Playwright Chromium Hebrew/dark screenshot check at 768x1024 saved to .symphony/tablet-full.png",
-		"Playwright Chromium Hebrew/dark screenshot check at 1440x1000 saved to .symphony/desktop-full.png"
+		"rtk read .symphony/task.json",
+		"git branch --show-current",
+		"git status --short",
+		"grep -RIn \"routing\\|board\\|label\\|trello\\|symphony\\|eden_website\\|ready_for_review\\|blocked\" . --exclude-dir=node_modules --exclude-dir=dist --exclude-dir=.git"
 	],
 	"changed_files": [
-		"src/components/lessons/lesson-card.tsx",
-		".symphony/ready_for_review.json",
-		".symphony/mobile-full.png",
-		".symphony/tablet-full.png",
-		".symphony/desktop-full.png"
+		".symphony/ready_for_review.json"
 	]
 }
