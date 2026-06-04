@@ -1,9 +1,0 @@
-{
-  "reason": "generated_contract_metadata_unavailable",
-  "summary": "Planner artifacts are complete and locally verified, but this worktree does not expose authoritative generated-contract metadata needed to confirm project_id eden_website, profile plan, and planner instruction selection for the Plan Required label.",
-  "session_id": "unknown",
-  "updated_at": "2026-06-03T20:13:15Z",
-  "blocked_kind": "verification_environment",
-  "missing_capabilities": ["authoritative_symphony_generated_contract_metadata"],
-  "verification_not_completed": ["Confirm generated project_id/profile/planner instruction selection against authoritative Symphony runtime contract metadata."]
-}
