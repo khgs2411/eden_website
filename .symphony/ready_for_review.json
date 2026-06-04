@@ -1,11 +1,11 @@
 {
 	"status": "ready_for_review",
-	"summary": "Confirmed the shared-board card labeled eden_website resolved into the Eden website repository worktree on branch eden_website/v2-test-shared-board-eden-website-label-routing-probe-Rekt. No application code changes were needed for this routing probe.",
+	"summary": "Confirmed the shared-board card labeled eden_website resolved into the Eden website repository worktree on branch eden_website/v2-test-shared-board-eden-website-label-routing-probe-Rekt. No application code changes were needed for this routing probe. Current behavior supports shared-board label-based Eden intake; blocking it would require Symphony policy/config outside this repository.",
 	"verification": [
 		"rtk read .symphony/task.json",
 		"git branch --show-current",
 		"git status --short",
-		"grep -RIn \"routing\\|board\\|label\\|trello\\|symphony\\|eden_website\\|ready_for_review\\|blocked\" . --exclude-dir=node_modules --exclude-dir=dist --exclude-dir=.git"
+		"find . -path './node_modules' -prune -o -path './dist' -prune -o -type f -print | xargs grep -nE \"Symphony|routing|eden_website|board|Trello|label|project\""
 	],
 	"changed_files": [
 		".symphony/ready_for_review.json"
