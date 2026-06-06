@@ -1,0 +1,3 @@
+# Rolling Schedule Materialization
+
+Schedules materialize concrete class rows through rolling generation inside a product-level generation horizon, defaulting to 8 weeks in v1. A schedule selects a class template as read-only source material and controls recurrence/time placement only; generated classes are snapshots that keep their concrete values, while future generated classes use the current template values at the moment they are created. Recurrence is stored in local wall-clock terms with an IANA timezone, and generated classes store absolute timestamps so local class times remain stable across daylight-saving changes while registration and querying use concrete class records.
