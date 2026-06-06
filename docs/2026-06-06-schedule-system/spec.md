@@ -52,7 +52,7 @@ In scope:
 - Per-class overrides for generated classes.
 - Schedule cancellation and skipped dates.
 - Duplicate prevention and idempotent generation.
-- How generated classes inherit template defaults and schedule defaults.
+- How generated classes inherit template defaults and schedule time placement.
 - Manager-facing operational behavior for drafts, publishing, and refreshes.
 - Acceptance boundaries for later implementation plans.
 
@@ -239,7 +239,6 @@ A schedule should support exceptions:
 
 - skip a date before class generation
 - cancel an existing generated class
-- detach or protect an overridden class from future schedule refreshes
 
 Resolved cancellation and skip model:
 

@@ -17,9 +17,9 @@ The product has four connected systems:
 
 ## Current Context
 
-This repo is a Vite, React, TypeScript marketing site with an existing Supabase local stack. The current database only has `public.lesson_signups`, a simple lead-capture table with public insert access.
+This repo is a Vite, React, TypeScript marketing site with an existing Supabase local stack. The existing app is only an implementation playground for the new class-management product; the reusable product design should not rely on deleted or legacy lesson-management documentation.
 
-There is also a prior lesson-management design at `docs/superpowers/specs/2026-05-31-lesson-management-service-design.md`. That design is useful context, but it is too single-site and lesson-specific for this product. It models owner/admin role management, lessons, pending approvals, and booking RPCs. It does not model tenant/vendor isolation, memberships, reusable templates, entitlement consumption, or cross-site portability.
+The current database baseline is intentionally small and site-specific. The class-management product should introduce its own product-scoped schema, Edge Function API boundary, and verification path rather than extending legacy lesson-signup assumptions.
 
 Supabase context verified for this draft:
 
@@ -136,7 +136,7 @@ Class templates support simple typed custom fields:
 
 Each template field should define a stable key, label, type, required flag, optional default value, and optional visibility/search flags. Templates should not support nested object schemas, arrays, validation expressions, or conditional logic in v1.
 
-Detailed schedule behavior is intentionally deferred to a separate schedule-system design. This global product spec only requires Schedule to remain distinct from Class Template and Class, and to eventually produce or coordinate concrete date-bound classes through a schedule-specific lifecycle.
+Detailed schedule generation behavior is owned by `docs/2026-06-06-schedule-system/spec.md`, not this root product spec. This global product spec only requires Schedule to remain distinct from Class Template and Class, and to produce concrete date-bound classes through the approved schedule-system lifecycle.
 
 Attendance is not just a scalar class field. It should be modeled as class participation records in one `class_participants` model:
 
@@ -391,7 +391,7 @@ The logical key is `(product_id, user_id)`. This lets the same Supabase Auth use
 ## Assumptions
 
 - Payments and selling memberships are out of scope.
-- Attendance, reminders, waitlists, and recurring-series generation are out of scope for the first implementation.
+- Attendance reminders and waitlists are out of scope for the first implementation. Detailed schedule generation behavior is owned by `docs/2026-06-06-schedule-system/spec.md`, not this root product spec.
 - The local Supabase stack is the development backend.
 - Edge Functions are the only application API exposed to frontend projects; Postgres/RPC should own transactional class and membership decisions behind that API.
 - The public website may remain Eden-specific while the backend and core product UI stay product-key-aware.
