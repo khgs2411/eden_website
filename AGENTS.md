@@ -46,3 +46,18 @@ Automated feature work must follow `docs/deployment/development-guideline.md`: u
 ## Security & Configuration Tips
 
 Do not commit `.env.local` or secrets. Public assets must work under the GitHub Pages base path; use `import.meta.env.BASE_URL` for runtime asset URLs instead of root-relative `/assets/...` paths.
+
+## Symphony / Trello Routing
+
+Symphony project id is `eden_website`, configured from `/Users/liadgoren/Repositories/openai_symphony/projects/eden.yaml`.
+
+- Trello board: `Eden’s Website` (`6a11a471dd21deb5d5fefc45`).
+- Non-dispatch planning list: `תכנון משימות` (`6a11a49d8e83750c92e4cef2`).
+- Configured intake route: `6a11a4a29dea19708e782e82`.
+- Configured running route: `6a11a76a3e69166f08644ade`.
+- Configured review route: `6a11a4a6803299cd0e7db277`.
+- Configured blockers route: `6a1551cb7260de4bbc672187`.
+- Configured done/on-site route: `באתר :)` (`6a15547f932cfaeb4a34e81d`).
+- Common labels: `Feature`, `Bug`, `No Push`, `Plan Required`, `eden_website`.
+
+Use `make register-symphony-reviewer` to register this repo as a reviewer target when review notifications should route here.

@@ -1,4 +1,4 @@
-PROJECT ?= eden
+PROJECT ?= eden_website
 SYMPHONY_REVIEWER_REGISTER ?= /Users/liadgoren/Repositories/openai_symphony/scripts/symphony-reviewer-register
 SYMPHONY_REVIEWER_MESSAGE_FILE ?= /Users/liadgoren/Repositories/openai_symphony/scripts/symphony-reviewer-message.txt
 SYMPHONY_REVIEWER_REPO_ROOT ?= $(CURDIR)
