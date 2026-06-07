@@ -107,7 +107,11 @@ begin
 			and status = 'active'
 			and user_id <> old.user_id;
 
-		if active_manager_count = 0 and (tg_op = 'DELETE' or new.role <> 'manager' or new.status <> 'active') then
+		if active_manager_count = 0 and tg_op = 'DELETE' then
+			raise exception 'cannot remove the last active manager for product %', old.product_id;
+		end if;
+
+		if active_manager_count = 0 and (new.role <> 'manager' or new.status <> 'active') then
 			raise exception 'cannot remove the last active manager for product %', old.product_id;
 		end if;
 	end if;
