@@ -1,7 +1,8 @@
-import { CalendarDays, ClipboardList, ShieldCheck, UserRound } from "lucide-react";
+import { CalendarDays, ShieldCheck, UserRound } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import { AuthPanel } from "@/components/product/auth-panel";
+import { ClassList } from "@/components/product/user/class-list";
 import { Button } from "@/components/ui/button";
 import { useProductContext } from "@/lib/product-context-state";
 
@@ -52,10 +53,7 @@ export function ProductShell() {
 					<div className="rounded-md border border-border bg-card p-4 text-card-foreground">
 						<div className="grid gap-3">
 							{hasActiveProductUser ? (
-								<div className="flex items-center gap-2">
-									<ClipboardList className="size-4 text-accent-foreground" />
-									<p className="font-display text-sm font-bold uppercase">{t("productShell.placeholders.user")}</p>
-								</div>
+								<ClassList />
 							) : null}
 							{isManager ? (
 								<div className="flex items-center gap-2">

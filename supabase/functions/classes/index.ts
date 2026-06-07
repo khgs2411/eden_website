@@ -78,6 +78,10 @@ type ClassRow = {
 	custom_data: Record<string, unknown>;
 };
 
+type ListedClassRow = ClassRow & {
+	[key: string]: unknown;
+};
+
 function requireString(value: unknown, field: string): string {
 	if (!value || typeof value !== "string") {
 		throw new ApiError(400, "bad_request", `${field} is required.`);
@@ -204,6 +208,36 @@ function rejectRegistrationAction(action: string | undefined): void {
 	}
 }
 
+async function addApprovedCounts(productId: string, classes: ListedClassRow[]): Promise<ListedClassRow[]> {
+	if (classes.length === 0) {
+		return classes;
+	}
+
+	const supabase = getServiceClient();
+	const classIds = classes.map((classRow) => classRow.id);
+	const { data, error } = await supabase
+		.from("class_registrations")
+		.select("class_id")
+		.eq("product_id", productId)
+		.eq("status", "approved")
+		.in("class_id", classIds);
+
+	if (error) {
+		throw new ApiError(500, "internal_error", "Could not load class availability.");
+	}
+
+	const approvedCounts = new Map<string, number>();
+	for (const registration of data ?? []) {
+		const classId = String(registration.class_id);
+		approvedCounts.set(classId, (approvedCounts.get(classId) ?? 0) + 1);
+	}
+
+	return classes.map((classRow) => ({
+		...classRow,
+		approved_count: approvedCounts.get(classRow.id) ?? 0,
+	}));
+}
+
 Deno.serve(async (req) => {
 	const preflight = handleCors(req);
 	if (preflight) {
@@ -235,7 +269,8 @@ Deno.serve(async (req) => {
 				throw new ApiError(500, "internal_error", "Could not list classes.");
 			}
 
-			return jsonOk({ classes: data }, { headers });
+			const classes = await addApprovedCounts(ctx.product.id, (data ?? []) as ListedClassRow[]);
+			return jsonOk({ classes }, { headers });
 		}
 
 		if (action === "list_user") {
@@ -279,8 +314,10 @@ Deno.serve(async (req) => {
 				}
 			}
 
+			const classesWithCounts = await addApprovedCounts(ctx.product.id, (data ?? []) as ListedClassRow[]);
+
 			return jsonOk({
-				classes: (data ?? []).map((classRow: { id: string }) => ({
+				classes: classesWithCounts.map((classRow) => ({
 					...classRow,
 					user_registration: registrationsByClassId.get(classRow.id) ?? null,
 				})),

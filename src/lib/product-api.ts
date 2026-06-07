@@ -24,6 +24,42 @@ export type ProductContextResponse = {
 	product_user: ProductUserSummary | null;
 };
 
+export type RegistrationStatus = "pending" | "approved" | "rejected" | "cancelled";
+export type ClassVisibility = "public" | "hidden" | "members_only";
+export type RegistrationPolicy = "auto_approve" | "member_auto_approve" | "approval_required";
+export type MembershipRequirement = "none" | "required";
+
+export type UserClassSummary = {
+	id: string;
+	name: string;
+	description: string | null;
+	category: string | null;
+	starts_at: string;
+	ends_at: string;
+	location: string | null;
+	capacity: number;
+	approved_count?: number;
+	visibility: ClassVisibility;
+	registration_policy: RegistrationPolicy;
+	membership_requirement: MembershipRequirement;
+	user_registration: { id: string; status: RegistrationStatus } | null;
+};
+
+export type UserClassesResponse = {
+	classes: UserClassSummary[];
+};
+
+export type ClassRegistrationResponse = {
+	registration_id: string;
+	status: RegistrationStatus;
+	stock_consumed: number;
+	registration: {
+		id: string;
+		class_id: string;
+		status: RegistrationStatus;
+	};
+};
+
 export const productKey = import.meta.env.VITE_PRODUCT_KEY || "eden";
 
 export async function invokeProductFunction<T>(
@@ -68,4 +104,24 @@ export async function invokeProductFunction<T>(
 	}
 
 	return data;
+}
+
+export function listUserClasses(isSignedIn: boolean) {
+	return invokeProductFunction<UserClassesResponse>("classes", {
+		action: isSignedIn ? "list_user" : "list_public",
+	});
+}
+
+export function registerForClass(classId: string) {
+	return invokeProductFunction<ClassRegistrationResponse>("register-class", {
+		action: "register",
+		class_id: classId,
+	});
+}
+
+export function cancelClassRegistration(registrationId: string) {
+	return invokeProductFunction<ClassRegistrationResponse>("register-class", {
+		action: "cancel",
+		registration_id: registrationId,
+	});
 }
