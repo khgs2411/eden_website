@@ -31,7 +31,7 @@ type ProductUserRow = {
   status: ProductUserStatus;
 };
 
-function getServiceClient(): SupabaseClient {
+export function getServiceClient(): SupabaseClient {
   const supabaseUrl = Deno.env.get("SUPABASE_URL");
   const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
 
