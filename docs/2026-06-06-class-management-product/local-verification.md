@@ -43,7 +43,7 @@ Expected seed state:
 3. Confirm migration state:
 
 ```bash
-supabase migration list
+rtk supabase migration list --local
 ```
 
 Expected: all local migrations through the class-management and attendance chunks are applied.

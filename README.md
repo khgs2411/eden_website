@@ -53,7 +53,7 @@ Minimum regression checks:
 ```bash
 rtk supabase status
 supabase db reset
-supabase migration list
+rtk supabase migration list --local
 supabase db lint
 npm run lint
 npm run build
