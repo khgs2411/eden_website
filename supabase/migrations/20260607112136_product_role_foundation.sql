@@ -150,6 +150,8 @@ revoke all on function private.is_platform_admin(uuid) from public, anon, authen
 revoke all on function private.has_product_role(uuid, text[], uuid) from public, anon, authenticated;
 revoke all on function private.prevent_last_manager_loss() from public, anon, authenticated;
 revoke all on function public.resolve_product_by_key_and_origin(text, text) from public, anon, authenticated;
+grant execute on function private.is_platform_admin(uuid) to authenticated;
+grant execute on function private.has_product_role(uuid, text[], uuid) to authenticated;
 grant execute on function public.resolve_product_by_key_and_origin(text, text) to service_role;
 
 create policy products_read_allowed
