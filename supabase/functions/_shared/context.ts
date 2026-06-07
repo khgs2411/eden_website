@@ -259,9 +259,11 @@ export async function requirePlatformAdmin(
   ctx: ProductRequestContext,
 ): Promise<void> {
   const supabase = getServiceClient();
-  const { data, error } = await supabase.rpc("is_platform_admin", {
-    check_user_id: ctx.user.id,
-  });
+  const { data, error } = await supabase
+    .from("platform_admins")
+    .select("user_id")
+    .eq("user_id", ctx.user.id)
+    .maybeSingle();
 
   if (error) {
     throw new ApiError(
@@ -271,7 +273,7 @@ export async function requirePlatformAdmin(
     );
   }
 
-  if (data !== true) {
+  if (!data) {
     throw new ApiError(403, "forbidden", "Platform admin role is required.");
   }
 }
