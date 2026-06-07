@@ -1,5 +1,7 @@
 create extension if not exists pgcrypto;
 
+create schema if not exists private;
+
 create table public.products (
 	id uuid primary key default gen_random_uuid(),
 	product_key text not null unique,
@@ -44,12 +46,12 @@ create index product_users_user_id_idx on public.product_users(user_id);
 create index product_users_product_role_idx on public.product_users(product_id, role);
 create index product_allowed_origins_origin_idx on public.product_allowed_origins(origin);
 
-create or replace function public.is_platform_admin(check_user_id uuid default auth.uid())
+create or replace function private.is_platform_admin(check_user_id uuid default auth.uid())
 returns boolean
 language sql
 stable
 security definer
-set search_path = public
+set search_path = private, public
 as $$
 	select exists (
 		select 1
@@ -58,12 +60,12 @@ as $$
 	);
 $$;
 
-create or replace function public.has_product_role(check_product_id uuid, allowed_roles text[], check_user_id uuid default auth.uid())
+create or replace function private.has_product_role(check_product_id uuid, allowed_roles text[], check_user_id uuid default auth.uid())
 returns boolean
 language sql
 stable
 security definer
-set search_path = public
+set search_path = private, public
 as $$
 	select exists (
 		select 1
@@ -90,11 +92,11 @@ as $$
 		and o.origin = p_origin;
 $$;
 
-create or replace function public.prevent_last_manager_loss()
+create or replace function private.prevent_last_manager_loss()
 returns trigger
 language plpgsql
 security definer
-set search_path = public
+set search_path = private, public
 as $$
 declare
 	active_manager_count integer;
@@ -126,11 +128,11 @@ $$;
 
 create trigger prevent_last_manager_loss_update
 before update on public.product_users
-for each row execute function public.prevent_last_manager_loss();
+for each row execute function private.prevent_last_manager_loss();
 
 create trigger prevent_last_manager_loss_delete
 before delete on public.product_users
-for each row execute function public.prevent_last_manager_loss();
+for each row execute function private.prevent_last_manager_loss();
 
 alter table public.products enable row level security;
 alter table public.product_allowed_origins enable row level security;
@@ -143,9 +145,12 @@ grant select on public.product_allowed_origins to authenticated;
 grant select, insert, update on public.profiles to authenticated;
 grant select on public.product_users to authenticated;
 grant select on public.platform_admins to authenticated;
-grant execute on function public.resolve_product_by_key_and_origin(text, text) to anon, authenticated;
-grant execute on function public.is_platform_admin(uuid) to authenticated;
-grant execute on function public.has_product_role(uuid, text[], uuid) to authenticated;
+revoke all on schema private from public, anon, authenticated;
+revoke all on function private.is_platform_admin(uuid) from public, anon, authenticated;
+revoke all on function private.has_product_role(uuid, text[], uuid) from public, anon, authenticated;
+revoke all on function private.prevent_last_manager_loss() from public, anon, authenticated;
+revoke all on function public.resolve_product_by_key_and_origin(text, text) from public, anon, authenticated;
+grant execute on function public.resolve_product_by_key_and_origin(text, text) to service_role;
 
 create policy products_read_allowed
 on public.products for select
@@ -155,7 +160,7 @@ using (status = 'active');
 create policy product_origins_manager_read
 on public.product_allowed_origins for select
 to authenticated
-using (public.has_product_role(product_id, array['manager']) or public.is_platform_admin());
+using (private.has_product_role(product_id, array['manager']) or private.is_platform_admin());
 
 create policy profiles_self_read
 on public.profiles for select
@@ -178,8 +183,8 @@ on public.product_users for select
 to authenticated
 using (
 	user_id = auth.uid()
-	or public.has_product_role(product_id, array['manager'])
-	or public.is_platform_admin()
+	or private.has_product_role(product_id, array['manager'])
+	or private.is_platform_admin()
 );
 
 create policy platform_admins_self_read
