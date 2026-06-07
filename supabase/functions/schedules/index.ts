@@ -65,6 +65,12 @@ type PreviewOccurrence = {
 	skipped: boolean;
 };
 
+type GenerationCounts = {
+	created_count: number;
+	existing_count: number;
+	skipped_count: number;
+};
+
 function requireString(value: unknown, field: string): string {
 	if (!value || typeof value !== "string") {
 		throw new ApiError(400, "bad_request", `${field} is required.`);
@@ -295,6 +301,24 @@ async function loadSchedule(productId: string, scheduleId: string): Promise<Sche
 	return data as ScheduleRow;
 }
 
+async function generateForActiveSchedule(productId: string, schedule: ScheduleRow): Promise<GenerationCounts | null> {
+	if (schedule.status !== "active") {
+		return null;
+	}
+
+	const supabase = getServiceClient();
+	const { data, error } = await supabase.rpc("generate_schedule_classes", {
+		p_product_id: productId,
+		p_schedule_id: schedule.id,
+	});
+
+	if (error) {
+		throw new ApiError(500, "internal_error", "Could not generate schedule classes.");
+	}
+
+	return (data?.[0] ?? { created_count: 0, existing_count: 0, skipped_count: 0 }) as GenerationCounts;
+}
+
 async function previewSchedule(productId: string, body: ScheduleRequest): Promise<PreviewOccurrence[]> {
 	const schedule = await loadSchedule(productId, requireString(body.schedule_id ?? body.id, "schedule_id"));
 	const from = requireDate(body.from, "from");
@@ -409,7 +433,9 @@ Deno.serve(async (req) => {
 				throw new ApiError(500, "internal_error", "Could not create schedule.");
 			}
 
-			return jsonOk({ schedule: data }, { headers });
+			const generation = await generateForActiveSchedule(ctx.product.id, data as ScheduleRow);
+
+			return jsonOk({ schedule: data, generation }, { headers });
 		}
 
 		if (action === "update") {
@@ -432,7 +458,13 @@ Deno.serve(async (req) => {
 				throw new ApiError(500, "internal_error", "Could not update schedule.");
 			}
 
-			return jsonOk({ schedule: data }, { headers });
+			if (!data) {
+				throw new ApiError(404, "not_found", "Schedule was not found.");
+			}
+
+			const generation = await generateForActiveSchedule(ctx.product.id, data as ScheduleRow);
+
+			return jsonOk({ schedule: data, generation }, { headers });
 		}
 
 		if (action === "pause" || action === "archive") {
