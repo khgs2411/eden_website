@@ -389,6 +389,9 @@ verify_jwt = false
 [functions.manager-promote-manager]
 verify_jwt = false
 
+[functions.memberships]
+verify_jwt = false
+
 [analytics]
 enabled = true
 port = 54327
