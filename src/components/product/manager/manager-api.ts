@@ -6,6 +6,10 @@ export type RegistrationPolicy = "auto_approve" | "member_auto_approve" | "appro
 export type MembershipRequirement = "none" | "required";
 export type ScheduleStatus = "draft" | "active" | "paused" | "archived";
 export type RecurrenceType = "one_time" | "weekly";
+export type MembershipMode = "stock" | "limited_stock" | "limited" | "infinite";
+export type MembershipGrantStatus = "active" | "inactive" | "revoked" | "replaced" | "expired";
+export type ParticipantKind = "registered" | "walk_in" | "trial";
+export type AttendanceStatus = "present" | "absent";
 
 export type CustomField = {
 	key: string;
@@ -89,6 +93,57 @@ export type Registration = {
 	status: "pending" | "approved" | "rejected" | "cancelled";
 	stock_consumed: number;
 	created_at: string;
+};
+
+export type MembershipType = {
+	id: string;
+	name: string;
+	mode: MembershipMode;
+	default_stock: number | null;
+	default_duration_days: number | null;
+	status: "active" | "inactive";
+	created_at: string;
+	updated_at: string;
+};
+
+export type MembershipGrant = {
+	id: string;
+	user_id: string;
+	membership_type_id: string;
+	mode: MembershipMode;
+	valid_from: string;
+	valid_until: string | null;
+	total_stock: number | null;
+	remaining_stock: number | null;
+	status: MembershipGrantStatus;
+	created_at: string;
+	updated_at: string;
+};
+
+export type MembershipLedgerEntry = {
+	id: string;
+	user_id: string;
+	membership_grant_id: string | null;
+	event_type: string;
+	stock_delta: number;
+	class_id: string | null;
+	registration_id: string | null;
+	metadata: Record<string, unknown>;
+	created_by: string | null;
+	created_at: string;
+};
+
+export type ClassParticipant = {
+	id: string;
+	class_id: string;
+	participant_kind: ParticipantKind;
+	user_id: string | null;
+	registration_id: string | null;
+	trial_name: string | null;
+	trial_contact: string | null;
+	attendance_status: AttendanceStatus;
+	created_at: string;
+	updated_at: string;
 };
 
 export async function callManagerApi<T>(functionName: string, body: Record<string, unknown>) {
