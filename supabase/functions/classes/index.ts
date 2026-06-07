@@ -258,7 +258,33 @@ Deno.serve(async (req) => {
 				throw new ApiError(500, "internal_error", "Could not list classes.");
 			}
 
-			return jsonOk({ classes: data }, { headers });
+			const classIds = (data ?? []).map((row: { id: string }) => row.id);
+			const registrationsByClassId = new Map<string, unknown>();
+
+			if (classIds.length > 0) {
+				const { data: registrations, error: registrationsError } = await supabase
+					.from("class_registrations")
+					.select("*")
+					.eq("product_id", ctx.product.id)
+					.eq("user_id", ctx.user.id)
+					.in("class_id", classIds)
+					.in("status", ["pending", "approved"]);
+
+				if (registrationsError) {
+					throw new ApiError(500, "internal_error", "Could not load registration status.");
+				}
+
+				for (const registration of registrations ?? []) {
+					registrationsByClassId.set(registration.class_id, registration);
+				}
+			}
+
+			return jsonOk({
+				classes: (data ?? []).map((classRow: { id: string }) => ({
+					...classRow,
+					user_registration: registrationsByClassId.get(classRow.id) ?? null,
+				})),
+			}, { headers });
 		}
 
 		const ctx = await requireProductContext(req, body);
@@ -408,16 +434,26 @@ Deno.serve(async (req) => {
 
 		if (action === "cancel" || action === "publish") {
 			const classId = requireString(body.class_id ?? body.id, "class_id");
-			const patch = action === "cancel" ? { lifecycle_status: "cancelled" } : { status: "published" };
-			const { data, error } = await supabase
-				.from("classes")
-				.update(patch)
-				.eq("product_id", ctx.product.id)
-				.eq("id", classId)
-				.select("*")
-				.maybeSingle();
+
+			const { data, error } = action === "cancel"
+				? await supabase.rpc("cancel_class_with_registration_restoration", {
+					p_product_id: ctx.product.id,
+					p_class_id: classId,
+					p_created_by: ctx.user.id,
+				})
+				: await supabase
+					.from("classes")
+					.update({ status: "published" })
+					.eq("product_id", ctx.product.id)
+					.eq("id", classId)
+					.select("*")
+					.maybeSingle();
 
 			if (error) {
+				if (action === "cancel" && error.message?.includes("class_not_found")) {
+					throw new ApiError(404, "not_found", "Class was not found.");
+				}
+
 				throw new ApiError(500, "internal_error", `Could not ${action} class.`);
 			}
 
