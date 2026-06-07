@@ -3,8 +3,11 @@ import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { AuthPanel } from "@/components/product/auth-panel";
+import { AttendanceSession } from "@/components/product/manager/attendance-session";
 import { GeneratedClassList } from "@/components/product/manager/generated-class-list";
 import { callManagerApi, type ClassTemplate, type Schedule } from "@/components/product/manager/manager-api";
+import { MembershipGrants } from "@/components/product/manager/membership-grants";
+import { MembershipTypes } from "@/components/product/manager/membership-types";
 import { PendingRegistrations } from "@/components/product/manager/pending-registrations";
 import { ScheduleEditor } from "@/components/product/manager/schedule-editor";
 import { TemplateEditor } from "@/components/product/manager/template-editor";
@@ -111,6 +114,9 @@ function ManagerClassOperations() {
 			<ScheduleEditor templates={templates} onChanged={refreshSharedData} />
 			<GeneratedClassList templates={templates} schedules={schedules} refreshKey={refreshKey} />
 			<PendingRegistrations refreshKey={refreshKey} />
+			<MembershipTypes refreshKey={refreshKey} onChanged={refreshSharedData} />
+			<MembershipGrants refreshKey={refreshKey} onChanged={refreshSharedData} />
+			<AttendanceSession refreshKey={refreshKey} />
 		</div>
 	);
 }
