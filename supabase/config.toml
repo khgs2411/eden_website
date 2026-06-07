@@ -392,6 +392,12 @@ verify_jwt = false
 [functions.memberships]
 verify_jwt = false
 
+[functions.templates]
+verify_jwt = false
+
+[functions.classes]
+verify_jwt = false
+
 [analytics]
 enabled = true
 port = 54327
