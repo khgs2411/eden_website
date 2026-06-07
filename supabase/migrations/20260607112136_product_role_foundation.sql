@@ -142,6 +142,7 @@ grant select on public.products to anon, authenticated;
 grant select on public.product_allowed_origins to authenticated;
 grant select, insert, update on public.profiles to authenticated;
 grant select on public.product_users to authenticated;
+grant select on public.platform_admins to authenticated;
 grant execute on function public.resolve_product_by_key_and_origin(text, text) to anon, authenticated;
 grant execute on function public.is_platform_admin(uuid) to authenticated;
 grant execute on function public.has_product_role(uuid, text[], uuid) to authenticated;
