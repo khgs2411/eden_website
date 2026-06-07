@@ -115,6 +115,34 @@ const resources = {
 					card16: { entry: "כרטיסייה\nגדולה", quantity: "16", price: "800₪", validity: "תקף לשלושה חודשים" },
 				},
 			},
+			productShell: {
+				eyebrow: "אזור מוצר",
+				title: "ניהול שיעורים",
+				productKey: "מוצר: {{productKey}}",
+				loading: "טוען הקשר מוצר...",
+				roles: {
+					anonymous: "אורחת",
+					user: "משתמשת",
+					manager: "מנהלת",
+				},
+				nav: {
+					user: "אזור משתמשת",
+					manager: "אזור מנהלת",
+				},
+				placeholders: {
+					user: "מסלול משתמשת מוכן לחיבור שיעורים",
+					manager: "מסלול מנהלת זמין לפי הרשאה",
+				},
+				auth: {
+					email: "אימייל",
+					password: "סיסמה",
+					signIn: "כניסה",
+					signingIn: "נכנסת...",
+					signOut: "יציאה",
+					signedIn: "מחובר/ת",
+					refresh: "רענון",
+				},
+			},
 			signup: {
 				eyebrow: "מתחילים לזוז",
 				title: "הרשמה",
@@ -239,6 +267,34 @@ const resources = {
 					card16: { entry: "Class card", quantity: "16", price: "₪800", validity: "3 months" },
 				},
 			},
+			productShell: {
+				eyebrow: "Product area",
+				title: "Class management",
+				productKey: "Product: {{productKey}}",
+				loading: "Loading product context...",
+				roles: {
+					anonymous: "Guest",
+					user: "User",
+					manager: "Manager",
+				},
+				nav: {
+					user: "User area",
+					manager: "Manager area",
+				},
+				placeholders: {
+					user: "User route ready for class workflows",
+					manager: "Manager route available by role",
+				},
+				auth: {
+					email: "Email",
+					password: "Password",
+					signIn: "Sign in",
+					signingIn: "Signing in...",
+					signOut: "Sign out",
+					signedIn: "Signed in",
+					refresh: "Refresh",
+				},
+			},
 			signup: {
 				eyebrow: "Start moving",
 				title: "Signup",
@@ -361,6 +417,34 @@ const resources = {
 					card8: { entry: "Абонемент", quantity: "8", price: "₪480", validity: "3 месяца" },
 					card12: { entry: "Абонемент", quantity: "12", price: "₪660", validity: "3 месяца" },
 					card16: { entry: "Абонемент", quantity: "16", price: "₪800", validity: "3 месяца" },
+				},
+			},
+			productShell: {
+				eyebrow: "Раздел продукта",
+				title: "Управление занятиями",
+				productKey: "Продукт: {{productKey}}",
+				loading: "Загрузка контекста продукта...",
+				roles: {
+					anonymous: "Гость",
+					user: "Пользователь",
+					manager: "Менеджер",
+				},
+				nav: {
+					user: "Раздел пользователя",
+					manager: "Раздел менеджера",
+				},
+				placeholders: {
+					user: "Маршрут пользователя готов для занятий",
+					manager: "Маршрут менеджера доступен по роли",
+				},
+				auth: {
+					email: "Email",
+					password: "Пароль",
+					signIn: "Войти",
+					signingIn: "Вход...",
+					signOut: "Выйти",
+					signedIn: "Вы вошли",
+					refresh: "Обновить",
 				},
 			},
 			signup: {
