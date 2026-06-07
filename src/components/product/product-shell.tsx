@@ -1,7 +1,13 @@
 import { CalendarDays, ShieldCheck, UserRound } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { AuthPanel } from "@/components/product/auth-panel";
+import { GeneratedClassList } from "@/components/product/manager/generated-class-list";
+import { callManagerApi, type ClassTemplate, type Schedule } from "@/components/product/manager/manager-api";
+import { PendingRegistrations } from "@/components/product/manager/pending-registrations";
+import { ScheduleEditor } from "@/components/product/manager/schedule-editor";
+import { TemplateEditor } from "@/components/product/manager/template-editor";
 import { ClassList } from "@/components/product/user/class-list";
 import { Button } from "@/components/ui/button";
 import { useProductContext } from "@/lib/product-context-state";
@@ -65,7 +71,46 @@ export function ProductShell() {
 						<AuthPanel />
 					</div>
 				</div>
+				{isManager ? <ManagerClassOperations /> : null}
 			</div>
 		</section>
+	);
+}
+
+function ManagerClassOperations() {
+	const { t } = useTranslation();
+	const [templates, setTemplates] = useState<ClassTemplate[]>([]);
+	const [schedules, setSchedules] = useState<Schedule[]>([]);
+	const [refreshKey, setRefreshKey] = useState(0);
+	const [message, setMessage] = useState<string | null>(null);
+
+	const refreshSharedData = useCallback(async () => {
+		try {
+			const [templateData, scheduleData] = await Promise.all([
+				callManagerApi<{ templates: ClassTemplate[] }>("templates", { action: "list" }),
+				callManagerApi<{ schedules: Schedule[] }>("schedules", { action: "list" }),
+			]);
+			setTemplates(templateData.templates);
+			setSchedules(scheduleData.schedules);
+			setRefreshKey((value) => value + 1);
+			setMessage(null);
+		} catch (error) {
+			setMessage(error instanceof Error ? error.message : t("managerOps.errors.generic"));
+		}
+	}, [t]);
+
+	useEffect(() => {
+		const timer = window.setTimeout(() => void refreshSharedData(), 0);
+		return () => window.clearTimeout(timer);
+	}, [refreshSharedData]);
+
+	return (
+		<div className="mt-6 grid gap-5">
+			{message ? <p className="rounded-md border border-border bg-card px-3 py-2 text-sm text-muted-foreground">{message}</p> : null}
+			<TemplateEditor onChanged={refreshSharedData} />
+			<ScheduleEditor templates={templates} onChanged={refreshSharedData} />
+			<GeneratedClassList templates={templates} schedules={schedules} refreshKey={refreshKey} />
+			<PendingRegistrations refreshKey={refreshKey} />
+		</div>
 	);
 }
