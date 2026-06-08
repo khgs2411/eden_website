@@ -1,6 +1,6 @@
 import { corsHeaders, handleCors } from "../_shared/cors.ts";
 import {
-  promoteProductManager,
+  promoteExistingProductUserToManager,
   readJsonBody,
   requireProductContext,
   requireProductManager,
@@ -27,7 +27,7 @@ Deno.serve(async (req) => {
 
     const ctx = await requireProductContext(req, body);
     await requireProductManager(ctx);
-    const productUser = await promoteProductManager(
+    const productUser = await promoteExistingProductUserToManager(
       ctx.product.id,
       body.user_id,
     );
