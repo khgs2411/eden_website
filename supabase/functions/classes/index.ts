@@ -238,6 +238,20 @@ async function addApprovedCounts(productId: string, classes: ListedClassRow[]): 
 	}));
 }
 
+async function hasActiveMembership(productId: string, userId: string): Promise<boolean> {
+	const supabase = getServiceClient();
+	const { data, error } = await supabase.rpc("get_active_membership_grant", {
+		p_product_id: productId,
+		p_user_id: userId,
+	});
+
+	if (error) {
+		throw new ApiError(500, "internal_error", "Could not verify membership visibility.");
+	}
+
+	return Boolean(data);
+}
+
 Deno.serve(async (req) => {
 	const preflight = handleCors(req);
 	if (preflight) {
@@ -279,15 +293,21 @@ Deno.serve(async (req) => {
 				throw new ApiError(403, "forbidden", "Active product user access is required.");
 			}
 
-			const { data, error } = await supabase
+			const activeMember = await hasActiveMembership(ctx.product.id, ctx.user.id);
+			let query = supabase
 				.from("classes")
 				.select("*")
 				.eq("product_id", ctx.product.id)
 				.eq("status", "published")
 				.eq("lifecycle_status", "created")
-				.in("visibility", ["public", "members_only"])
 				.gte("starts_at", new Date().toISOString())
 				.order("starts_at", { ascending: true });
+
+			query = activeMember
+				? query.in("visibility", ["public", "members_only"])
+				: query.eq("visibility", "public");
+
+			const { data, error } = await query;
 
 			if (error) {
 				throw new ApiError(500, "internal_error", "Could not list classes.");
