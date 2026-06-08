@@ -1,6 +1,6 @@
 {
 	"status": "ready_for_review",
-	"summary": "Appended the requested rework paragraph to the harness smoke note.",
-	"verification": ["rtk read docs/harness-smoke.md"],
-	"changed_files": ["docs/harness-smoke.md", ".symphony/ready_for_review.json"]
+	"summary": "Resolved the harness-smoke base conflict and added the requested rework paragraph.",
+	"verification": ["Checked docs/harness-smoke.md exists on disk."],
+	"changed_files": ["docs/harness-smoke.md"]
 }
