@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
-import { ProductShell } from "@/components/product/product-shell";
 import { HeroSection } from "@/components/sections/hero-section";
 import { LessonsSection } from "@/components/sections/lessons-section";
 import { PrivateLessonSection } from "@/components/sections/private-lesson-section";
@@ -10,7 +9,6 @@ import { VoguePricingView } from "@/components/sections/vogue-pricing-view";
 import type { Lesson } from "@/data/site";
 import { useTheme } from "@/hooks/use-theme";
 import { getDrawerSide, getPreferredLocale, type DrawerSide } from "@/lib/locale";
-import { ProductProvider } from "@/lib/product-context";
 
 function App() {
 	const { theme, toggleTheme } = useTheme();
@@ -62,24 +60,21 @@ function App() {
 	}
 
 	return (
-		<ProductProvider>
-			<main className="mx-auto min-h-screen max-w-[430px] overflow-hidden bg-background text-foreground shadow-[0_0_0_1px_var(--border),0_24px_80px_rgba(0,0,0,0.18)] sm:my-1 sm:rounded-[1.25rem] lg:max-w-[820px]">
-				<SiteHeader drawerSide={drawerSide} menuOpen={menuOpen} onMenuOpenChange={setMenuOpen} onThemeToggle={toggleTheme} theme={theme} />
-				{activeView === "voguePricing" ? (
-					<VoguePricingView onBack={() => setActiveView("home")} />
-				) : (
-					<>
-						<div className="bg-background">
-							<HeroSection theme={theme} />
-							<LessonsSection onLessonSelect={handleLessonSelect} />
-						</div>
-						<PrivateLessonSection />
-						<ProductShell />
-					</>
-				)}
-				<SiteFooter />
-			</main>
-		</ProductProvider>
+		<main className="mx-auto min-h-screen max-w-[430px] overflow-hidden bg-background text-foreground shadow-[0_0_0_1px_var(--border),0_24px_80px_rgba(0,0,0,0.18)] sm:my-1 sm:rounded-[1.25rem] lg:max-w-[820px]">
+			<SiteHeader drawerSide={drawerSide} menuOpen={menuOpen} onMenuOpenChange={setMenuOpen} onThemeToggle={toggleTheme} theme={theme} />
+			{activeView === "voguePricing" ? (
+				<VoguePricingView onBack={() => setActiveView("home")} />
+			) : (
+				<>
+					<div className="bg-background">
+						<HeroSection theme={theme} />
+						<LessonsSection onLessonSelect={handleLessonSelect} />
+					</div>
+					<PrivateLessonSection />
+				</>
+			)}
+			<SiteFooter />
+		</main>
 	);
 }
 
