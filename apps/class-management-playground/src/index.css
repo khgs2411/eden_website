@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+:root {
+	--background: oklch(0.99 0 0);
+	--foreground: oklch(0.16 0 0);
+	--muted-foreground: oklch(0.45 0 0);
+}
+
+body {
+	margin: 0;
+	min-width: 320px;
+	background: var(--background);
+}
+
+@theme inline {
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+	--color-muted-foreground: var(--muted-foreground);
+}
