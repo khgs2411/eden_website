@@ -73,6 +73,7 @@ type TemplateRow = {
 type ClassRow = {
 	id: string;
 	template_id: string | null;
+	schedule_id: string | null;
 	starts_at: string;
 	ends_at: string;
 	custom_data: Record<string, unknown>;
@@ -139,18 +140,6 @@ function requireIsoTimestamp(value: unknown, field: string): string {
 	return value;
 }
 
-function optionalIsoDate(value: unknown, field: string): string | null {
-	if (value === undefined || value === null) {
-		return null;
-	}
-
-	if (typeof value !== "string" || Number.isNaN(Date.parse(value))) {
-		throw new ApiError(400, "bad_request", `${field} must be a date string.`);
-	}
-
-	return value;
-}
-
 function optionalEnum<T extends string>(value: unknown, allowed: readonly T[], field: string): T | undefined {
 	if (value === undefined) {
 		return undefined;
@@ -205,6 +194,15 @@ function rejectRegistrationAction(action: string | undefined): void {
 
 	if (action.includes("register") || action.includes("registration")) {
 		throw new ApiError(400, "bad_request", "Users register for concrete classes through the registration API, not templates or class core CRUD.");
+	}
+}
+
+function rejectScheduleGeneratedSourceFields(body: ClassRequest): void {
+	const sourceFields = ["schedule_id", "generated_for_date", "source_timezone"] as const;
+	for (const field of sourceFields) {
+		if (body[field] !== undefined) {
+			throw new ApiError(400, "bad_request", `${field} is controlled by schedule generation.`);
+		}
 	}
 }
 
@@ -362,6 +360,7 @@ Deno.serve(async (req) => {
 		}
 
 		if (action === "create") {
+			rejectScheduleGeneratedSourceFields(body);
 			const templateId = optionalUuidText(body.template_id, "template_id");
 			const templateData = templateId ? await loadTemplate(ctx.product.id, templateId) : null;
 			const startsAt = requireIsoTimestamp(body.starts_at, "starts_at");
@@ -389,9 +388,6 @@ Deno.serve(async (req) => {
 				.insert({
 					product_id: ctx.product.id,
 					template_id: templateId,
-					schedule_id: optionalUuidText(body.schedule_id, "schedule_id"),
-					generated_for_date: optionalIsoDate(body.generated_for_date, "generated_for_date"),
-					source_timezone: optionalText(body.source_timezone, "source_timezone"),
 					name,
 					description: body.description !== undefined ? optionalText(body.description, "description") : template?.description,
 					category: body.category !== undefined ? optionalText(body.category, "category") : template?.category,
@@ -420,7 +416,7 @@ Deno.serve(async (req) => {
 			const classId = requireString(body.class_id ?? body.id, "class_id");
 			const { data: existing, error: existingError } = await supabase
 				.from("classes")
-				.select("id,template_id,starts_at,ends_at,custom_data")
+				.select("id,template_id,schedule_id,starts_at,ends_at,custom_data")
 				.eq("product_id", ctx.product.id)
 				.eq("id", classId)
 				.maybeSingle();
@@ -434,12 +430,14 @@ Deno.serve(async (req) => {
 			}
 
 			const existingClass = existing as ClassRow;
+			rejectScheduleGeneratedSourceFields(body);
+			if (body.template_id !== undefined && existingClass.schedule_id !== null) {
+				throw new ApiError(400, "bad_request", "template_id is controlled by schedule generation for generated classes.");
+			}
+
 			const update: Record<string, unknown> = {};
 
 			if (body.template_id !== undefined) update.template_id = optionalUuidText(body.template_id, "template_id");
-			if (body.schedule_id !== undefined) update.schedule_id = optionalUuidText(body.schedule_id, "schedule_id");
-			if (body.generated_for_date !== undefined) update.generated_for_date = optionalIsoDate(body.generated_for_date, "generated_for_date");
-			if (body.source_timezone !== undefined) update.source_timezone = optionalText(body.source_timezone, "source_timezone");
 			if (body.name !== undefined) update.name = requireString(body.name, "name");
 			if (body.description !== undefined) update.description = optionalText(body.description, "description");
 			if (body.category !== undefined) update.category = optionalText(body.category, "category");
