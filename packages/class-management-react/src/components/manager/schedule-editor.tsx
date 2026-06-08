@@ -156,11 +156,11 @@ export function ScheduleEditor({ templates, onChanged }: { templates: ClassTempl
 		}
 	}
 
-	async function changeStatus(schedule: Schedule, action: "pause" | "archive") {
+	async function changeStatus(schedule: Schedule, action: "activate" | "pause" | "archive") {
 		setLoading(true);
 		setMessage(null);
 		try {
-			await callManagerApi(client, "schedules", { action, schedule_id: schedule.id });
+			await callManagerApi(client, "schedules", action === "activate" ? { action: "update", schedule_id: schedule.id, status: "active" } : { action, schedule_id: schedule.id });
 			await loadSchedules();
 			onChanged();
 		} catch (error) {
@@ -263,6 +263,9 @@ export function ScheduleEditor({ templates, onChanged }: { templates: ClassTempl
 								</Button>
 								<Button type="button" variant="outline" size="sm" onClick={() => generate(schedule.id)} disabled={schedule.status !== "active"}>
 									{labels.generate}
+								</Button>
+								<Button type="button" variant="ghost" size="sm" onClick={() => changeStatus(schedule, "activate")} disabled={schedule.status === "active" || schedule.status === "archived"}>
+									{labels.activate}
 								</Button>
 								<Button type="button" variant="ghost" size="sm" onClick={() => changeStatus(schedule, "pause")} disabled={schedule.status === "paused"}>
 									{labels.pause}

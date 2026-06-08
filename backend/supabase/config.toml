@@ -383,6 +383,9 @@ deno_version = 2
 [functions.product-context]
 verify_jwt = false
 
+[functions.product-users]
+verify_jwt = false
+
 [functions.admin-promote-manager]
 verify_jwt = false
 

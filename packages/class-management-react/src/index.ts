@@ -14,6 +14,7 @@ export * from "./components/manager/generated-class-list";
 export * from "./components/manager/pending-registrations";
 export * from "./components/manager/membership-types";
 export * from "./components/manager/membership-grants";
+export * from "./components/manager/product-users-list";
 export * from "./components/manager/trial-attendee-form";
 export * from "./components/manager/attendance-session";
 export * from "./components/manager/manager-class-dashboard";

@@ -1,13 +1,15 @@
 import { useState } from "react";
-import { ClassManagementUiProvider, ManagerClassDashboard, ManagerOperationsDashboard, ProductProvider, UserDashboard, useProductContext } from "@eden/class-management-react";
+import { ClassManagementUiProvider, ManagerClassDashboard, ManagerOperationsDashboard, ProductProvider, ProductUsersList, UserDashboard, useProductContext } from "@eden/class-management-react";
 import { classManagementClient } from "./class-management-client";
 
-type PlaygroundPage = "classes" | "templates" | "schedules";
+type PlaygroundPage = "classes" | "templates" | "schedules" | "users" | "memberships";
 
 const pages = [
 	{ id: "classes", label: "Classes" },
 	{ id: "templates", label: "Templates" },
 	{ id: "schedules", label: "Schedules" },
+	{ id: "users", label: "Users" },
+	{ id: "memberships", label: "Memberships" },
 ] satisfies { id: PlaygroundPage; label: string }[];
 
 export function App() {
@@ -55,9 +57,10 @@ function PlaygroundDashboard({ page }: { page: PlaygroundPage }) {
 			{page === "classes" ? <UserDashboard /> : null}
 			{canManage && page === "templates" ? <ManagerClassDashboard view="templates" /> : null}
 			{canManage && page === "schedules" ? <ManagerClassDashboard view="schedules" /> : null}
+			{canManage && page === "users" ? <ProductUsersList /> : null}
 			{canManage && page === "classes" ? <ManagerClassDashboard view="classes" /> : null}
 			{canManage && page === "classes" ? <ManagerOperationsDashboard view="attendance" /> : null}
-			{canManage && page === "templates" ? <ManagerOperationsDashboard view="memberships" /> : null}
+			{canManage && page === "memberships" ? <ManagerOperationsDashboard view="memberships" /> : null}
 		</div>
 	);
 }

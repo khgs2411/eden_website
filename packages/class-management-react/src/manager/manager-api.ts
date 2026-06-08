@@ -1,6 +1,6 @@
 import { invokeProductFunction } from "../client/product-api";
 import type { ClassManagementClient } from "../client/supabase";
-import type { MembershipRequirement, RegistrationPolicy } from "../types";
+import type { MembershipRequirement, ProductRole, RegistrationPolicy } from "../types";
 
 export type CustomFieldType = "text" | "long text" | "number" | "boolean" | "select" | "multi-select" | "date" | "URL";
 export type Visibility = "public" | "hidden" | "members_only";
@@ -142,6 +142,17 @@ export type ClassParticipant = {
 	trial_name: string | null;
 	trial_contact: string | null;
 	attendance_status: AttendanceStatus;
+	created_at: string;
+	updated_at: string;
+};
+
+export type ProductUserListItem = {
+	user_id: string;
+	email: string | null;
+	display_name: string | null;
+	role: ProductRole;
+	status: "active" | "inactive";
+	scope: "product" | "platform";
 	created_at: string;
 	updated_at: string;
 };
