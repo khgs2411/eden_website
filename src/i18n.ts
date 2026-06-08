@@ -115,6 +115,23 @@ const resources = {
 					card16: { entry: "כרטיסייה\nגדולה", quantity: "16", price: "800₪", validity: "תקף לשלושה חודשים" },
 				},
 			},
+			classManagement: {
+				eyebrow: "הרשמה וניהול",
+				title: "שיעורים פתוחים",
+				body: "כאן אפשר לראות שיעורים זמינים, להתחבר ולהגיש בקשת הרשמה. אזור ניהול מלא יוצג רק למנהלות פעילות.",
+				user: {
+					loading: "טוען שיעורים...",
+					productKey: "מוצר: {{productKey}}",
+					anonymousRole: "אפשר לראות שיעורים גם בלי להתחבר. התחברות נדרשת להרשמה.",
+					activeRole: "גישה פעילה להרשמה",
+					inactiveRole: "הגישה שלך לא פעילה כרגע.",
+					errorPrefix: "שגיאת מערכת",
+				},
+				manager: {
+					eyebrow: "אזור מנהלת",
+					title: "ניהול שיעורים וחברות",
+				},
+			},
 			productShell: {
 				eyebrow: "אזור מוצר",
 				title: "ניהול שיעורים",
@@ -436,6 +453,23 @@ const resources = {
 					card16: { entry: "Class card", quantity: "16", price: "₪800", validity: "3 months" },
 				},
 			},
+			classManagement: {
+				eyebrow: "Registration and management",
+				title: "Open classes",
+				body: "View available classes, sign in, and submit a registration request. Full manager tools appear only for active managers.",
+				user: {
+					loading: "Loading classes...",
+					productKey: "Product: {{productKey}}",
+					anonymousRole: "You can view classes before signing in. Sign in to register.",
+					activeRole: "Active registration access",
+					inactiveRole: "Your access is currently inactive.",
+					errorPrefix: "System error",
+				},
+				manager: {
+					eyebrow: "Manager area",
+					title: "Class and membership operations",
+				},
+			},
 			productShell: {
 				eyebrow: "Product area",
 				title: "Class management",
@@ -755,6 +789,23 @@ const resources = {
 					card8: { entry: "Абонемент", quantity: "8", price: "₪480", validity: "3 месяца" },
 					card12: { entry: "Абонемент", quantity: "12", price: "₪660", validity: "3 месяца" },
 					card16: { entry: "Абонемент", quantity: "16", price: "₪800", validity: "3 месяца" },
+				},
+			},
+			classManagement: {
+				eyebrow: "Запись и управление",
+				title: "Открытые занятия",
+				body: "Здесь можно посмотреть доступные занятия, войти и отправить заявку на запись. Полные инструменты менеджера видны только активным менеджерам.",
+				user: {
+					loading: "Загрузка занятий...",
+					productKey: "Продукт: {{productKey}}",
+					anonymousRole: "Занятия можно посмотреть без входа. Для записи нужно войти.",
+					activeRole: "Активный доступ к записи",
+					inactiveRole: "Ваш доступ сейчас неактивен.",
+					errorPrefix: "Системная ошибка",
+				},
+				manager: {
+					eyebrow: "Раздел менеджера",
+					title: "Управление занятиями и абонементами",
 				},
 			},
 			productShell: {
