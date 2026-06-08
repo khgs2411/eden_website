@@ -15,7 +15,8 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@eden/class-management-react": ["./packages/class-management-react/src/index.ts"]
     },
 
     /* Linting */

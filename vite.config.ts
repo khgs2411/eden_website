@@ -10,6 +10,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
+      '@eden/class-management-react': path.resolve(__dirname, './packages/class-management-react/src/index.ts'),
     },
   },
 })
