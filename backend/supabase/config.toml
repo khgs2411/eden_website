@@ -398,7 +398,19 @@ verify_jwt = false
 [functions.classes]
 verify_jwt = false
 
+[functions.register-class]
+verify_jwt = false
+
 [functions.schedules]
+verify_jwt = false
+
+[functions.schedule-generate]
+verify_jwt = false
+
+[functions.manage-registrations]
+verify_jwt = false
+
+[functions.attendance]
 verify_jwt = false
 
 [analytics]

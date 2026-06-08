@@ -7,14 +7,16 @@ Mobile-first React SPA for a dance brand landing page and local playground for t
 ```bash
 npm install
 cp .env.example .env.local
-rtk supabase status
-rtk supabase start
-supabase db reset
-supabase functions serve
+cd backend
+npm run supabase:status
+npm run supabase:start
+npm run supabase:migrations
+npm run supabase:db-lint
+cd ..
 npm run dev
 ```
 
-Use `rtk supabase start` only when `rtk supabase status` shows the local stack is stopped. After the stack is running, copy the local API URL and publishable key into `.env.local`:
+The Supabase backend lives in `backend/`. Run backend commands from that folder. Use `npm run supabase:start` only when `npm run supabase:status` shows the local stack is stopped. After the stack is running, copy the local API URL and publishable key into `.env.local`:
 
 ```bash
 VITE_SUPABASE_URL=http://127.0.0.1:54321
@@ -46,15 +48,16 @@ The final local smoke checklist is documented in `docs/2026-06-06-class-manageme
 Minimum regression checks:
 
 ```bash
-rtk supabase status
-supabase db reset
-rtk supabase migration list --local
-supabase db lint
+cd backend
+npm run supabase:status
+npm run supabase:migrations
+npm run supabase:db-lint
+cd ..
 npm run lint
 npm run build
 ```
 
-Run `supabase functions serve` for local Edge Function validation before exercising the product UI.
+Run `npm run supabase:functions` from `backend/` for local Edge Function validation before exercising the product UI. `npm run supabase:reset` from `backend/` runs `supabase db reset` and is destructive to local data.
 
 ## Legacy Landing Page Data
 
