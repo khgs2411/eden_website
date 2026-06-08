@@ -123,7 +123,7 @@ Update documentation and handoff notes so the extracted product can be operated 
   - Expected: no Consumer Website imports from backend source files.
 - [ ] Run: `rtk rg -n "@/components/product|@/lib/product" src`
   - Expected: no old embedded product imports.
-- [ ] Run: `rtk rg -n "TODO|TBD|fill in|placeholder" README.md backend packages/class-management-react apps/class-management-playground docs/2026-06-08-class-management-extraction`
+- [ ] Run an unresolved-placeholder scan across `README.md`, `backend`, `packages/class-management-react`, `apps/class-management-playground`, and `docs/2026-06-08-class-management-extraction`.
   - Expected: no unresolved planning placeholders.
 
 ### Task 8: Final verification
