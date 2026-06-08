@@ -20,7 +20,9 @@
 		"react-dom": "^19.2.6"
 	},
 	"dependencies": {
-		"lucide-react": "^1.16.0"
+		"clsx": "^2.1.1",
+		"lucide-react": "^1.16.0",
+		"tailwind-merge": "^3.6.0"
 	},
 	"devDependencies": {}
 }
