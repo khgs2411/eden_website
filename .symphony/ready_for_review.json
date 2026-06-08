@@ -1,6 +1,6 @@
 {
 	"status": "ready_for_review",
-	"summary": "Created docs/harness-smoke.md for the isolated harness smoke test.",
+	"summary": "Appended the requested rework paragraph to the harness smoke note.",
 	"verification": ["rtk read docs/harness-smoke.md"],
-	"changed_files": ["docs/harness-smoke.md"]
+	"changed_files": ["docs/harness-smoke.md", ".symphony/ready_for_review.json"]
 }
