@@ -278,7 +278,7 @@ export async function requirePlatformAdmin(
   }
 }
 
-export async function promoteProductManager(
+export async function assignProductManagerByPlatformAdmin(
   productId: string,
   userId: string,
 ): Promise<ProductUserRow> {
@@ -301,7 +301,40 @@ export async function promoteProductManager(
     throw new ApiError(
       500,
       "internal_error",
+      "Could not assign product manager.",
+    );
+  }
+
+  return data as ProductUserRow;
+}
+
+export async function promoteExistingProductUserToManager(
+  productId: string,
+  userId: string,
+): Promise<ProductUserRow> {
+  const supabase = getServiceClient();
+  const { data, error } = await supabase
+    .from("product_users")
+    .update({ role: "manager", status: "active" })
+    .eq("product_id", productId)
+    .eq("user_id", userId)
+    .eq("status", "active")
+    .select("role,status")
+    .maybeSingle();
+
+  if (error) {
+    throw new ApiError(
+      500,
+      "internal_error",
       "Could not promote product manager.",
+    );
+  }
+
+  if (!data) {
+    throw new ApiError(
+      404,
+      "not_found",
+      "Target user is not an active product user.",
     );
   }
 
