@@ -9,7 +9,10 @@
 		"skipLibCheck": true,
 		"verbatimModuleSyntax": true,
 		"noEmit": true,
-		"types": ["vite/client"]
+		"types": ["vite/client"],
+		"paths": {
+			"@eden/class-management-react": ["../../packages/class-management-react/src/index.ts"]
+		}
 	},
 	"include": ["src", "vite.config.ts"]
 }
