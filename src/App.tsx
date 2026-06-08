@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
-import { ClassManagementSection } from "@/components/sections/class-management-section";
 import { HeroSection } from "@/components/sections/hero-section";
 import { LessonsSection } from "@/components/sections/lessons-section";
 import { PrivateLessonSection } from "@/components/sections/private-lesson-section";
@@ -71,7 +70,6 @@ function App() {
 						<HeroSection theme={theme} />
 						<LessonsSection onLessonSelect={handleLessonSelect} />
 					</div>
-					<ClassManagementSection />
 					<PrivateLessonSection />
 				</>
 			)}
