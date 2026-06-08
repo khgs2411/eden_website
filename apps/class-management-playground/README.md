@@ -37,6 +37,7 @@ Run this flow against the local backend and classify each item as `pass`, `block
 1. Start the local Supabase stack from `backend/` and copy the anon/publishable key into `.env.local`.
 2. Start the playground with `npm run dev:playground`.
 3. Signed out: load the app and confirm public classes load, or a clear empty/error state is shown.
+   - Expected contract: `product-context` returns the `eden` product with `product_user: null` before login. Supabase may send the anon/publishable key as an `Authorization` bearer on this request; that bearer is public configuration and must be treated as anonymous, not as an invalid user session.
 4. Sign in as `eden@manager.local`; confirm product context loads for product `eden`, role `manager`, status `active`.
 5. Sign out; confirm the session clears without refresh-token errors.
 6. Sign in as `admin@admin.local`; confirm auth succeeds and product context either reflects global access or returns a clear backend response.
@@ -53,3 +54,4 @@ Run this flow against the local backend and classify each item as `pass`, `block
 
 - Static package/playground builds are the minimum verification for this chunk when the local Supabase CLI is unavailable.
 - Backend and manual browser smoke checks require the Supabase CLI and a running local stack. If those tools are missing in a worker environment, record the gap as `verification_environment` rather than changing product behavior speculatively.
+- Signed-out playground load is expected to pass the public product-context and public class-listing path without login. Auth-required manager/user mutation paths should still reject anonymous requests.

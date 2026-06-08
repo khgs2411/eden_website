@@ -54,6 +54,12 @@ function getBearerToken(req: Request): string | null {
   return match?.[1] ?? null;
 }
 
+function isPublicApiKeyToken(token: string): boolean {
+  return token === Deno.env.get("SUPABASE_ANON_KEY") ||
+    token === Deno.env.get("SUPABASE_PUBLISHABLE_KEY") ||
+    token.startsWith("sb_publishable_");
+}
+
 export async function readJsonBody<T extends Record<string, unknown>>(
   req: Request,
 ): Promise<T> {
@@ -125,6 +131,10 @@ async function loadUser(
         "Authorization bearer token is required.",
       );
     }
+    return null;
+  }
+
+  if (!required && isPublicApiKeyToken(token)) {
     return null;
   }
 
