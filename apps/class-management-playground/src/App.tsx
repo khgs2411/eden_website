@@ -1,4 +1,4 @@
-import { ClassManagementUiProvider, ManagerClassDashboard, ProductProvider, UserDashboard, useProductContext } from "@eden/class-management-react";
+import { ClassManagementUiProvider, ManagerClassDashboard, ManagerOperationsDashboard, ProductProvider, UserDashboard, useProductContext } from "@eden/class-management-react";
 import { classManagementClient } from "./class-management-client";
 
 export function App() {
@@ -23,7 +23,12 @@ function PlaygroundDashboard() {
 	return (
 		<>
 			<UserDashboard />
-			{isActiveManager ? <ManagerClassDashboard /> : null}
+			{isActiveManager ? (
+				<>
+					<ManagerClassDashboard />
+					<ManagerOperationsDashboard />
+				</>
+			) : null}
 		</>
 	);
 }

@@ -12,7 +12,12 @@ export * from "./components/manager/template-editor";
 export * from "./components/manager/schedule-editor";
 export * from "./components/manager/generated-class-list";
 export * from "./components/manager/pending-registrations";
+export * from "./components/manager/membership-types";
+export * from "./components/manager/membership-grants";
+export * from "./components/manager/trial-attendee-form";
+export * from "./components/manager/attendance-session";
 export * from "./components/manager/manager-class-dashboard";
+export * from "./components/manager/manager-operations-dashboard";
 export * from "./ui/classnames";
 export * from "./ui/ui-adapter";
 export type {
