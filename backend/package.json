@@ -1,0 +1,13 @@
+{
+	"name": "class-management-supabase-project",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"supabase:status": "supabase status",
+		"supabase:start": "supabase start",
+		"supabase:reset": "supabase db reset",
+		"supabase:migrations": "supabase migration list --local",
+		"supabase:db-lint": "supabase db lint",
+		"supabase:functions": "supabase functions serve"
+	}
+}
