@@ -15,7 +15,7 @@ import type {
 	ProductSummary,
 	ProductUserStatus,
 	RegistrationPolicy,
-	RegistrationStatus,
+	RegistrationStatusValue as RegistrationStatus,
 	UserClassesResponse,
 	UserClassSummary,
 	ProductUserSummary,
