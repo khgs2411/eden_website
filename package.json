@@ -3,11 +3,18 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "workspaces": [
+    "packages/class-management-react",
+    "apps/class-management-playground"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build:package": "npm run build -w packages/class-management-react",
+    "build:playground": "npm run build -w apps/class-management-playground",
+    "dev:playground": "npm run dev -w apps/class-management-playground"
   },
   "dependencies": {
     "@fontsource/assistant": "^5.2.9",
