@@ -4,7 +4,7 @@ export type ApiResponse<T> =
 	| { data: T; error: null }
 	| { data: null; error: { code: ApiErrorCode; message: string } };
 
-export type ProductRole = "manager" | "user";
+export type ProductRole = "admin" | "manager" | "user";
 export type ProductUserStatus = "active" | "inactive";
 
 export type ProductSummary = {

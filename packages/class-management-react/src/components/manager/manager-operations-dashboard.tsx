@@ -4,7 +4,9 @@ import { AttendanceSession } from "./attendance-session";
 import { MembershipGrants } from "./membership-grants";
 import { MembershipTypes } from "./membership-types";
 
-export function ManagerOperationsDashboard({ refreshKey = 0 }: { refreshKey?: number }) {
+export type ManagerOperationsDashboardView = "all" | "memberships" | "attendance";
+
+export function ManagerOperationsDashboard({ refreshKey = 0, view = "all" }: { refreshKey?: number; view?: ManagerOperationsDashboardView }) {
 	const [membershipRefreshKey, setMembershipRefreshKey] = useState(0);
 
 	function refreshMembershipViews() {
@@ -13,9 +15,9 @@ export function ManagerOperationsDashboard({ refreshKey = 0 }: { refreshKey?: nu
 
 	return (
 		<section className="mt-6 grid gap-5">
-			<MembershipTypes refreshKey={membershipRefreshKey} onChanged={refreshMembershipViews} />
-			<MembershipGrants refreshKey={membershipRefreshKey} onChanged={refreshMembershipViews} />
-			<AttendanceSession refreshKey={refreshKey} />
+			{view === "all" || view === "memberships" ? <MembershipTypes refreshKey={membershipRefreshKey} onChanged={refreshMembershipViews} /> : null}
+			{view === "all" || view === "memberships" ? <MembershipGrants refreshKey={membershipRefreshKey} onChanged={refreshMembershipViews} /> : null}
+			{view === "all" || view === "attendance" ? <AttendanceSession refreshKey={refreshKey} /> : null}
 		</section>
 	);
 }

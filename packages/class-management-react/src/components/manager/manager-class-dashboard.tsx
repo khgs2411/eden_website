@@ -7,7 +7,9 @@ import { PendingRegistrations } from "./pending-registrations";
 import { ScheduleEditor } from "./schedule-editor";
 import { TemplateEditor } from "./template-editor";
 
-export function ManagerClassDashboard() {
+export type ManagerClassDashboardView = "all" | "templates" | "schedules" | "classes";
+
+export function ManagerClassDashboard({ view = "all" }: { view?: ManagerClassDashboardView } = {}) {
 	const client = useClassManagementClient();
 	const [templates, setTemplates] = useState<ClassTemplate[]>([]);
 	const [schedules, setSchedules] = useState<Schedule[]>([]);
@@ -37,10 +39,10 @@ export function ManagerClassDashboard() {
 	return (
 		<section className="mt-6 grid gap-5">
 			{message ? <p className="rounded-md border border-border bg-card px-3 py-2 text-sm text-muted-foreground">{message}</p> : null}
-			<TemplateEditor onChanged={refreshSharedData} />
-			<ScheduleEditor templates={templates} onChanged={refreshSharedData} />
-			<GeneratedClassList templates={templates} schedules={schedules} refreshKey={refreshKey} />
-			<PendingRegistrations refreshKey={refreshKey} />
+			{view === "all" || view === "templates" ? <TemplateEditor onChanged={refreshSharedData} /> : null}
+			{view === "all" || view === "schedules" ? <ScheduleEditor templates={templates} onChanged={refreshSharedData} /> : null}
+			{view === "all" || view === "classes" ? <GeneratedClassList templates={templates} schedules={schedules} refreshKey={refreshKey} /> : null}
+			{view === "all" || view === "classes" ? <PendingRegistrations refreshKey={refreshKey} /> : null}
 		</section>
 	);
 }

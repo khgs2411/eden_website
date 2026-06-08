@@ -16,11 +16,13 @@ export async function invokeProductFunction<T>(
 		};
 	}
 
+	const nextBody = { ...body };
+	if (!("product_key" in nextBody) && client.productKey) {
+		nextBody.product_key = client.productKey;
+	}
+
 	const { data, error } = await client.supabase.functions.invoke<ApiResponse<T>>(functionName, {
-		body: {
-			...body,
-			product_key: body.product_key ?? client.productKey,
-		},
+		body: nextBody,
 	});
 
 	if (error) {

@@ -1,8 +1,15 @@
 @import "tailwindcss";
+@source "../../../packages/class-management-react/src";
 
 :root {
 	--background: oklch(0.99 0 0);
 	--foreground: oklch(0.16 0 0);
+	--card: oklch(1 0 0);
+	--card-foreground: oklch(0.16 0 0);
+	--primary: oklch(0.2 0 0);
+	--primary-foreground: oklch(0.99 0 0);
+	--border: oklch(0.88 0 0);
+	--input: oklch(0.82 0 0);
 	--muted-foreground: oklch(0.45 0 0);
 }
 
@@ -15,5 +22,12 @@ body {
 @theme inline {
 	--color-background: var(--background);
 	--color-foreground: var(--foreground);
+	--color-card: var(--card);
+	--color-card-foreground: var(--card-foreground);
+	--color-primary: var(--primary);
+	--color-primary-foreground: var(--primary-foreground);
+	--color-border: var(--border);
+	--color-input: var(--input);
 	--color-muted-foreground: var(--muted-foreground);
+	--font-display: ui-sans-serif, system-ui, sans-serif;
 }

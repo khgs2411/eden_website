@@ -26,7 +26,7 @@ export function ProductProvider({ children, client }: ProductProviderProps) {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 
-	const productKey = client?.productKey ?? "";
+	const productKey = product?.product_key ?? client?.productKey ?? "";
 
 	const refreshProductContext = useCallback(async () => {
 		setLoading(true);

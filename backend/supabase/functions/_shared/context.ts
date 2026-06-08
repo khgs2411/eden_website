@@ -5,7 +5,7 @@ import {
 import { getRequestOrigin } from "./cors.ts";
 import { ApiError } from "./errors.ts";
 
-type ProductRole = "manager" | "user";
+type ProductRole = "admin" | "manager" | "user";
 type ProductUserStatus = "active" | "inactive";
 
 export type ProductRequestContext = {
@@ -79,17 +79,20 @@ async function resolveProduct(
   productKey: string | undefined,
   origin: string,
 ) {
-  if (!productKey || typeof productKey !== "string") {
-    throw new ApiError(400, "bad_request", "product_key is required.");
-  }
+  const rpcName = productKey && typeof productKey === "string"
+    ? "resolve_product_by_key_and_origin"
+    : "resolve_product_by_origin";
 
-  const { data, error } = await supabase.rpc(
-    "resolve_product_by_key_and_origin",
-    {
+  const rpcArgs = productKey && typeof productKey === "string"
+    ? {
       p_product_key: productKey,
       p_origin: origin,
-    },
-  );
+    }
+    : {
+      p_origin: origin,
+    };
+
+  const { data, error } = await supabase.rpc(rpcName, rpcArgs);
 
   if (error) {
     throw new ApiError(
@@ -105,7 +108,7 @@ async function resolveProduct(
     throw new ApiError(
       403,
       "forbidden",
-      "Product key is not allowed for this origin.",
+      "Product is not allowed for this origin.",
     );
   }
 
@@ -173,6 +176,27 @@ async function loadProductUser(
   return (data ?? null) as ProductUserRow | null;
 }
 
+async function loadPlatformAdmin(
+  supabase: SupabaseClient,
+  userId: string,
+): Promise<boolean> {
+  const { data, error } = await supabase
+    .from("platform_admins")
+    .select("user_id")
+    .eq("user_id", userId)
+    .maybeSingle();
+
+  if (error) {
+    throw new ApiError(
+      500,
+      "internal_error",
+      "Could not verify platform admin.",
+    );
+  }
+
+  return Boolean(data);
+}
+
 export async function ensureProductUser(
   ctx: AnonymousProductContext,
 ): Promise<ProductUserRow> {
@@ -231,8 +255,11 @@ export async function resolveAnonymousProductContext(
   const supabase = getServiceClient();
   const product = await resolveProduct(supabase, body.product_key, origin);
   const user = await loadUser(supabase, req, false);
+  const isPlatformAdmin = user ? await loadPlatformAdmin(supabase, user.id) : false;
   const productUser = user
-    ? await loadProductUser(supabase, product.id, user.id)
+    ? isPlatformAdmin
+      ? { role: "admin" as const, status: "active" as const }
+      : await loadProductUser(supabase, product.id, user.id)
     : null;
 
   return { req, origin, product, user, productUser };
@@ -259,7 +286,8 @@ export async function requireProductManager(
   ctx: ProductRequestContext,
 ): Promise<void> {
   if (
-    ctx.productUser?.role !== "manager" || ctx.productUser.status !== "active"
+    ctx.productUser?.status !== "active" ||
+    (ctx.productUser.role !== "manager" && ctx.productUser.role !== "admin")
   ) {
     throw new ApiError(403, "forbidden", "Product manager role is required.");
   }
@@ -269,21 +297,9 @@ export async function requirePlatformAdmin(
   ctx: ProductRequestContext,
 ): Promise<void> {
   const supabase = getServiceClient();
-  const { data, error } = await supabase
-    .from("platform_admins")
-    .select("user_id")
-    .eq("user_id", ctx.user.id)
-    .maybeSingle();
+  const isPlatformAdmin = await loadPlatformAdmin(supabase, ctx.user.id);
 
-  if (error) {
-    throw new ApiError(
-      500,
-      "internal_error",
-      "Could not verify platform admin.",
-    );
-  }
-
-  if (!data) {
+  if (!isPlatformAdmin) {
     throw new ApiError(403, "forbidden", "Platform admin role is required.");
   }
 }

@@ -19,6 +19,10 @@ type GenerationCounts = {
 	skipped_count: number;
 };
 
+type ScheduleStatusRow = {
+	status: string;
+};
+
 function optionalScheduleId(value: unknown): string | null {
 	if (value === undefined || value === null) {
 		return null;
@@ -46,6 +50,28 @@ Deno.serve(async (req) => {
 		await requireProductManager(ctx);
 		const scheduleId = optionalScheduleId(body.schedule_id);
 		const supabase = getServiceClient();
+
+		if (scheduleId) {
+			const { data: schedule, error: scheduleError } = await supabase
+				.from("schedules")
+				.select("status")
+				.eq("product_id", ctx.product.id)
+				.eq("id", scheduleId)
+				.maybeSingle();
+
+			if (scheduleError) {
+				throw new ApiError(500, "internal_error", "Could not load schedule.");
+			}
+
+			if (!schedule) {
+				throw new ApiError(404, "not_found", "Schedule was not found.");
+			}
+
+			if ((schedule as ScheduleStatusRow).status !== "active") {
+				throw new ApiError(409, "conflict", "Activate the schedule before generating classes.");
+			}
+		}
+
 		const { data, error } = await supabase.rpc("generate_schedule_classes", {
 			p_product_id: ctx.product.id,
 			p_schedule_id: scheduleId,

@@ -53,6 +53,7 @@ const labels = {
 	archive: "Archive",
 	edit: "Edit",
 	saveBeforePreview: "Save the schedule before previewing occurrences.",
+	activateBeforeGenerate: "Activate the schedule before generating classes.",
 	generation: (result: ScheduleGenerationResult) => `Created ${result.created_count}, existing ${result.existing_count}, skipped ${result.skipped_count}.`,
 	skipped: "skipped",
 	archiveChoice: "Archive keeps existing generated classes untouched.",
@@ -170,6 +171,13 @@ export function ScheduleEditor({ templates, onChanged }: { templates: ClassTempl
 	}
 
 	async function generate(scheduleId?: string) {
+		const schedule = scheduleId ? schedules.find((item) => item.id === scheduleId) : null;
+		if (scheduleId && schedule?.status !== "active") {
+			setGeneration(null);
+			setMessage(labels.activateBeforeGenerate);
+			return;
+		}
+
 		setLoading(true);
 		setMessage(null);
 		try {
@@ -226,7 +234,7 @@ export function ScheduleEditor({ templates, onChanged }: { templates: ClassTempl
 					<Eye className="size-4" />
 					{labels.preview}
 				</Button>
-				<Button type="button" variant="outline" onClick={() => generate(form.id ?? undefined)} disabled={loading}>
+				<Button type="button" variant="outline" onClick={() => generate(form.id ?? undefined)} disabled={loading || !form.id || schedules.find((schedule) => schedule.id === form.id)?.status !== "active"}>
 					<RefreshCw className="size-4" />
 					{labels.generate}
 				</Button>
@@ -253,7 +261,7 @@ export function ScheduleEditor({ templates, onChanged }: { templates: ClassTempl
 								<Button type="button" variant="outline" size="sm" onClick={() => editSchedule(schedule)}>
 									{labels.edit}
 								</Button>
-								<Button type="button" variant="outline" size="sm" onClick={() => generate(schedule.id)}>
+								<Button type="button" variant="outline" size="sm" onClick={() => generate(schedule.id)} disabled={schedule.status !== "active"}>
 									{labels.generate}
 								</Button>
 								<Button type="button" variant="ghost" size="sm" onClick={() => changeStatus(schedule, "pause")} disabled={schedule.status === "paused"}>

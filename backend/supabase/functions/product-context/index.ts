@@ -18,7 +18,11 @@ Deno.serve(async (req) => {
   try {
     const body = await readJsonBody<{ product_key?: string }>(req);
     const ctx = await resolveAnonymousProductContext(req, body);
-    const productUser = ctx.user ? await ensureProductUser(ctx) : null;
+    const productUser = ctx.user
+      ? ctx.productUser?.role === "admin"
+        ? ctx.productUser
+        : await ensureProductUser(ctx)
+      : null;
 
     return jsonOk(
       {

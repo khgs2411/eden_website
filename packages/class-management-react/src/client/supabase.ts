@@ -3,13 +3,13 @@ import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 export type ClassManagementClientConfig = {
 	supabaseUrl?: string | null;
 	supabasePublishableKey?: string | null;
-	productKey: string;
+	productKey?: string | null;
 	authStorageKey?: string;
 };
 
 export type ClassManagementClient = {
 	supabase: SupabaseClient;
-	productKey: string;
+	productKey?: string;
 	authStorageKey: string;
 };
 
@@ -24,13 +24,13 @@ export function createClassManagementClient(config: ClassManagementClientConfig)
 
 	const supabase = createClient(config.supabaseUrl, config.supabasePublishableKey, {
 		auth: {
-			storageKey: config.authStorageKey ?? `class-management-${config.productKey}-auth`,
+			storageKey: config.authStorageKey ?? `class-management-${config.productKey ?? "domain"}-auth`,
 		},
 	});
 
 	return {
 		supabase,
-		productKey: config.productKey,
-		authStorageKey: config.authStorageKey ?? `class-management-${config.productKey}-auth`,
+		productKey: config.productKey ?? undefined,
+		authStorageKey: config.authStorageKey ?? `class-management-${config.productKey ?? "domain"}-auth`,
 	};
 }
