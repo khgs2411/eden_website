@@ -16,6 +16,8 @@ npm run supabase:functions
 
 `npm run supabase:reset` runs `supabase db reset` and is destructive to local data.
 
+Smoke-check details live in `SMOKE.md`.
+
 ## Seeded Local Users
 
 - `admin@admin.local` / `password`
