@@ -5,23 +5,23 @@ Scope: Current embedded class-management implementation before extraction.
 
 | Check | Command | Expected | Actual |
 | --- | --- | --- | --- |
-| Git state | `rtk git status --short --branch` | branch is `feature/classes`; no unrelated implementation edits are required for smoke | `* eden_website/wave-a-class-management-extraction-01-baseline-product-smoke-rMq6`; clean working tree before this smoke record was added. |
-| Frontend lint | `rtk npm run lint` | exits 0 | Initial run failed because `node_modules` was absent and npm fell back to global ESLint 6.4.0. After `rtk npm ci`, exits 0. |
-| Frontend build | `rtk npm run build` | exits 0; Vite chunk-size warning is acceptable | Initial run failed because `tsc` was absent. After `rtk npm ci`, exits 0. No chunk-size warning. |
-| Supabase status | `rtk supabase status` | local stack running or clear stopped-state action | `rtk supabase status` failed because `supabase` is not on `PATH`. `rtk npx supabase status` reached Supabase CLI 2.105.0 but failed: cannot connect to Docker daemon at `unix:///var/run/docker.sock`. |
-| Migration state | `rtk supabase migration list --local` | local migrations include class-management migrations through `20260608030000` | `rtk supabase migration list --local` failed because `supabase` is not on `PATH`. `rtk npx supabase migration list --local` failed because local Postgres at `127.0.0.1:54322` refused connection. Not completed. |
-| DB lint | `rtk supabase db lint` | exits 0; known extra warnings may be recorded | `rtk supabase db lint` failed because `supabase` is not on `PATH`. `rtk npx supabase db lint` failed because local Postgres at `127.0.0.1:54322` refused connection. Not completed. |
-| Admin auth login | password token request for `admin@admin.local` | HTTP 200 | Not completed; local Supabase stack is unavailable because Docker daemon is not reachable. |
-| Manager auth login | password token request for `eden@manager.local` | HTTP 200 | Not completed; local Supabase stack is unavailable because Docker daemon is not reachable. |
-| Product context | `product-context` with manager JWT | HTTP 200 with product `eden` and role `manager` | Not completed; manager login/JWT could not be obtained because local Supabase stack is unavailable. |
-| Public classes | `classes` action `list_public` | HTTP 200 with JSON API envelope | Not completed; local Supabase functions are unavailable because the local stack is unavailable. |
-| Manager templates | `templates` action `list` with manager JWT | HTTP 200 with JSON API envelope | Not completed; manager login/JWT could not be obtained because local Supabase stack is unavailable. |
-| Manager schedules | `schedules` action `list` with manager JWT | HTTP 200 with JSON API envelope | Not completed; manager login/JWT could not be obtained because local Supabase stack is unavailable. |
-| Manager memberships | `memberships` action `list_types` with manager JWT | HTTP 200 with JSON API envelope | Not completed; manager login/JWT could not be obtained because local Supabase stack is unavailable. |
+| Git state | `rtk git status --short --branch` | branch is `feature/classes`; no unrelated implementation edits are required for smoke | Worker branch and reviewer branch were clean during smoke. Reviewer worktree: `* HEAD (no branch)` before reviewer fix; `review/wave-a-baseline-smoke` after reviewer fix. |
+| Frontend lint | `rtk npm run lint` | exits 0 | Worker: passed after `rtk npm ci`. Reviewer: passed after `rtk npm ci`. |
+| Frontend build | `rtk npm run build` | exits 0; Vite chunk-size warning is acceptable | Worker: passed after `rtk npm ci`. Reviewer: passed after `rtk npm ci`; no chunk-size warning. |
+| Supabase status | `rtk supabase status` | local stack running or clear stopped-state action | Reviewer: exits 0. Local development setup is running at `http://127.0.0.1:54321`; database URL is `postgresql://postgres:postgres@127.0.0.1:54322/postgres`. |
+| Migration state | `rtk supabase migration list --local` | local migrations include class-management migrations through `20260608030000` | Reviewer: exits 0. Local migration list includes all required migrations through `20260608030000`. |
+| DB lint | `rtk supabase db lint` | exits 0; known extra warnings may be recorded | Reviewer: exits 0. Warnings recorded for unused parameters in `private.consume_registration_stock` and never-read variable `v_product_user` in `public.register_for_class`. |
+| Admin auth login | password token request for `admin@admin.local` | HTTP 200 | Reviewer: HTTP 200; response contains `access_token`. |
+| Manager auth login | password token request for `eden@manager.local` | HTTP 200 | Reviewer: HTTP 200; response contains `access_token`. |
+| Product context | `product-context` with manager JWT | HTTP 200 with product `eden` and role `manager` | Reviewer: HTTP 200; response has `data.product.product_key = eden`, `data.product_user.role = manager`, `data.product_user.status = active`, `error = null`. |
+| Public classes | `classes` action `list_public` | HTTP 200 with JSON API envelope | Reviewer: HTTP 200; response has `{ data, error }`, `data.classes`, and `error = null`. |
+| Manager templates | `templates` action `list` with manager JWT | HTTP 200 with JSON API envelope | Reviewer: HTTP 200; response has `{ data, error }`, `data.templates`, and `error = null`. |
+| Manager schedules | `schedules` action `list` with manager JWT | HTTP 200 with JSON API envelope | Reviewer: HTTP 200; response has `{ data, error }`, `data.schedules`, and `error = null`. |
+| Manager memberships | `memberships` action `list_types` with manager JWT | HTTP 200 with JSON API envelope | Reviewer: HTTP 200; response has `{ data, error }`, `data.membership_types`, and `error = null`. |
 
 ## Notes
 
-- `rtk npm ci` was required before static checks because this worktree did not have `node_modules`.
-- Plain `rtk supabase ...` is not available in this environment. `rtk npx supabase --version` returns `2.105.0`, so Supabase CLI can be reached through `npx`.
-- Supabase runtime checks are blocked by the local environment: `rtk npx supabase status` cannot connect to Docker, and local Postgres on `127.0.0.1:54322` is not accepting connections.
-- Extraction remains blocked until the Supabase baseline smoke can run against a reachable local stack or these failures are accepted as environment-only by human review.
+- `rtk npm ci` was required before static checks because the worker/reviewer worktrees did not have `node_modules`.
+- Worker environment could not reach Supabase CLI/Docker/Postgres, so Supabase runtime checks were completed by reviewer on the preserved branch in a local environment with Supabase access.
+- Reviewer had to run Supabase CLI commands with host access because the CLI writes telemetry under the user Supabase directory.
+- The pre-extraction baseline smoke gate is satisfied. Later extraction chunks can treat these results as the current behavior baseline.
