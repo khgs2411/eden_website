@@ -34,15 +34,10 @@ The local seed creates:
 
 - `products.product_key = eden`
 - allowed development origins for `http://localhost:5173` and `http://127.0.0.1:5173`
+- `admin@admin.local` as a platform admin
+- `eden@manager.local` as an active manager for the Eden product
 
-To bootstrap local roles, create or sign in a local Supabase Auth user from the app, then promote that auth user as the local platform admin in SQL:
-
-```sql
-insert into public.platform_admins (user_id)
-values ('<local-auth-user-uuid>');
-```
-
-After the platform admin exists, use the `admin-promote-manager` Edge Function from an authenticated platform-admin session to promote the first Eden product manager. Do not commit real user IDs, access tokens, or service-role keys.
+Both seeded local users use the password `password`. Do not reuse these credentials outside local development.
 
 ## Verification
 

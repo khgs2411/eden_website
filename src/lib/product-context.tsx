@@ -3,7 +3,15 @@ import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react
 
 import { invokeProductFunction, productKey, type ProductContextResponse, type ProductSummary, type ProductUserSummary } from "@/lib/product-api";
 import { ProductContext, type ProductContextValue } from "@/lib/product-context-state";
-import { supabase } from "@/lib/supabase";
+import { supabase, supabaseAuthStorageKey } from "@/lib/supabase";
+
+function isStaleRefreshTokenError(error: Error) {
+	return error.message.toLowerCase().includes("refresh token");
+}
+
+function clearStoredSupabaseSession() {
+	window.localStorage.removeItem(supabaseAuthStorageKey);
+}
 
 export function ProductProvider({ children }: { children: ReactNode }) {
 	const [session, setSession] = useState<Session | null>(null);
@@ -44,7 +52,12 @@ export function ProductProvider({ children }: { children: ReactNode }) {
 			if (!mounted) return;
 
 			if (sessionError) {
-				setError(sessionError.message);
+				if (isStaleRefreshTokenError(sessionError)) {
+					clearStoredSupabaseSession();
+					setSession(null);
+				} else {
+					setError(sessionError.message);
+				}
 			} else {
 				setSession(data.session);
 			}

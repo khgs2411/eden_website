@@ -40,7 +40,10 @@ Expected seed state after reset:
 
 - `products` contains `product_key = eden`.
 - `product_allowed_origins` contains `http://localhost:5173` and `http://127.0.0.1:5173`.
-- No real user ids, JWTs, or secrets are committed.
+- `auth.users` contains local-only users `admin@admin.local` and `eden@manager.local` with password `password`.
+- `admin@admin.local` is present in `platform_admins`.
+- `eden@manager.local` is an active `manager` in `product_users` for the Eden product.
+- No real user ids, JWTs, access tokens, or service-role keys are committed.
 
 3. Confirm migration state:
 
