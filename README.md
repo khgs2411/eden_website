@@ -56,7 +56,13 @@ Backend commands are run from `backend/`:
 
 ## GitHub Pages
 
-GitHub Pages deployment builds the Eden Consumer Website from the repository root and deploys `dist/` on pushes to `master`. The deployment does not require Supabase secrets; public runtime values are supplied through Vite environment variables.
+GitHub Pages deployment builds the Eden Consumer Website from the repository root and deploys `dist/` on pushes to `master`. The deployment does not require Supabase secrets, but the class-management section needs public Vite build variables:
+
+- `VITE_SUPABASE_URL`
+- `VITE_SUPABASE_PUBLISHABLE_KEY`
+- `VITE_PRODUCT_KEY=eden`
+
+If those variables are not supplied to the Pages build, Eden still builds but the class-management section renders the package configuration error instead of live product data.
 
 ## Class Management Product
 

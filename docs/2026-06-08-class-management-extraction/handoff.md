@@ -39,16 +39,25 @@ npm run build
 
 Result: all four commands exited 0. `npm run build` emitted Vite's non-fatal chunk-size warning for the Eden bundle.
 
-Boundary scans were run with `grep -R` because `rg` was not installed in this worker environment:
+Boundary scans run during implementation:
 
 ```bash
 grep -R -n -E "supabase\\.from\\(|supabase\\.rpc\\(" src packages/class-management-react/src apps/class-management-playground/src
 grep -R -n -E "backend/|supabase/functions|supabase/migrations" src packages/class-management-react/src apps/class-management-playground/src
 grep -R -n -E "@/components/product|@/lib/product" src
-grep -R -n -E "TODO|TBD|fill in" README.md backend packages/class-management-react apps/class-management-playground docs/2026-06-08-class-management-extraction
 ```
 
-Result: no matches.
+Result: no Consumer Website boundary violations were found.
+
+Reviewer follow-up verification used `rtk rg` locally. The broad unresolved-word scan returned only command examples, historical plan references to scaffold placeholders, and JSX input `placeholder` props; no unresolved handoff placeholder requiring implementation was found.
+
+GitHub Pages builds need public Vite variables for the live class-management section:
+
+- `VITE_SUPABASE_URL`
+- `VITE_SUPABASE_PUBLISHABLE_KEY`
+- `VITE_PRODUCT_KEY=eden`
+
+If they are missing, the static site still builds, but the package renders its configuration error instead of live product data.
 
 Backend verification, when local Supabase is available, should run from `backend/`:
 
