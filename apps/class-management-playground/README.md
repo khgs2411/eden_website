@@ -20,8 +20,13 @@ All values are browser-visible. Do not put service-role keys or secrets in this 
 
 - `npm run dev:playground` from the repository root starts this app.
 - `npm run build:playground` from the repository root builds this app.
+- `npm run build -w apps/class-management-playground` is the package-local build command.
 
 Backend commands are owned by `backend/`; see `backend/SMOKE.md`.
+
+## Product Key
+
+The playground is currently configured for the local Eden product with `VITE_PRODUCT_KEY=eden`.
 
 ## Seeded Users
 
@@ -55,3 +60,4 @@ Run this flow against the local backend and classify each item as `pass`, `block
 - Static package/playground builds are the minimum verification for this chunk when the local Supabase CLI is unavailable.
 - Backend and manual browser smoke checks require the Supabase CLI and a running local stack. If those tools are missing in a worker environment, record the gap as `verification_environment` rather than changing product behavior speculatively.
 - Signed-out playground load is expected to pass the public product-context and public class-listing path without login. Auth-required manager/user mutation paths should still reject anonymous requests.
+- No accepted product behavior limitations are documented for this final handoff. Treat new smoke failures as either environment blockers or defects to triage, not as silently accepted behavior.
