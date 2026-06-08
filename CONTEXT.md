@@ -40,6 +40,34 @@ _Avoid_: stock counter, payment ledger
 A private Supabase server-side capability that can bypass RLS and is never granted as an application role.
 _Avoid_: admin role, platform admin
 
+**Supabase Project**:
+The decoupled backend product boundary that owns the shared database, migrations, seed data, Edge Functions, and backend RPCs.
+_Avoid_: website backend, app folder, frontend infrastructure
+
+**Consumer Website**:
+A React website that connects to the **Supabase Project** through configuration and product APIs without owning backend source files.
+_Avoid_: backend host, Supabase owner
+
+**Class Management Playground**:
+A standalone Consumer Website used to develop and test the reusable class-management frontend package against the Supabase Project.
+_Avoid_: Eden app, backend playground, package internals
+
+**Reusable Frontend Package**:
+The local workspace React package that exposes class-management product client code, hooks, types, and reusable workflow components for Consumer Websites.
+_Avoid_: Eden product UI, copied app code
+
+**Headless Core**:
+The non-visual API, state, provider, hook, and type layer of the Reusable Frontend Package.
+_Avoid_: UI shell, dashboard
+
+**Workflow Component**:
+A ready-made React component in the Reusable Frontend Package that implements one class-management user or manager workflow.
+_Avoid_: page, route, Eden section
+
+**UI Primitive Adapter**:
+The host-supplied mapping from package workflow components to ShadCN-compatible primitives such as buttons, inputs, labels, and textareas.
+_Avoid_: Eden UI imports, hardcoded design system
+
 **Class Template**:
 A product-scoped interface/schema that defines the structured data used to create concrete classes.
 _Avoid_: class, occurrence, default class
@@ -86,6 +114,10 @@ _Avoid_: walk-in, user
 - A **Member** is a **Product User** with an active membership grant.
 - A **Member** can have many **Membership Ledger** events.
 - A **Manager** can promote other **Product Users** to **Manager** within the same **Product**.
+- A **Consumer Website** connects to one **Supabase Project** through Supabase URL, publishable key, product key, Edge Functions, and approved backend APIs.
+- The **Class Management Playground** is a **Consumer Website** and is the first consumer of the reusable frontend package.
+- A **Reusable Frontend Package** contains a **Headless Core** and **Workflow Components**.
+- A **Workflow Component** receives visual primitives through a **UI Primitive Adapter**.
 - A **Class Template** can be placed by a **Schedule** to produce one or more **Classes**.
 - A **Generation Horizon** bounds how far ahead active **Schedules** materialize **Classes**.
 - A **Class** belongs to exactly one **Product**.
@@ -119,6 +151,15 @@ _Avoid_: walk-in, user
 > **Dev:** "Does the **Membership Ledger** only matter for stock memberships?"
 > **Domain expert:** "No. Stock entries carry deltas, but all membership-backed actions should be recorded."
 
+> **Dev:** "Since the Supabase files live beside Eden's website for now, is Eden the backend?"
+> **Domain expert:** "No. Eden is a **Consumer Website**. The **Supabase Project** is the backend boundary and should be movable out later."
+
+> **Dev:** "Should we test the reusable package by putting it back into Eden first?"
+> **Domain expert:** "No. The **Class Management Playground** is the first package consumer; Eden reintegration comes after package and backend validation."
+
+> **Dev:** "Can the package import Eden's Button component directly?"
+> **Domain expert:** "No. A **Workflow Component** should use a **UI Primitive Adapter** so each **Consumer Website** can supply its own ShadCN-compatible primitives."
+
 ## Flagged ambiguities
 
 - "admin" was used for both platform ownership and product management. Resolved: **Platform Admin** is the product owner; **Manager** is the client-business role that manages classes and memberships.
@@ -126,3 +167,4 @@ _Avoid_: walk-in, user
 - "project", "product", and "tenant" were used interchangeably. Resolved: use **Product** for the database boundary and `product_key` for the public scope identifier.
 - "class" and "template" were used like concrete scheduled objects. Resolved: **Class Template** is an interface/schema, **Schedule** is time placement, and **Class** is the registerable date-bound object.
 - "walk-in" and "trial" were both used for people who appear without registration. Resolved: **Walk-in** is an existing **Product User**; **Trial** is not a **Product User** yet.
+- "Supabase folder", "backend", and "website backend" were used interchangeably. Resolved: use **Supabase Project** for the decoupled backend product boundary and **Consumer Website** for Eden or any other React frontend that connects to it.
