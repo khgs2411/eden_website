@@ -32,6 +32,14 @@ _Avoid_: customer when discussing authorization
 A product user with an active membership grant.
 _Avoid_: user, manager
 
+**Membership Type**:
+A manager-created product offering that defines the mode and default grant terms used for future membership grants.
+_Avoid_: granted membership, user membership
+
+**Membership Grant**:
+The concrete entitlement issued to one product user from a membership type, with its own validity window, stock totals, remaining stock, status, and audit history.
+_Avoid_: membership type, package
+
 **Membership Ledger**:
 The audit record of membership-backed actions, with stock deltas only when the membership mode consumes or restores stock.
 _Avoid_: stock counter, payment ledger
@@ -116,6 +124,7 @@ _Avoid_: walk-in, user
 - A **Product User** belongs to exactly one **Product** and one Supabase Auth identity.
 - A **Product User** has exactly one product-scoped role: **Manager** or **User**.
 - A **Member** is a **Product User** with an active membership grant.
+- A **Membership Type** can be edited by a **Manager** for future grants, but a **Membership Grant** keeps the entitlement values that were issued when it was created.
 - A **Member** can have many **Membership Ledger** events.
 - A **Manager** can promote other **Product Users** to **Manager** within the same **Product**.
 - A **Consumer Website** connects to one **Supabase Project** through Supabase URL, publishable key, product key, Edge Functions, and approved backend APIs.
@@ -152,6 +161,9 @@ _Avoid_: walk-in, user
 
 > **Dev:** "Is every **User** a **Member**?"
 > **Domain expert:** "No. A **Member** is a **Product User** with an active membership grant."
+
+> **Dev:** "If I edit a **Membership Type**, do existing users lose or gain stock?"
+> **Domain expert:** "No. The **Membership Type** changes future defaults; each **Membership Grant** keeps the validity and stock values already issued."
 
 > **Dev:** "Does the **Membership Ledger** only matter for stock memberships?"
 > **Domain expert:** "No. Stock entries carry deltas, but all membership-backed actions should be recorded."
