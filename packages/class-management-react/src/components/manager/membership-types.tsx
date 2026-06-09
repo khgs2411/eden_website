@@ -1,4 +1,4 @@
-import { RefreshCw, ShieldMinus } from "lucide-react";
+import { Pencil, RefreshCw, ShieldMinus, X } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 
 import { useClassManagementClient } from "../../context/product-context-state";
@@ -16,9 +16,13 @@ const labels = {
 	defaultStock: "Default stock",
 	defaultDuration: "Default duration days",
 	create: "Create",
+	edit: "Edit",
+	cancel: "Cancel",
+	save: "Save",
 	deactivate: "Deactivate",
 	saved: "Saved.",
 	error: "Unable to complete manager operation.",
+	futureOnly: "Edits apply to future grants only. Existing grants keep their issued stock and validity.",
 	modes: {
 		stock: "Stock",
 		limited_stock: "Limited stock",
@@ -35,6 +39,10 @@ export function MembershipTypes({ refreshKey, onChanged }: { refreshKey: number;
 	const [mode, setMode] = useState<MembershipMode>("stock");
 	const [defaultStock, setDefaultStock] = useState("");
 	const [defaultDurationDays, setDefaultDurationDays] = useState("");
+	const [editingTypeId, setEditingTypeId] = useState<string | null>(null);
+	const [editName, setEditName] = useState("");
+	const [editDefaultStock, setEditDefaultStock] = useState("");
+	const [editDefaultDurationDays, setEditDefaultDurationDays] = useState("");
 	const [loading, setLoading] = useState(false);
 	const [message, setMessage] = useState<string | null>(null);
 
@@ -70,6 +78,57 @@ export function MembershipTypes({ refreshKey, onChanged }: { refreshKey: number;
 			setName("");
 			setDefaultStock("");
 			setDefaultDurationDays("");
+			await loadTypes();
+			onChanged();
+			setMessage(labels.saved);
+		} catch (error) {
+			setMessage(error instanceof Error ? error.message : labels.error);
+		} finally {
+			setLoading(false);
+		}
+	}
+
+	function startEdit(type: MembershipType) {
+		setEditingTypeId(type.id);
+		setEditName(type.name);
+		setEditDefaultStock(type.default_stock?.toString() ?? "");
+		setEditDefaultDurationDays(type.default_duration_days?.toString() ?? "");
+		setMessage(null);
+	}
+
+	function cancelEdit() {
+		setEditingTypeId(null);
+		setEditName("");
+		setEditDefaultStock("");
+		setEditDefaultDurationDays("");
+	}
+
+	async function updateType(type: MembershipType) {
+		setLoading(true);
+		setMessage(null);
+		try {
+			const payload: {
+				action: "update_type";
+				membership_type_id: string;
+				name: string;
+				default_stock?: number | null;
+				default_duration_days?: number | null;
+			} = {
+				action: "update_type",
+				membership_type_id: type.id,
+				name: editName.trim(),
+			};
+
+			if (usesStock(type.mode)) {
+				payload.default_stock = editDefaultStock ? Number(editDefaultStock) : null;
+			}
+
+			if (usesDuration(type.mode)) {
+				payload.default_duration_days = editDefaultDurationDays ? Number(editDefaultDurationDays) : null;
+			}
+
+			await callManagerApi(client, "memberships", payload);
+			cancelEdit();
 			await loadTypes();
 			onChanged();
 			setMessage(labels.saved);
@@ -122,18 +181,49 @@ export function MembershipTypes({ refreshKey, onChanged }: { refreshKey: number;
 			</div>
 			{message ? <p className="mt-3 text-sm text-muted-foreground">{message}</p> : null}
 			<div className="mt-4 grid gap-2">
-				{types.map((type) => (
-					<div key={type.id} className="flex flex-wrap items-center justify-between gap-2 rounded-md border border-border px-3 py-2 text-sm">
-						<div>
-							<p>{type.name} · {labels.modes[type.mode]} · {type.status}</p>
-							<p className="text-xs text-muted-foreground">{formatTypeLimits(type)}</p>
+				{types.map((type) => {
+					const isEditing = editingTypeId === type.id;
+
+					return (
+						<div key={type.id} className="grid gap-3 rounded-md border border-border px-3 py-2 text-sm md:grid-cols-[1fr_auto]">
+							{isEditing ? (
+								<div className="grid gap-3 md:grid-cols-3">
+									<TextField label={labels.name} value={editName} onChange={setEditName} />
+									<TextField label={labels.defaultStock} type="number" value={editDefaultStock} onChange={setEditDefaultStock} disabled={!usesStock(type.mode)} />
+									<TextField label={labels.defaultDuration} type="number" value={editDefaultDurationDays} onChange={setEditDefaultDurationDays} disabled={!usesDuration(type.mode)} />
+									<p className="text-xs text-muted-foreground md:col-span-3">{labels.futureOnly}</p>
+								</div>
+							) : (
+								<div>
+									<p>{type.name} · {labels.modes[type.mode]} · {type.status}</p>
+									<p className="text-xs text-muted-foreground">{formatTypeLimits(type)}</p>
+								</div>
+							)}
+							<div className="flex flex-wrap items-center gap-2 md:justify-end">
+								{isEditing ? (
+									<>
+										<Button type="button" size="sm" onClick={() => updateType(type)} disabled={loading || editName.trim().length === 0}>{labels.save}</Button>
+										<Button type="button" variant="ghost" size="sm" onClick={cancelEdit} disabled={loading}>
+											<X className="size-4" />
+											{labels.cancel}
+										</Button>
+									</>
+								) : (
+									<>
+										<Button type="button" variant="ghost" size="sm" onClick={() => startEdit(type)} disabled={loading || type.status === "inactive"}>
+											<Pencil className="size-4" />
+											{labels.edit}
+										</Button>
+										<Button type="button" variant="ghost" size="sm" onClick={() => deactivateType(type.id)} disabled={loading || type.status === "inactive"}>
+											<ShieldMinus className="size-4" />
+											{labels.deactivate}
+										</Button>
+									</>
+								)}
+							</div>
 						</div>
-						<Button type="button" variant="ghost" size="sm" onClick={() => deactivateType(type.id)} disabled={loading || type.status === "inactive"}>
-							<ShieldMinus className="size-4" />
-							{labels.deactivate}
-						</Button>
-					</div>
-				))}
+					);
+				})}
 			</div>
 		</div>
 	);
