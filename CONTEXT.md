@@ -92,6 +92,10 @@ _Avoid_: template edit, schedule edit
 A participation record for a class, representing a registered user, walk-in user, or trial attendee, with separate registration and attendance state where applicable.
 _Avoid_: attendance list item
 
+**Registration Rejection Recovery**:
+A manager operation on a rejected class registration that either approves that same registration when the class still allows it, or marks the rejection recovered while keeping it non-live so the user can submit a fresh registration.
+_Avoid_: deleting rejection history, silently resetting status
+
 **Attendance**:
 The present/absent state of class participants after the manager starts or runs the class.
 _Avoid_: raw list on class
@@ -124,6 +128,7 @@ _Avoid_: walk-in, user
 - A **Class Override** belongs to exactly one generated **Class**.
 - Users register for **Classes**, not **Class Templates** or **Schedules**.
 - A **Class** has many **Class Participants**.
+- **Registration Rejection Recovery** applies to a rejected class registration, not to the **Product User** role/status lifecycle.
 - A **Walk-in** references a **Product User**.
 - A **Trial** does not require a **Product User** and is present by default.
 - Registration status and **Attendance** are separate lifecycle axes.
