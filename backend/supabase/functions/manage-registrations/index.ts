@@ -7,7 +7,7 @@ import {
 } from "../_shared/context.ts";
 import { ApiError, errorResponse, jsonOk } from "../_shared/errors.ts";
 
-type ManagerRegistrationAction = "list_pending" | "list_class" | "approve" | "reject" | "cancel";
+type ManagerRegistrationAction = "list_pending" | "list_class" | "approve" | "reject" | "cancel" | "approve_rejected" | "allow_reregister";
 
 type ManagerRegistrationRequest = {
 	[key: string]: unknown;
@@ -46,8 +46,13 @@ function toApiError(error: { message?: string } | null, fallback: string): ApiEr
 		return new ApiError(404, "not_found", "Registration target was not found.");
 	}
 
+	if (message.includes("registration_live_replacement_exists")) {
+		return new ApiError(409, "conflict", "A live registration already exists for this user and class.");
+	}
+
 	if (
 		message.includes("registration_not_pending") ||
+		message.includes("registration_not_rejected") ||
 		message.includes("registration_not_cancellable") ||
 		message.includes("unsupported_registration_action") ||
 		message.includes("class_not_registerable") ||
@@ -113,7 +118,7 @@ Deno.serve(async (req) => {
 			return jsonOk({ registrations: data as RegistrationRow[] }, { headers });
 		}
 
-		if (action === "approve" || action === "reject" || action === "cancel") {
+		if (action === "approve" || action === "reject" || action === "cancel" || action === "approve_rejected" || action === "allow_reregister") {
 			const registrationId = requireString(body.registration_id, "registration_id");
 			const { data, error } = await supabase.rpc("manage_class_registration", {
 				p_product_id: ctx.product.id,

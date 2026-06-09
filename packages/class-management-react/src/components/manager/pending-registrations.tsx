@@ -11,6 +11,11 @@ const labels = {
 	empty: "No pending registrations.",
 	approve: "Approve",
 	reject: "Reject",
+	rejectedTitle: "Rejected registrations",
+	rejectedEmpty: "No rejected registrations.",
+	approveRejected: "Approve",
+	allowReregister: "Allow re-register",
+	recoveryMessage: "Rejected registration recovery updated.",
 	capacityError: "Unable to update registration. Check capacity and membership rules.",
 	error: "Unable to load pending registrations.",
 };
@@ -19,6 +24,7 @@ export function PendingRegistrations({ refreshKey }: { refreshKey: number }) {
 	const client = useClassManagementClient();
 	const { Button } = useClassManagementUi();
 	const [registrations, setRegistrations] = useState<Registration[]>([]);
+	const [rejectedRegistrations, setRejectedRegistrations] = useState<Registration[]>([]);
 	const [classes, setClasses] = useState<ManagedClass[]>([]);
 	const [loading, setLoading] = useState(false);
 	const [message, setMessage] = useState<string | null>(null);
@@ -35,6 +41,19 @@ export function PendingRegistrations({ refreshKey }: { refreshKey: number }) {
 			]);
 			setRegistrations(registrationData.registrations);
 			setClasses(classData.classes);
+			const rejectedResults = await Promise.all(
+				classData.classes.map((classRow) =>
+					callManagerApi<{ registrations: Registration[] }>(client, "manage-registrations", {
+						action: "list_class",
+						class_id: classRow.id,
+					}),
+				),
+			);
+			setRejectedRegistrations(
+				rejectedResults.flatMap((result) =>
+					result.registrations.filter((registration) => registration.status === "rejected" && !registration.rejection_recovered_at),
+				),
+			);
 		} catch (error) {
 			setMessage(error instanceof Error ? error.message : labels.error);
 		} finally {
@@ -53,6 +72,20 @@ export function PendingRegistrations({ refreshKey }: { refreshKey: number }) {
 		try {
 			await callManagerApi(client, "manage-registrations", { action, registration_id: registrationId });
 			await loadQueue();
+		} catch (error) {
+			setMessage(error instanceof Error ? error.message : labels.capacityError);
+		} finally {
+			setLoading(false);
+		}
+	}
+
+	async function recover(registrationId: string, action: "approve_rejected" | "allow_reregister") {
+		setLoading(true);
+		setMessage(null);
+		try {
+			await callManagerApi(client, "manage-registrations", { action, registration_id: registrationId });
+			await loadQueue();
+			setMessage(labels.recoveryMessage);
 		} catch (error) {
 			setMessage(error instanceof Error ? error.message : labels.capacityError);
 		} finally {
@@ -95,6 +128,35 @@ export function PendingRegistrations({ refreshKey }: { refreshKey: number }) {
 						</div>
 					);
 				})}
+			</div>
+			<div className="mt-5 border-t border-border pt-4">
+				<h4 className="font-display text-base font-bold uppercase">{labels.rejectedTitle}</h4>
+				<div className="mt-3 grid gap-2">
+					{rejectedRegistrations.length === 0 ? <p className="text-sm text-muted-foreground">{labels.rejectedEmpty}</p> : null}
+					{rejectedRegistrations.map((registration) => {
+						const classRow = classesById.get(registration.class_id);
+						return (
+							<div key={registration.id} className="flex flex-wrap items-center justify-between gap-2 rounded-md border border-border px-3 py-2 text-sm">
+								<div>
+									<p>{classRow?.name ?? registration.class_id}</p>
+									<p className="text-xs text-muted-foreground">
+										{registration.user_id} · {formatDate(registration.updated_at ?? registration.created_at)}
+									</p>
+								</div>
+								<div className="flex gap-2">
+									<Button type="button" size="sm" onClick={() => recover(registration.id, "approve_rejected")} disabled={loading}>
+										<Check className="size-4" />
+										{labels.approveRejected}
+									</Button>
+									<Button type="button" variant="outline" size="sm" onClick={() => recover(registration.id, "allow_reregister")} disabled={loading}>
+										<RefreshCw className="size-4" />
+										{labels.allowReregister}
+									</Button>
+								</div>
+							</div>
+						);
+					})}
+				</div>
 			</div>
 		</div>
 	);
