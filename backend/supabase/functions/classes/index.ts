@@ -83,6 +83,11 @@ type ListedClassRow = ClassRow & {
 	[key: string]: unknown;
 };
 
+type RegistrationRow = {
+	id: string;
+	status: string;
+};
+
 function requireString(value: unknown, field: string): string {
 	if (!value || typeof value !== "string") {
 		throw new ApiError(400, "bad_request", `${field} is required.`);
@@ -236,6 +241,39 @@ async function addApprovedCounts(productId: string, classes: ListedClassRow[]): 
 	}));
 }
 
+async function loadCancellationCutoffHours(productId: string): Promise<number> {
+	const supabase = getServiceClient();
+	const { data, error } = await supabase
+		.from("products")
+		.select("registration_cancellation_cutoff_hours")
+		.eq("id", productId)
+		.maybeSingle();
+
+	if (error) {
+		throw new ApiError(500, "internal_error", "Could not load product cancellation policy.");
+	}
+
+	const cutoffHours = data?.registration_cancellation_cutoff_hours;
+	return typeof cutoffHours === "number" ? cutoffHours : 24;
+}
+
+function withCancellationAvailability(
+	classRow: ListedClassRow,
+	cutoffHours: number,
+	nowMs: number,
+	registration: RegistrationRow | null,
+): ListedClassRow {
+	const liveRegistration = registration?.status === "pending" || registration?.status === "approved";
+	const cancelCutoffAt = Date.parse(classRow.starts_at) - cutoffHours * 60 * 60 * 1000;
+
+	return {
+		...classRow,
+		registration_cancellation_cutoff_hours: cutoffHours,
+		can_cancel_registration: Boolean(liveRegistration && nowMs < cancelCutoffAt),
+		user_registration: registration,
+	};
+}
+
 async function hasActiveMembership(productId: string, userId: string): Promise<boolean> {
 	const supabase = getServiceClient();
 	const { data, error } = await supabase.rpc("get_active_membership_grant", {
@@ -281,8 +319,12 @@ Deno.serve(async (req) => {
 				throw new ApiError(500, "internal_error", "Could not list classes.");
 			}
 
+			const cutoffHours = await loadCancellationCutoffHours(ctx.product.id);
+			const nowMs = Date.now();
 			const classes = await addApprovedCounts(ctx.product.id, (data ?? []) as ListedClassRow[]);
-			return jsonOk({ classes }, { headers });
+			return jsonOk({
+				classes: classes.map((classRow) => withCancellationAvailability(classRow, cutoffHours, nowMs, null)),
+			}, { headers });
 		}
 
 		if (action === "list_user") {
@@ -312,7 +354,7 @@ Deno.serve(async (req) => {
 			}
 
 			const classIds = (data ?? []).map((row: { id: string }) => row.id);
-			const registrationsByClassId = new Map<string, unknown>();
+			const registrationsByClassId = new Map<string, RegistrationRow>();
 
 			if (classIds.length > 0) {
 				const { data: registrations, error: registrationsError } = await supabase
@@ -328,17 +370,16 @@ Deno.serve(async (req) => {
 				}
 
 				for (const registration of registrations ?? []) {
-					registrationsByClassId.set(registration.class_id, registration);
+					registrationsByClassId.set(registration.class_id, registration as RegistrationRow);
 				}
 			}
 
+			const cutoffHours = await loadCancellationCutoffHours(ctx.product.id);
+			const nowMs = Date.now();
 			const classesWithCounts = await addApprovedCounts(ctx.product.id, (data ?? []) as ListedClassRow[]);
 
 			return jsonOk({
-				classes: classesWithCounts.map((classRow) => ({
-					...classRow,
-					user_registration: registrationsByClassId.get(classRow.id) ?? null,
-				})),
+				classes: classesWithCounts.map((classRow) => withCancellationAvailability(classRow, cutoffHours, nowMs, registrationsByClassId.get(classRow.id) ?? null)),
 			}, { headers });
 		}
 

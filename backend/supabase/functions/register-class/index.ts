@@ -49,6 +49,10 @@ function toApiError(error: { message?: string } | null, fallback: string): ApiEr
 		return new ApiError(404, "not_found", "Registration target was not found.");
 	}
 
+	if (message.includes("registration_cancellation_closed")) {
+		return new ApiError(400, "bad_request", "Cancellation is closed for this class.");
+	}
+
 	if (
 		message.includes("class_not_registerable") ||
 		message.includes("product_user_not_found") ||
