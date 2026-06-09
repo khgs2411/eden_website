@@ -40,6 +40,8 @@ export type UserClassSummary = {
 	visibility: ClassVisibility;
 	registration_policy: RegistrationPolicy;
 	membership_requirement: MembershipRequirement;
+	registration_cancellation_cutoff_hours: number;
+	can_cancel_registration: boolean;
 	user_registration: { id: string; status: RegistrationStatus } | null;
 };
 

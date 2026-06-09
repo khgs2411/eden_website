@@ -14,6 +14,7 @@ export type ClassDetailLabels = {
 	actions?: {
 		register?: string;
 		cancel?: string;
+		cancellationClosed?: string;
 		working?: string;
 	};
 	registrationStatus?: RegistrationStatusLabels;
@@ -38,6 +39,7 @@ const defaultLabels = {
 	actions: {
 		register: "Register",
 		cancel: "Cancel registration",
+		cancellationClosed: "Cancellation is closed for this class.",
 		working: "Working...",
 	},
 } satisfies Omit<Required<ClassDetailLabels>, "membershipMessages" | "policyMessages" | "registrationStatus">;
@@ -78,7 +80,8 @@ export function ClassDetail({
 	}
 
 	const registration = selectedClass.user_registration;
-	const canCancel = registration?.status === "pending" || registration?.status === "approved";
+	const hasLiveRegistration = registration?.status === "pending" || registration?.status === "approved";
+	const canCancel = hasLiveRegistration && selectedClass.can_cancel_registration;
 
 	return (
 		<div className="rounded-md border border-border bg-card p-4 text-card-foreground">
@@ -114,10 +117,16 @@ export function ClassDetail({
 			{message ? <p className="mt-3 rounded-md border border-border bg-background px-3 py-2 text-sm text-muted-foreground">{message}</p> : null}
 
 			<div className="mt-4 flex flex-wrap gap-2">
-				{canCancel && registration ? (
-					<Button type="button" variant="outline" onClick={() => onCancel(registration.id)} disabled={actionPending}>
-						{actionPending ? labels.actions.working : labels.actions.cancel}
-					</Button>
+				{hasLiveRegistration && registration ? (
+					canCancel ? (
+						<Button type="button" variant="outline" onClick={() => onCancel(registration.id)} disabled={actionPending}>
+							{actionPending ? labels.actions.working : labels.actions.cancel}
+						</Button>
+					) : (
+						<Button type="button" variant="outline" disabled>
+							{labels.actions.cancellationClosed}
+						</Button>
+					)
 				) : (
 					<Button type="button" onClick={() => onRegister(selectedClass.id)} disabled={actionPending || Boolean(registration)}>
 						{actionPending ? labels.actions.working : labels.actions.register}

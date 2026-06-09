@@ -19,6 +19,7 @@ export type ClassListLabels = {
 		membershipStockDepleted?: string;
 		capacityFull?: string;
 		notRegisterable?: string;
+		cancellationClosed?: string;
 	};
 	result?: Partial<Record<RegistrationStatusValue, string>>;
 	classDetail?: ClassDetailLabels;
@@ -35,6 +36,7 @@ const defaultLabels = {
 		membershipStockDepleted: "Your membership has no remaining class credits.",
 		capacityFull: "This class is full.",
 		notRegisterable: "This class is not currently open for registration.",
+		cancellationClosed: "Cancellation is closed for this class.",
 	},
 	result: {
 		pending: "Registration submitted for approval.",
@@ -49,6 +51,7 @@ function registrationMessageKey(errorMessage: string) {
 	if (errorMessage.includes("membership_stock_depleted")) return "membershipStockDepleted";
 	if (errorMessage.includes("class_capacity_full")) return "capacityFull";
 	if (errorMessage.includes("class_not_registerable")) return "notRegisterable";
+	if (errorMessage.includes("registration_cancellation_closed") || errorMessage.includes("Cancellation is closed")) return "cancellationClosed";
 	return null;
 }
 

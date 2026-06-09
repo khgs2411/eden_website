@@ -46,7 +46,7 @@ Run this flow against the local backend and classify each item as `pass`, `block
 4. Sign in as `eden@manager.local`; confirm product context loads for product `eden`, role `manager`, status `active`.
 5. Sign out; confirm the session clears without refresh-token errors.
 6. Sign in as `admin@admin.local`; confirm auth succeeds and product context either reflects global access or returns a clear backend response.
-7. User workflow: load classes, register for a valid class when seed/current data supports it, then cancel a registration when available.
+7. User workflow: load classes, register for a valid class when seed/current data supports it, cancel a registration before the product cancellation cutoff, then verify a live registration inside the cutoff still shows its status but displays cancellation-closed messaging instead of a working cancel action.
 8. Manager class/schedule workflow: create or update a template, create a schedule, preview generation, generate classes, edit one generated class, cancel one generated class, then list pending registrations.
 9. Manager membership/attendance workflow: list/create membership types, grant/upgrade/revoke membership stock where data supports it, open attendance for a generated class, start attendance, mark a row, add trial/walk-in attendees where supported, then complete attendance.
 10. Run final static checks from the repository root:
