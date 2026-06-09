@@ -11,6 +11,7 @@ type GenerateRequest = {
 	[key: string]: unknown;
 	product_key?: string;
 	schedule_id?: string | null;
+	generation_count?: unknown;
 };
 
 type GenerationCounts = {
@@ -23,16 +24,48 @@ type ScheduleStatusRow = {
 	status: string;
 };
 
+const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
 function optionalScheduleId(value: unknown): string | null {
 	if (value === undefined || value === null) {
 		return null;
 	}
 
-	if (typeof value !== "string" || value.length === 0) {
+	if (typeof value !== "string" || !uuidPattern.test(value)) {
 		throw new ApiError(400, "bad_request", "schedule_id must be a UUID string.");
 	}
 
 	return value;
+}
+
+function optionalGenerationCount(value: unknown): number | null {
+	if (value === undefined || value === null) {
+		return null;
+	}
+
+	if (typeof value === "number") {
+		if (!Number.isInteger(value) || value < 1 || value > 52) {
+			throw new ApiError(400, "bad_request", "generation_count must be an integer between 1 and 52.");
+		}
+
+		return value;
+	}
+
+	if (typeof value === "string") {
+		const trimmed = value.trim();
+		if (!/^\d+$/.test(trimmed)) {
+			throw new ApiError(400, "bad_request", "generation_count must be an integer between 1 and 52.");
+		}
+
+		const parsed = Number(trimmed);
+		if (!Number.isInteger(parsed) || parsed < 1 || parsed > 52) {
+			throw new ApiError(400, "bad_request", "generation_count must be an integer between 1 and 52.");
+		}
+
+		return parsed;
+	}
+
+	throw new ApiError(400, "bad_request", "generation_count must be an integer between 1 and 52.");
 }
 
 Deno.serve(async (req) => {
@@ -49,6 +82,7 @@ Deno.serve(async (req) => {
 		const ctx = await requireProductContext(req, body);
 		await requireProductManager(ctx);
 		const scheduleId = optionalScheduleId(body.schedule_id);
+		const generationCount = optionalGenerationCount(body.generation_count);
 		const supabase = getServiceClient();
 
 		if (scheduleId) {
@@ -75,11 +109,16 @@ Deno.serve(async (req) => {
 		const { data, error } = await supabase.rpc("generate_schedule_classes", {
 			p_product_id: ctx.product.id,
 			p_schedule_id: scheduleId,
+			p_generation_count: generationCount,
 		});
 
 		if (error) {
 			if (error.message.includes("schedule_not_found")) {
 				throw new ApiError(404, "not_found", "Schedule was not found.");
+			}
+
+			if (error.message.includes("invalid_generation_count")) {
+				throw new ApiError(400, "bad_request", "generation_count must be an integer between 1 and 52.");
 			}
 
 			throw new ApiError(500, "internal_error", "Could not generate schedule classes.");

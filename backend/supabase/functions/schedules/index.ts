@@ -310,6 +310,7 @@ async function generateForActiveSchedule(productId: string, schedule: ScheduleRo
 	const { data, error } = await supabase.rpc("generate_schedule_classes", {
 		p_product_id: productId,
 		p_schedule_id: schedule.id,
+		p_generation_count: null,
 	});
 
 	if (error) {

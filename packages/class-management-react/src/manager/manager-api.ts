@@ -64,6 +64,11 @@ export type ScheduleGenerationResult = {
 	skipped_count: number;
 };
 
+export type ScheduleGenerationRequest = {
+	schedule_id: string | null;
+	generation_count: number;
+};
+
 export type ManagedClass = {
 	id: string;
 	template_id: string | null;
