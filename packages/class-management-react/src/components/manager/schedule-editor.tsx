@@ -2,7 +2,7 @@ import { CalendarCheck, Eye, Play, RefreshCw } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 
 import { useClassManagementClient } from "../../context/product-context-state";
-import { callManagerApi, type ClassTemplate, type Schedule, type ScheduleGenerationResult, type SchedulePreviewOccurrence } from "../../manager/manager-api";
+import { callManagerApi, type ClassTemplate, type Schedule, type ScheduleGenerationRequest, type ScheduleGenerationResult, type SchedulePreviewOccurrence } from "../../manager/manager-api";
 import { useClassManagementUi } from "../../ui/ui-adapter";
 
 type ScheduleForm = {
@@ -42,6 +42,7 @@ const labels = {
 	startTime: "Start time",
 	duration: "Duration minutes",
 	timezone: "Timezone",
+	generateCount: "Generate count",
 	weekdays: "Weekdays",
 	weekdaysShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
 	create: "Create",
@@ -54,6 +55,7 @@ const labels = {
 	edit: "Edit",
 	saveBeforePreview: "Save the schedule before previewing occurrences.",
 	activateBeforeGenerate: "Activate the schedule before generating classes.",
+	invalidGenerateCount: "Generate count must be between 1 and 52.",
 	generation: (result: ScheduleGenerationResult) => `Created ${result.created_count}, existing ${result.existing_count}, skipped ${result.skipped_count}.`,
 	skipped: "skipped",
 	archiveChoice: "Archive keeps existing generated classes untouched.",
@@ -68,6 +70,7 @@ export function ScheduleEditor({ templates, onChanged }: { templates: ClassTempl
 	const [form, setForm] = useState<ScheduleForm>(emptyForm);
 	const [preview, setPreview] = useState<SchedulePreviewOccurrence[]>([]);
 	const [generation, setGeneration] = useState<ScheduleGenerationResult | null>(null);
+	const [generationCount, setGenerationCount] = useState("8");
 	const [loading, setLoading] = useState(false);
 	const [message, setMessage] = useState<string | null>(null);
 
@@ -119,6 +122,15 @@ export function ScheduleEditor({ templates, onChanged }: { templates: ClassTempl
 			duration_minutes: Number(form.duration_minutes),
 			timezone: form.timezone,
 		};
+	}
+
+	function parsedGenerationCount() {
+		const parsed = Number(generationCount);
+		if (!Number.isInteger(parsed) || parsed < 1 || parsed > 52) {
+			return null;
+		}
+
+		return parsed;
 	}
 
 	async function saveSchedule(status = "draft") {
@@ -178,10 +190,21 @@ export function ScheduleEditor({ templates, onChanged }: { templates: ClassTempl
 			return;
 		}
 
+		const count = parsedGenerationCount();
+		if (count === null) {
+			setGeneration(null);
+			setMessage(labels.invalidGenerateCount);
+			return;
+		}
+
 		setLoading(true);
 		setMessage(null);
 		try {
-			const data = await callManagerApi<ScheduleGenerationResult>(client, "schedule-generate", { schedule_id: scheduleId ?? null });
+			const request: ScheduleGenerationRequest = {
+				schedule_id: scheduleId ?? null,
+				generation_count: count,
+			};
+			const data = await callManagerApi<ScheduleGenerationResult>(client, "schedule-generate", request);
 			setGeneration(data);
 			onChanged();
 		} catch (error) {
@@ -190,6 +213,8 @@ export function ScheduleEditor({ templates, onChanged }: { templates: ClassTempl
 			setLoading(false);
 		}
 	}
+
+	const canGenerateCount = parsedGenerationCount() !== null;
 
 	return (
 		<div className="rounded-md border border-border bg-card p-4">
@@ -209,6 +234,7 @@ export function ScheduleEditor({ templates, onChanged }: { templates: ClassTempl
 				<TextField label={labels.startTime} type="time" value={form.start_time} onChange={(value) => setForm({ ...form, start_time: value })} />
 				<TextField label={labels.duration} type="number" value={form.duration_minutes} onChange={(value) => setForm({ ...form, duration_minutes: value })} />
 				<TextField label={labels.timezone} value={form.timezone} onChange={(value) => setForm({ ...form, timezone: value })} />
+				<TextField label={labels.generateCount} type="number" value={generationCount} onChange={setGenerationCount} />
 				<div className="grid gap-2">
 					<Label>{labels.weekdays}</Label>
 					<div className="flex flex-wrap gap-2">
@@ -234,7 +260,7 @@ export function ScheduleEditor({ templates, onChanged }: { templates: ClassTempl
 					<Eye className="size-4" />
 					{labels.preview}
 				</Button>
-				<Button type="button" variant="outline" onClick={() => generate(form.id ?? undefined)} disabled={loading || !form.id || schedules.find((schedule) => schedule.id === form.id)?.status !== "active"}>
+				<Button type="button" variant="outline" onClick={() => generate(form.id ?? undefined)} disabled={loading || !form.id || !canGenerateCount || schedules.find((schedule) => schedule.id === form.id)?.status !== "active"}>
 					<RefreshCw className="size-4" />
 					{labels.generate}
 				</Button>
@@ -261,7 +287,7 @@ export function ScheduleEditor({ templates, onChanged }: { templates: ClassTempl
 								<Button type="button" variant="outline" size="sm" onClick={() => editSchedule(schedule)}>
 									{labels.edit}
 								</Button>
-								<Button type="button" variant="outline" size="sm" onClick={() => generate(schedule.id)} disabled={schedule.status !== "active"}>
+								<Button type="button" variant="outline" size="sm" onClick={() => generate(schedule.id)} disabled={schedule.status !== "active" || !canGenerateCount}>
 									{labels.generate}
 								</Button>
 								<Button type="button" variant="ghost" size="sm" onClick={() => changeStatus(schedule, "activate")} disabled={schedule.status === "active" || schedule.status === "archived"}>
