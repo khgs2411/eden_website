@@ -96,6 +96,10 @@ _Avoid_: attendance list item
 A manager operation on a rejected class registration that either approves that same registration when the class still allows it, or marks the rejection recovered while keeping it non-live so the user can submit a fresh registration.
 _Avoid_: deleting rejection history, silently resetting status
 
+**Cancellation Cutoff**:
+The product-level number of hours before a class start after which a user can no longer cancel their own live class registration.
+_Avoid_: manager class cancellation, registration close time
+
 **Attendance**:
 The present/absent state of class participants after the manager starts or runs the class.
 _Avoid_: raw list on class
@@ -129,6 +133,7 @@ _Avoid_: walk-in, user
 - Users register for **Classes**, not **Class Templates** or **Schedules**.
 - A **Class** has many **Class Participants**.
 - **Registration Rejection Recovery** applies to a rejected class registration, not to the **Product User** role/status lifecycle.
+- A **Cancellation Cutoff** blocks user self-cancellation only; manager and class cancellation flows remain separate.
 - A **Walk-in** references a **Product User**.
 - A **Trial** does not require a **Product User** and is present by default.
 - Registration status and **Attendance** are separate lifecycle axes.
