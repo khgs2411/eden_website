@@ -114,6 +114,14 @@ function optionalPositiveInteger(value: unknown, field: string): number | null {
 	return Number(value);
 }
 
+function unsupportedDefaultField(value: unknown, field: string, mode: MembershipMode): null {
+	if (value !== null) {
+		throw new ApiError(400, "bad_request", `${field} is not supported for ${mode} membership types.`);
+	}
+
+	return null;
+}
+
 function optionalIsoDate(value: unknown, field: string): string | null {
 	if (value === undefined || value === null) {
 		return null;
@@ -223,6 +231,27 @@ Deno.serve(async (req) => {
 
 		if (action === "update_type") {
 			const id = requireString(body.id ?? body.membership_type_id, "membership_type_id");
+			const { data: existing, error: loadError } = await supabase
+				.from("membership_types")
+				.select("*")
+				.eq("product_id", ctx.product.id)
+				.eq("id", id)
+				.maybeSingle();
+
+			if (loadError) {
+				throw new ApiError(500, "internal_error", "Could not load membership type.");
+			}
+
+			if (!existing) {
+				throw new ApiError(404, "not_found", "Membership type was not found.");
+			}
+
+			const membershipType = existing as MembershipTypeRow;
+
+			if (body.mode !== undefined) {
+				throw new ApiError(400, "bad_request", "mode cannot be changed.");
+			}
+
 			const update: {
 				name?: string;
 				default_stock?: number | null;
@@ -234,11 +263,19 @@ Deno.serve(async (req) => {
 			}
 
 			if (body.default_stock !== undefined) {
-				update.default_stock = optionalPositiveInteger(body.default_stock, "default_stock");
+				if (membershipType.mode !== "stock" && membershipType.mode !== "limited_stock") {
+					update.default_stock = unsupportedDefaultField(body.default_stock, "default_stock", membershipType.mode);
+				} else {
+					update.default_stock = optionalPositiveInteger(body.default_stock, "default_stock");
+				}
 			}
 
 			if (body.default_duration_days !== undefined) {
-				update.default_duration_days = optionalPositiveInteger(body.default_duration_days, "default_duration_days");
+				if (membershipType.mode !== "limited" && membershipType.mode !== "limited_stock") {
+					update.default_duration_days = unsupportedDefaultField(body.default_duration_days, "default_duration_days", membershipType.mode);
+				} else {
+					update.default_duration_days = optionalPositiveInteger(body.default_duration_days, "default_duration_days");
+				}
 			}
 
 			const { data, error } = await supabase
