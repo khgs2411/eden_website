@@ -53,7 +53,7 @@ function optionalGenerationCount(value: unknown): number | null {
 
 	if (typeof value === "string") {
 		const trimmed = value.trim();
-		if (!/^\d+$/.test(trimmed)) {
+		if (!/^(?:[1-9]\d*)$/.test(trimmed)) {
 			throw new ApiError(400, "bad_request", "generation_count must be an integer between 1 and 52.");
 		}
 
