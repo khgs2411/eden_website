@@ -47,7 +47,7 @@ Run this flow against the local backend and classify each item as `pass`, `block
 5. Sign out; confirm the session clears without refresh-token errors.
 6. Sign in as `admin@admin.local`; confirm auth succeeds and product context either reflects global access or returns a clear backend response.
 7. User workflow: load classes, register for a valid class when seed/current data supports it, then cancel a registration when available.
-8. Manager class/schedule workflow: create or update a template, create a schedule, preview generation, generate classes, edit one generated class, cancel one generated class, then list pending registrations.
+8. Manager class/schedule workflow: create or update a template, create a schedule, preview generation, generate classes, edit one generated class, cancel one generated class, list pending registrations, reject a pending registration where data supports it, then verify the rejected recovery controls can either approve the rejected registration or allow the user to re-register.
 9. Manager membership/attendance workflow: list/create membership types, grant/upgrade/revoke membership stock where data supports it, open attendance for a generated class, start attendance, mark a row, add trial/walk-in attendees where supported, then complete attendance.
 10. Run final static checks from the repository root:
     - `rtk npm run build:package`

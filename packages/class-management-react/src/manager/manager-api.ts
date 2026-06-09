@@ -93,6 +93,12 @@ export type Registration = {
 	status: "pending" | "approved" | "rejected" | "cancelled";
 	stock_consumed: number;
 	created_at: string;
+	updated_at: string;
+	rejected_at: string | null;
+	rejected_by: string | null;
+	rejection_recovered_at: string | null;
+	rejection_recovered_by: string | null;
+	rejection_recovery_action: "approve_rejected" | "allow_reregister" | null;
 };
 
 export type MembershipType = {
