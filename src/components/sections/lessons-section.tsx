@@ -1,15 +1,12 @@
-import { ChevronDown } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { useRef, useState, type FocusEvent } from 'react'
 
 import { LessonCard } from '@/components/lessons/lesson-card'
-import { lessons, type Lesson } from '@/data/site'
+import { LessonVideos } from '@/components/lessons/lesson-videos'
+import { CollapsibleToggle } from '@/components/ui/collapsible-toggle'
+import { lessonGroups } from '@/data/site'
 
-type LessonsSectionProps = {
-  onLessonSelect?: (lesson: Lesson) => void
-}
-
-export function LessonsSection({ onLessonSelect }: LessonsSectionProps) {
+export function LessonsSection() {
   const { t } = useTranslation()
   const [fitOpen, setFitOpen] = useState(false)
   const fitRef = useRef<HTMLDivElement>(null)
@@ -22,34 +19,30 @@ export function LessonsSection({ onLessonSelect }: LessonsSectionProps) {
   return (
     <section id="lessons" className="relative z-20 -mt-72 bg-transparent px-6 pb-14 pt-20 lg:-mt-56 lg:px-12">
       <div className="mx-auto max-w-md lg:max-w-2xl">
-        <div className="mb-8 text-center">
-          <h2 className="font-display text-[1.65rem] font-bold uppercase leading-none tracking-[0.28em]">
-            {t('lessons.title')}
-          </h2>
-        </div>
+        <div className="grid gap-12">
+          {lessonGroups.map((group) => {
+            const groupTitle = t(`lessons.groups.${group.id}`)
 
-        <div className="grid gap-2.5 lg:gap-4">
-          {lessons.map((lesson) => (
-            <LessonCard key={lesson.id} lesson={lesson} onSelect={onLessonSelect} />
-          ))}
+            return (
+              <div key={group.id}>
+                <h2 className="mb-8 text-center font-display text-[1.65rem] font-bold uppercase leading-none tracking-[0.28em]">
+                  {groupTitle}
+                </h2>
+                <div className="grid gap-2.5 lg:gap-4">
+                  {group.lessons.map((lesson) => (
+                    <LessonCard key={lesson.id} lesson={lesson} />
+                  ))}
+                </div>
+                <LessonVideos id={group.id} label={t(`lessons.videosCtaOverrides.${group.id}`, { defaultValue: t('lessons.videosCta', { title: groupTitle }) })} videos={group.videos} />
+              </div>
+            )
+          })}
         </div>
 
         <div ref={fitRef} className="mt-5" onBlur={handleFitBlur}>
-          <button
-            type="button"
-            className="mx-auto flex items-center gap-2.5 font-display text-sm font-bold uppercase tracking-[0.12em] text-accent-foreground transition hover:text-foreground"
-            aria-expanded={fitOpen}
-            aria-controls="lesson-fit-panel"
-            onClick={() => setFitOpen((current) => !current)}
-          >
-            <span>{t('lessons.fitCta')}</span>
-            <span
-              className={`inline-flex size-5 shrink-0 origin-center items-center justify-center transition-transform duration-200 ${fitOpen ? 'rotate-180' : ''}`}
-              aria-hidden="true"
-            >
-              <ChevronDown className="size-4 translate-y-[3px]" strokeWidth={2.4} />
-            </span>
-          </button>
+          <CollapsibleToggle open={fitOpen} controls="lesson-fit-panel" onToggle={() => setFitOpen((current) => !current)}>
+            {t('lessons.fitCta')}
+          </CollapsibleToggle>
 
           {fitOpen && (
             <div

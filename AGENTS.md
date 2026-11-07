@@ -5,7 +5,7 @@
 This is a Vite + React + TypeScript marketing site. Application code lives in `src/`.
 
 - `src/components/layout/` contains shared page chrome such as header, footer, and language menu.
-- `src/components/sections/` contains page sections and alternate views, including hero, lessons, about, and Vogue pricing.
+- `src/components/sections/` contains page sections and alternate views, including hero, lessons, about, and private lessons.
 - `src/components/ui/` contains small reusable UI primitives.
 - `src/data/site.ts` stores lesson schedule data.
 - `src/i18n.ts` stores Hebrew, English, and Russian copy.
@@ -23,7 +23,7 @@ GitHub Pages deployment is configured in `.github/workflows/deploy-pages.yml` an
 
 ## Coding Style & Naming Conventions
 
-Use TypeScript React components with clear PascalCase component names, e.g. `HeroSection`, `LessonCard`, `VoguePricingView`. Keep component-specific logic local unless it is reused.
+Use TypeScript React components with clear PascalCase component names, e.g. `HeroSection`, `LessonCard`, `LessonsSection`. Keep component-specific logic local unless it is reused.
 
 Formatting follows `.prettierrc`: tabs, double quotes, semicolons, trailing commas, and `printWidth: 160`. Tailwind classes are used directly in JSX; prefer existing color tokens such as `bg-background`, `text-foreground`, and `text-accent-foreground` before adding custom colors.
 

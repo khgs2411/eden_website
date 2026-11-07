@@ -38,14 +38,26 @@ const resources = {
 			},
 			lessons: {
 				eyebrow: "השבוע",
-				title: "מערכת שיעורים",
-				dayPrefix: "יום",
+				groups: {
+					vogueWorkshops: "סדנאות Vogue New Way",
+					hipHop: "שיעורי Hip-Hop",
+					guestTeacher: "מורה אורחת בסטודיו שלכם",
+				},
+				videosCta: "להתרשמות מ{{title}}",
+				// Per-group replacements for videosCta, where the generic "<cta> <group title>" reads badly.
+				videosCtaOverrides: {
+					guestTeacher: "להתרשמות",
+				},
 				signupCta: "הרשמה",
-				contactCard: {
-					label: "שיעור פרטי",
-					title: "שיעור פרטי או קבוצתי סגור",
-					body: "רוצות לתאם שיעור אישי, הכנה\nלאירוע או סדנה לקבוצה סגורה? כתבו\nלי ונמצא את הפורמט שמתאים לכן.",
-					cta: "להרשמה",
+				contactCards: {
+					privateGroup: {
+						title: "שיעור פרטי או קבוצתי סגור",
+						body: "רוצות לתאם שיעור אישי, הכנה\nלאירוע או סדנה לקבוצה סגורה? כתבו\nלי ונמצא את הפורמט שמתאים לכן.",
+					},
+					guestTeacher: {
+						body: "סדנאות בסטודיו שלכם לאורך השנה: לסדנה חד פעמית או למס מפגשים כמורה אורחת לגילאי חטיבה ומעלה\nהסגנון משלב טכניקת ידיים, פיתוח פרפורמנס וביטחון אישי, קורדינציה, מוסיקאליות ועוד מגוון איכויות שיתנו בוסט לכל רקדן!",
+						cta: "לתאום",
+					},
 				},
 				fitCta: "למי זה מתאים?",
 				fit: {
@@ -68,22 +80,26 @@ const resources = {
 					cta: "להרשמה",
 				},
 			},
-			days: {
-				mon: "שני",
-				sun: "ראשון",
-				tue: "שלישי",
-				wed: "רביעי",
-				thu: "חמישי",
-				fri: "שישי",
-				sat: "שבת",
-			},
 			locations: {
-				ramatGan: "רמת גן",
-				rishonLeZion: "ראשון לציון",
-				nessZiona: "נס ציונה",
+				beerYaakov: "באר יעקב",
+				shenkin17TelAviv: "שנקין 17 תל אביב",
+				bialik25StudioNaim: "ביאליק 25 - סטודיו נעים, רמת גן",
+			},
+			// Card copy writes "Hip\u2011Hop" (non-breaking hyphen) so narrow cards never split the brand name.
+			lessonStyles: {
+				techniqueWorkshop: "סדנת טכניקה",
+				vogueDanceWorkshop: "סדנת ריקוד Vogue",
+				openHipHopClasses: "שיעורי Hip\u2011Hop פתוחים",
 			},
 			lessonStyleSubtitles: {
-				women: "לנשים",
+				earlyBirdPrice: "80 ש״ח בהרשמה מראש",
+				// \u2068…\u2069 isolates the Latin brand name so "/ 150" keeps its place in RTL.
+				hipHopClubPrice: "75 ש״ח לחברות \u2068Hip\u2011Hop Club\u2069 / 150 ש״ח לחיצוניים",
+				ramatGanResidentPrice: "20 ש״ח לתושבי רמת גן | 40 ש״ח לתושבי חוץ",
+				hipHopClubTrial: "בתאום שיעור נסיון ב Hip\u2011Hop Club",
+			},
+			lessonDays: {
+				wednesdays: "ימי רביעי",
 			},
 			lessonPeriods: {
 				morning: "בוקר",
@@ -93,27 +109,6 @@ const resources = {
 				quote: "הריקוד הוא השפה הנסתרת של הנשמה.",
 				body: "שיעור פרטי ממוקד בקצב, טכניקה וביטוי אישי. מתאים להכנה לאירוע, שיפור ביטחון או בניית בסיס חזק יותר.",
 				cta: "להזמין שיעור פרטי",
-			},
-			voguePricing: {
-				back: "חזרה לעמוד הקודם",
-				title: "מחירון שיעורי ווג",
-				schedule: "ימי ראשון / 19:15",
-				duration: "משך השיעור 75 דק׳",
-				location: "השיעור מתקיים במרכז שקמה, רחוב שלם 32 - רמת גן",
-				registration: "לפרטים והרשמה פנו אלי באינסטגרם",
-				table: {
-					entry: "כניסה",
-					quantity: "כמות שיעורים",
-					price: "מחיר",
-					validity: "תוקף",
-				},
-				rows: {
-					trial: { entry: "שיעור היכרות", quantity: "1", price: "60₪", validity: "חד פעמי" },
-					single: { entry: "שיעור בודד", quantity: "1", price: "70₪", validity: "חד פעמי" },
-					card8: { entry: "כרטיסייה\nקטנה", quantity: "8", price: "480₪", validity: "תקף לשלושה חודשים" },
-					card12: { entry: "כרטיסייה בינונית", quantity: "12", price: "660₪", validity: "תקף לשלושה חודשים" },
-					card16: { entry: "כרטיסייה\nגדולה", quantity: "16", price: "800₪", validity: "תקף לשלושה חודשים" },
-				},
 			},
 			signup: {
 				eyebrow: "מתחילים לזוז",
@@ -162,14 +157,25 @@ const resources = {
 			},
 			lessons: {
 				eyebrow: "This week",
-				title: "Lesson plan",
-				dayPrefix: "",
+				groups: {
+					vogueWorkshops: "Vogue New Way Workshops",
+					hipHop: "Hip-Hop Classes",
+					guestTeacher: "A Guest Teacher at Your Studio",
+				},
+				videosCta: "See {{title}} in action",
+				videosCtaOverrides: {
+					guestTeacher: "See it in action",
+				},
 				signupCta: "Sign up",
-				contactCard: {
-					label: "Private lesson",
-					title: "Private lesson or closed group",
-					body: "Want to book a personal lesson, event prep, or a workshop for a closed group? Message me and we will find the right format.",
-					cta: "Sign up",
+				contactCards: {
+					privateGroup: {
+						title: "Private lesson or closed group",
+						body: "Want to book a personal lesson, event prep, or a workshop for a closed group? Message me and we will find the right format.",
+					},
+					guestTeacher: {
+						body: "Workshops at your studio throughout the year: a one-off workshop or a series of sessions as a guest teacher, for middle school ages and up.\nThe style combines hand technique, performance and confidence building, coordination, musicality and many more qualities that will give every dancer a boost!",
+						cta: "Get in touch",
+					},
 				},
 				fitCta: "Who is this for?",
 				fit: {
@@ -192,22 +198,24 @@ const resources = {
 					cta: "Sign up",
 				},
 			},
-			days: {
-				mon: "Monday",
-				sun: "Sunday",
-				tue: "Tuesday",
-				wed: "Wednesday",
-				thu: "Thursday",
-				fri: "Friday",
-				sat: "Saturday",
-			},
 			locations: {
-				ramatGan: "Ramat Gan",
-				rishonLeZion: "Rishon LeZion",
-				nessZiona: "Ness Ziona",
+				beerYaakov: "Be'er Ya'akov",
+				shenkin17TelAviv: "17 Shenkin St, Tel Aviv",
+				bialik25StudioNaim: "25 Bialik St - Studio Na'im, Ramat Gan",
+			},
+			lessonStyles: {
+				techniqueWorkshop: "Technique Workshop",
+				vogueDanceWorkshop: "Vogue Dance Workshop",
+				openHipHopClasses: "Open Hip\u2011Hop Classes",
 			},
 			lessonStyleSubtitles: {
-				women: "Women",
+				earlyBirdPrice: "₪80 with advance registration",
+				hipHopClubPrice: "₪75 for Hip\u2011Hop Club members / ₪150 for non-members",
+				ramatGanResidentPrice: "₪20 for Ramat Gan residents | ₪40 for non-residents",
+				hipHopClubTrial: "Trial class by arrangement at Hip\u2011Hop Club",
+			},
+			lessonDays: {
+				wednesdays: "Wednesdays",
 			},
 			lessonPeriods: {
 				morning: "Morning",
@@ -217,27 +225,6 @@ const resources = {
 				quote: "Dance is the hidden language of the soul.",
 				body: "A focused private lesson built around rhythm, technique, and personal expression. Ideal for event prep, confidence, or building a stronger foundation.",
 				cta: "Book a private lesson",
-			},
-			voguePricing: {
-				back: "Back to previous page",
-				title: "Vogue class pricing",
-				schedule: "Sundays / 19:15",
-				duration: "Class duration: 75 minutes",
-				location: "Classes take place in Ramat Gan",
-				registration: "For details and registration, message me on Instagram",
-				table: {
-					entry: "Entry",
-					quantity: "Classes",
-					price: "Price",
-					validity: "Valid for",
-				},
-				rows: {
-					trial: { entry: "Intro class", quantity: "1", price: "₪60", validity: "One time" },
-					single: { entry: "Single class", quantity: "1", price: "₪70", validity: "One time" },
-					card8: { entry: "Class card", quantity: "8", price: "₪480", validity: "3 months" },
-					card12: { entry: "Class card", quantity: "12", price: "₪660", validity: "3 months" },
-					card16: { entry: "Class card", quantity: "16", price: "₪800", validity: "3 months" },
-				},
 			},
 			signup: {
 				eyebrow: "Start moving",
@@ -286,14 +273,25 @@ const resources = {
 			},
 			lessons: {
 				eyebrow: "На этой неделе",
-				title: "План уроков",
-				dayPrefix: "",
+				groups: {
+					vogueWorkshops: "Воркшопы Vogue New Way",
+					hipHop: "Занятия Hip-Hop",
+					guestTeacher: "Приглашённый педагог в вашей студии",
+				},
+				videosCta: "Как проходят {{title}}",
+				videosCtaOverrides: {
+					guestTeacher: "Как это выглядит",
+				},
 				signupCta: "Запись",
-				contactCard: {
-					label: "Личный урок",
-					title: "Личный урок или закрытая группа",
-					body: "Хотите личный урок, подготовку к событию или занятие для закрытой группы? Напишите мне, и мы подберем подходящий формат.",
-					cta: "Запись",
+				contactCards: {
+					privateGroup: {
+						title: "Личный урок или закрытая группа",
+						body: "Хотите личный урок, подготовку к событию или занятие для закрытой группы? Напишите мне, и мы подберем подходящий формат.",
+					},
+					guestTeacher: {
+						body: "Воркшопы в вашей студии в течение всего года: разовый воркшоп или серия занятий в формате приглашённого педагога, для учеников средней школы и старше.\nСтиль сочетает технику рук, развитие перформанса и уверенности в себе, координацию, музыкальность и множество других качеств, которые дадут импульс любому танцору!",
+						cta: "Связаться",
+					},
 				},
 				fitCta: "Кому это подходит?",
 				fit: {
@@ -316,22 +314,24 @@ const resources = {
 					cta: "Запись",
 				},
 			},
-			days: {
-				mon: "Понедельник",
-				sun: "Воскресенье",
-				tue: "Вторник",
-				wed: "Среда",
-				thu: "Четверг",
-				fri: "Пятница",
-				sat: "Суббота",
-			},
 			locations: {
-				ramatGan: "Рамат-Ган",
-				rishonLeZion: "Ришон-ле-Цион",
-				nessZiona: "Нес-Циона",
+				beerYaakov: "Беэр-Яаков",
+				shenkin17TelAviv: "Шенкин 17, Тель-Авив",
+				bialik25StudioNaim: "Бялик 25 - студия Наим, Рамат-Ган",
+			},
+			lessonStyles: {
+				techniqueWorkshop: "Воркшоп по технике",
+				vogueDanceWorkshop: "Танцевальный воркшоп Vogue",
+				openHipHopClasses: "Открытые занятия Hip\u2011Hop",
 			},
 			lessonStyleSubtitles: {
-				women: "Для женщин",
+				earlyBirdPrice: "80 ₪ при предварительной записи",
+				hipHopClubPrice: "75 ₪ для участниц Hip\u2011Hop Club / 150 ₪ для остальных",
+				ramatGanResidentPrice: "20 ₪ для жителей Рамат-Гана | 40 ₪ для остальных",
+				hipHopClubTrial: "Пробное занятие по договоренности в Hip\u2011Hop Club",
+			},
+			lessonDays: {
+				wednesdays: "По средам",
 			},
 			lessonPeriods: {
 				morning: "Утро",
@@ -341,27 +341,6 @@ const resources = {
 				quote: "Танец — скрытый язык души.",
 				body: "Индивидуальный урок вокруг ритма, техники и личного выражения. Подходит для подготовки к событию, уверенности и сильной базы.",
 				cta: "Записаться на личный урок",
-			},
-			voguePricing: {
-				back: "Назад на предыдущую страницу",
-				title: "Цены на занятия Vogue",
-				schedule: "Воскресенье / 19:15",
-				duration: "Продолжительность: 75 минут",
-				location: "Занятия проходят в Рамат-Гане",
-				registration: "Для подробностей и записи напишите мне в Instagram",
-				table: {
-					entry: "Вход",
-					quantity: "Занятий",
-					price: "Цена",
-					validity: "Срок",
-				},
-				rows: {
-					trial: { entry: "Пробное занятие", quantity: "1", price: "₪60", validity: "Один раз" },
-					single: { entry: "Разовое занятие", quantity: "1", price: "₪70", validity: "Один раз" },
-					card8: { entry: "Абонемент", quantity: "8", price: "₪480", validity: "3 месяца" },
-					card12: { entry: "Абонемент", quantity: "12", price: "₪660", validity: "3 месяца" },
-					card16: { entry: "Абонемент", quantity: "16", price: "₪800", validity: "3 месяца" },
-				},
 			},
 			signup: {
 				eyebrow: "Начать движение",
