@@ -43,12 +43,24 @@ const resources = {
 					hipHop: "שיעורי Hip-Hop",
 					tailored: "בהתאמה אישית",
 				},
+				// Short group names for the hero jump chips, sized to fit one line at 375px.
+				groupsShort: {
+					vogueWorkshops: "סדנאות Vogue New Way",
+					hipHop: "שיעורי Hip-Hop",
+					tailored: "בהתאמה אישית",
+				},
 				videosCta: "להתרשמות מ{{title}}",
 				// Per-group replacements for videosCta, where the generic "<cta> <group title>" reads badly.
 				videosCtaOverrides: {
 					tailored: "להתרשמות",
 				},
 				signupCta: "הרשמה",
+				notices: {
+					workshopUpdates: {
+						body: "לא מסתדר לכם להגיע לאחת הסדנאות?\nיש לי קבוצת וואטסאפ עם מידע על הסדנאות הבאות.",
+						cta: "להצטרפות לקבוצה",
+					},
+				},
 				contactCards: {
 					privateGroup: {
 						title: "שיעור פרטי או קבוצתי סגור",
@@ -78,7 +90,7 @@ const resources = {
 				body: "היי, אני עדן - רקדנית מקצועית ומורה לריקוד\nבעלת נסיון של מעל 14 שנים בהוראת מחול\n\nבוגרת קורס מדריכי היפ-הופ בוינגייט ומסלול הכשרת רקדנים באקדמיה למחול\nמופיעה במחזות זמר והצגות בתיאטראות ברחבי הארץ,\nממקימי סצנת הבולרום בישראל, מתמחה בסגנון Vogue New Way ושופטת בתחרויות ריקוד בארץ.\nבעלת ניסיון בסגנונות מגוונים כמו ג'אז, היפהופ, בלט, מחזות זמר, ווג ואמפרוביזציה.\n\nאת השעורים שלי אני מלמדת באווירה מקצועית, פתוחה ומעצימה, עם דגש על ביטחון עצמי, ביטוי אישי והנאה.\n\nאני מאמינה שכל עוד יש בך את הרצון, יש בך גם את היכולת\nכל מה שנדרש הוא לתרגל\nזה מה שנעשה יחד, צעד צעד, בשעורי ריקוד לבוגרים\n\nאין צורך בנסיון קודם, השיעורים מתאימים לכל הרמות\nמחכה לכן.ם בסטודיו 🤍",
 				registrationCard: {
 					title: "רוצות להצטרף?",
-					body: "חזרו למערכת השיעורים ובחרו את השיעור שמתאים לכן.",
+					body: "חזרו למערכת השיעורים ובחרו את השיעור שמתאים לכן.ם.",
 					cta: "להרשמה",
 				},
 			},
@@ -164,11 +176,22 @@ const resources = {
 					hipHop: "Hip-Hop Classes",
 					tailored: "Tailored to You",
 				},
+				groupsShort: {
+					vogueWorkshops: "Vogue New Way",
+					hipHop: "Hip-Hop",
+					tailored: "Tailored",
+				},
 				videosCta: "See {{title}} in action",
 				videosCtaOverrides: {
 					tailored: "See it in action",
 				},
 				signupCta: "Sign up",
+				notices: {
+					workshopUpdates: {
+						body: "Can't make it to one of these?\nI've got a WhatsApp group with info about what's coming up.",
+						cta: "Join the group",
+					},
+				},
 				contactCards: {
 					privateGroup: {
 						title: "Private lesson or closed group",
@@ -282,11 +305,22 @@ const resources = {
 					hipHop: "Занятия Hip-Hop",
 					tailored: "Индивидуальный формат",
 				},
+				groupsShort: {
+					vogueWorkshops: "Vogue New Way",
+					hipHop: "Hip-Hop",
+					tailored: "Индивидуально",
+				},
 				videosCta: "Как проходят {{title}}",
 				videosCtaOverrides: {
 					tailored: "Как это выглядит",
 				},
 				signupCta: "Запись",
+				notices: {
+					workshopUpdates: {
+						body: "Не получается прийти ни на один из этих воркшопов?\nУ меня есть WhatsApp-группа с информацией о ближайших событиях.",
+						cta: "Вступить в группу",
+					},
+				},
 				contactCards: {
 					privateGroup: {
 						title: "Личный урок или закрытая группа",

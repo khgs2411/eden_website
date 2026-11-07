@@ -39,6 +39,8 @@ export const lessonGroups = [
         signupUrl: 'https://ramat-gan.smarticket.co.il/%D7%A1%D7%93%D7%A0%D7%AA_Vogue_New_Way/?id=4534',
       },
     ],
+    // Shown under the dated workshops for people who can't make these dates.
+    notice: { copy: 'workshopUpdates', href: 'https://chat.whatsapp.com/LgV1Go5aIEg40Edbh7degB?s=cl&p=a&iam=2' },
     // Paths are relative to public/; width/height are the source pixels, used to reserve layout space.
     videos: [
       { src: 'videos/vogue-workshops-1.mp4', poster: 'videos/vogue-workshops-1.jpg', width: 478, height: 850 },

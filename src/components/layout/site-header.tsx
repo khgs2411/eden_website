@@ -46,29 +46,17 @@ export function SiteHeader({
     <>
       <header
         className={cn(
-          'fixed left-1/2 top-0 z-50 w-full max-w-[430px] -translate-x-1/2 transition-colors duration-200 lg:max-w-[820px]',
+          'fixed left-1/2 top-0 z-50 w-full max-w-(--shell-width) -translate-x-1/2 transition-colors duration-200',
           isScrolled
             ? 'border-b border-border/70 bg-background/95 shadow-sm backdrop-blur'
             : 'bg-transparent',
         )}
         dir="ltr"
       >
-        <div className="mx-auto flex h-16 items-center justify-between px-7 lg:px-10">
+        <div className="mx-auto flex h-16 items-center justify-between px-6">
           <a href="#home" className="font-display text-xl font-bold uppercase tracking-[0.42em]">
             {t('brand')}
           </a>
-
-          <nav className="hidden items-center gap-7 lg:flex">
-            {navItems.map((item) => (
-              <a
-                key={item.key}
-                href={item.href}
-                className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground transition hover:text-foreground"
-              >
-                {t(`nav.${item.key}`)}
-              </a>
-            ))}
-          </nav>
 
           <div className="flex items-center gap-0.5">
             <LanguageMenu onLanguageChange={() => onMenuOpenChange(false)} />
@@ -86,7 +74,7 @@ export function SiteHeader({
               type="button"
               variant="ghost"
               size="icon"
-              className="size-9 lg:hidden"
+              className="size-9"
               aria-label={t('menu.toggle')}
               aria-expanded={menuOpen}
               onClick={() => onMenuOpenChange(!menuOpen)}
@@ -98,7 +86,8 @@ export function SiteHeader({
       </header>
 
       {menuOpen && (
-        <div className="fixed inset-0 z-50 lg:hidden">
+        // Constrained to the phone-width column so the drawer opens inside the site on desktop too.
+        <div className="fixed inset-y-0 left-1/2 z-[70] w-full max-w-(--shell-width) -translate-x-1/2 overflow-hidden">
           <button
             type="button"
             className="absolute inset-0 bg-foreground/35"
@@ -135,13 +124,14 @@ export function SiteHeader({
             </div>
 
             <nav className="grid gap-1 p-4">
-              {navItems.map((item) => (
+              {navItems.map((item, index) => (
                 <a
                   key={item.key}
                   href={item.href}
-                  className="rounded-md px-3 py-3 text-base font-bold uppercase tracking-[0.16em] text-muted-foreground hover:bg-muted hover:text-foreground"
+                  className="group flex items-baseline gap-3 rounded-md px-3 py-3 font-display text-3xl font-bold uppercase tracking-[0.02em] text-foreground/80 transition hover:text-accent-foreground"
                   onClick={() => onMenuOpenChange(false)}
                 >
+                  <span className="text-xs tracking-[0.3em] text-accent-foreground">{String(index + 1).padStart(2, '0')}</span>
                   {t(`nav.${item.key}`)}
                 </a>
               ))}
