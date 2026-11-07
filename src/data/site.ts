@@ -59,12 +59,6 @@ export const lessonGroups = [
         signupUrl:
           'https://www.hiphop-club.com/?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAdGRzdgVbyaxleHRuA2FlbQIxMQBwZG9mAnNydGMGYXBwX2lkDzU2NzA2NzM0MzM1MjQyNwABpyJUlmQfmZ6PRbgd2hSO3PW2mW-jC2vahu7GUgwmsFkvO9D88zTdG4LQ7v_Q_aem_cP07OUNPUGUHg8uHije8SQ',
       },
-      {
-        id: 'private-group-contact',
-        kind: 'contact',
-        copy: 'privateGroup',
-        href: instagramUrl,
-      },
     ],
     videos: [
       { src: 'videos/hip-hop-1.mp4', poster: 'videos/hip-hop-1.jpg', width: 848, height: 478 },
@@ -73,13 +67,19 @@ export const lessonGroups = [
     ],
   },
   {
-    id: 'guestTeacher',
+    id: 'tailored',
     lessons: [
       {
         id: 'guest-teacher-contact',
         kind: 'contact',
         copy: 'guestTeacher',
         href: 'https://wa.me/972549847896',
+      },
+      {
+        id: 'private-group-contact',
+        kind: 'contact',
+        copy: 'privateGroup',
+        href: instagramUrl,
       },
     ],
     videos: [

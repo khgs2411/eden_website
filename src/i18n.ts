@@ -41,20 +41,22 @@ const resources = {
 				groups: {
 					vogueWorkshops: "סדנאות Vogue New Way",
 					hipHop: "שיעורי Hip-Hop",
-					guestTeacher: "מורה אורחת בסטודיו שלכם",
+					tailored: "בהתאמה אישית",
 				},
 				videosCta: "להתרשמות מ{{title}}",
 				// Per-group replacements for videosCta, where the generic "<cta> <group title>" reads badly.
 				videosCtaOverrides: {
-					guestTeacher: "להתרשמות",
+					tailored: "להתרשמות",
 				},
 				signupCta: "הרשמה",
 				contactCards: {
 					privateGroup: {
 						title: "שיעור פרטי או קבוצתי סגור",
-						body: "רוצות לתאם שיעור אישי, הכנה\nלאירוע או סדנה לקבוצה סגורה? כתבו\nלי ונמצא את הפורמט שמתאים לכן.",
+						body: "רוצות לתאם שיעור אישי, הכנה לאירוע או סדנה לקבוצה סגורה? כתבו לי ונמצא את הפורמט שמתאים לכן.",
+						cta: "לתאום",
 					},
 					guestTeacher: {
+						title: "מורה אורחת בסטודיו שלכם",
 						body: "סדנאות בסטודיו שלכם לאורך השנה: לסדנה חד פעמית או למס מפגשים כמורה אורחת לגילאי חטיבה ומעלה\nהסגנון משלב טכניקת ידיים, פיתוח פרפורמנס וביטחון אישי, קורדינציה, מוסיקאליות ועוד מגוון איכויות שיתנו בוסט לכל רקדן!",
 						cta: "לתאום",
 					},
@@ -160,19 +162,21 @@ const resources = {
 				groups: {
 					vogueWorkshops: "Vogue New Way Workshops",
 					hipHop: "Hip-Hop Classes",
-					guestTeacher: "A Guest Teacher at Your Studio",
+					tailored: "Tailored to You",
 				},
 				videosCta: "See {{title}} in action",
 				videosCtaOverrides: {
-					guestTeacher: "See it in action",
+					tailored: "See it in action",
 				},
 				signupCta: "Sign up",
 				contactCards: {
 					privateGroup: {
 						title: "Private lesson or closed group",
 						body: "Want to book a personal lesson, event prep, or a workshop for a closed group? Message me and we will find the right format.",
+						cta: "Get in touch",
 					},
 					guestTeacher: {
+						title: "A Guest Teacher at Your Studio",
 						body: "Workshops at your studio throughout the year: a one-off workshop or a series of sessions as a guest teacher, for middle school ages and up.\nThe style combines hand technique, performance and confidence building, coordination, musicality and many more qualities that will give every dancer a boost!",
 						cta: "Get in touch",
 					},
@@ -276,19 +280,21 @@ const resources = {
 				groups: {
 					vogueWorkshops: "Воркшопы Vogue New Way",
 					hipHop: "Занятия Hip-Hop",
-					guestTeacher: "Приглашённый педагог в вашей студии",
+					tailored: "Индивидуальный формат",
 				},
 				videosCta: "Как проходят {{title}}",
 				videosCtaOverrides: {
-					guestTeacher: "Как это выглядит",
+					tailored: "Как это выглядит",
 				},
 				signupCta: "Запись",
 				contactCards: {
 					privateGroup: {
 						title: "Личный урок или закрытая группа",
 						body: "Хотите личный урок, подготовку к событию или занятие для закрытой группы? Напишите мне, и мы подберем подходящий формат.",
+						cta: "Связаться",
 					},
 					guestTeacher: {
+						title: "Приглашённый педагог в вашей студии",
 						body: "Воркшопы в вашей студии в течение всего года: разовый воркшоп или серия занятий в формате приглашённого педагога, для учеников средней школы и старше.\nСтиль сочетает технику рук, развитие перформанса и уверенности в себе, координацию, музыкальность и множество других качеств, которые дадут импульс любому танцору!",
 						cta: "Связаться",
 					},

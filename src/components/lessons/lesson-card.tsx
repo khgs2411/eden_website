@@ -1,35 +1,48 @@
+import { ArrowRight } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 import type { Lesson } from '@/data/site'
 
 type LessonCardProps = {
   lesson: Lesson
+  index: number
 }
 
-export function LessonCard({ lesson }: LessonCardProps) {
+export function LessonCard({ lesson, index }: LessonCardProps) {
   const { t } = useTranslation()
 
   if (!('style' in lesson)) {
     // Title and cta are optional per card; the cta falls back to the shared signup label.
     const copy = t(`lessons.contactCards.${lesson.copy}`, { returnObjects: true }) as { title?: string; body: string; cta?: string }
 
+    // Offer tile: poster-style outlined number, title, copy, and a CTA anchored to the bottom so
+    // side-by-side tiles line up regardless of copy length.
     return (
       <a
         href={lesson.href}
         target="_blank"
         rel="noreferrer"
-        className="grid w-full grid-cols-[1fr_max-content] items-stretch rounded-md border border-border/80 bg-card/82 text-start shadow-[0_10px_30px_rgba(0,0,0,0.04)] backdrop-blur transition hover:-translate-y-0.5 hover:border-foreground/30 hover:shadow-md dark:bg-card/35 lg:min-h-[7.25rem] lg:grid-cols-[minmax(0,1fr)_max-content]"
+        className="group relative flex h-full flex-col overflow-hidden rounded-md border border-border/80 bg-card/82 p-5 text-start shadow-[0_10px_30px_rgba(0,0,0,0.04)] backdrop-blur transition hover:-translate-y-0.5 hover:border-foreground/30 hover:shadow-md dark:bg-card/35 lg:p-7"
       >
-        <span className="grid min-w-0 content-center gap-2 px-4 py-5 lg:px-8 lg:py-6">
-          {copy.title && (
-            <span className="font-display text-[1.05rem] font-bold uppercase tracking-[0.08em] text-foreground/92 lg:text-2xl">{copy.title}</span>
-          )}
-          <span className="whitespace-pre-line text-sm font-semibold leading-5 text-muted-foreground lg:text-lg lg:leading-8">{copy.body}</span>
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 top-0 h-0.5 bg-linear-to-l from-transparent via-accent-foreground/80 to-transparent"
+        />
+        <span
+          aria-hidden="true"
+          className="font-display text-5xl font-bold leading-none text-transparent [-webkit-text-stroke:1px_var(--accent-foreground)] lg:text-6xl"
+        >
+          {String(index + 1).padStart(2, '0')}
         </span>
-        <span className="flex items-center justify-end border-s border-border/70 px-4 py-5 lg:border-s-0 lg:px-6">
-          <span className="rounded-sm border border-accent-foreground/65 px-3 py-2 font-display text-xs font-bold uppercase tracking-[0.1em] text-accent-foreground">
-            {copy.cta ?? t('lessons.signupCta')}
+        {copy.title && (
+          <span className="mt-4 font-display text-[1.15rem] font-bold uppercase leading-tight tracking-[0.08em] text-foreground/92 lg:text-2xl">
+            {copy.title}
           </span>
+        )}
+        <span className="mt-3 flex-1 whitespace-pre-line text-sm font-semibold leading-6 text-muted-foreground lg:text-base lg:leading-7">{copy.body}</span>
+        <span className="mt-6 inline-flex items-center gap-2 self-start rounded-sm border border-accent-foreground/65 px-4 py-2 font-display text-xs font-bold uppercase tracking-[0.1em] text-accent-foreground transition-colors group-hover:bg-accent-foreground group-hover:text-background">
+          {copy.cta ?? t('lessons.signupCta')}
+          <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5 rtl:-scale-x-100 rtl:group-hover:-translate-x-0.5" strokeWidth={2.4} />
         </span>
       </a>
     )

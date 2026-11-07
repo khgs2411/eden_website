@@ -9,8 +9,7 @@ This site is a focused dance-teacher landing page for Eden Dafna Goren. The expe
 The page is built from full-width sections inside a constrained app shell. Keep the main experience direct:
 
 - Hero: identity, photography, and the main dance lesson offer.
-- Lessons: schedule cards, lesson-fit disclosure, and click-through paths.
-- Vogue pricing view: focused detail page for Vogue registration/pricing.
+- Lessons: titled groups of schedule cards, each with an optional lazy-loaded video disclosure; a final group of two-up offer tiles (outlined number, title, copy, bottom-anchored CTA); and the lesson-fit disclosure.
 - About: personal credibility and teaching philosophy.
 - Footer: social links.
 
