@@ -65,7 +65,7 @@ const resources = {
 				fit: {
 					hipHop: {
 						title: "Hip-Hop",
-						body: "שיעורי היפ הופ לנשים מתאימים לכל מי שרוצה לרקוד, להשתחרר ולהנות במרחב פתוח ומאפשר.\nאין צורך בנסיון קודם. בואי כמו שאת.",
+						body: "שיעורי היפ הופ פתוחים מתאימים לכל מי שרוצה לרקוד, להשתחרר ולהנות במרחב פתוח ומאפשר.\nאין צורך בנסיון קודם. בואי כמו שאת.",
 					},
 					vogue: {
 						title: "Vogue",
@@ -185,7 +185,7 @@ const resources = {
 				fit: {
 					hipHop: {
 						title: "Hip-Hop",
-						body: "Hip-Hop classes for women are for anyone who wants to dance, release, and enjoy movement in an open, supportive space.\nNo previous experience is needed. Come as you are.",
+						body: "Open Hip-Hop classes are for anyone who wants to dance, release, and enjoy movement in an open, supportive space.\nNo previous experience is needed. Come as you are.",
 					},
 					vogue: {
 						title: "Vogue",
@@ -303,7 +303,7 @@ const resources = {
 				fit: {
 					hipHop: {
 						title: "Hip-Hop",
-						body: "Занятия Hip-Hop для женщин подходят всем, кто хочет танцевать, расслабиться и получать удовольствие в открытом и поддерживающем пространстве.\nПредыдущий опыт не нужен. Приходи такой, какая ты есть.",
+						body: "Открытые занятия Hip-Hop подходят всем, кто хочет танцевать, расслабиться и получать удовольствие в открытом и поддерживающем пространстве.\nПредыдущий опыт не нужен. Приходи такой, какая ты есть.",
 					},
 					vogue: {
 						title: "Vogue",

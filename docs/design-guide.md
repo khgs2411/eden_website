@@ -9,7 +9,7 @@ This site is a focused dance-teacher landing page for Eden Dafna Goren. The expe
 The page is built from full-width sections inside a constrained app shell. Keep the main experience direct:
 
 - Hero: identity, photography, and the main dance lesson offer.
-- Lessons: titled groups of schedule cards, each with an optional lazy-loaded video disclosure; a final group of two-up offer tiles (outlined number, title, copy, bottom-anchored CTA); and the lesson-fit disclosure.
+- Lessons: titled groups of schedule cards, each with an optional lazy-loaded video disclosure; a final group of two-up offer tiles (outlined number, title, copy, bottom-anchored CTA); and an always-visible "who is this for" spread with outlined poster words per style.
 - About: personal credibility and teaching philosophy.
 - Footer: social links.
 
