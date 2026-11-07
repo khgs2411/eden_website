@@ -15,7 +15,8 @@ dist/
 dist-ssr/
 build/
 coverage/
-assets/
+# Raw source media (e.g. WhatsApp exports) kept locally; only public/assets ships.
+/assets/
 
 # Local env files
 .env
