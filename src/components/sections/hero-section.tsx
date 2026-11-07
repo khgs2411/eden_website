@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import type { CSSProperties } from 'react'
 
+import { lessonGroups } from '@/data/site'
 import type { Theme } from '@/hooks/use-theme'
 import { cn } from '@/lib/utils'
 
@@ -29,30 +30,22 @@ export function HeroSection({ theme }: HeroSectionProps) {
       : isRtl
         ? 'scale(1.09) scaleX(-1)'
         : 'scale(1.09)'
-  const desktopImageTransform =
-    theme === 'light'
-      ? isRtl
-        ? 'translate(-4%, -4%) scale(1.03) scaleX(-1)'
-        : 'translate(4%, -4%) scale(1.03)'
-      : isRtl
-        ? 'translate(-3%, -2%) scale(1.02) scaleX(-1)'
-        : 'translate(3%, -2%) scale(1.02)'
   const nameLine = [t('hero.noLimits'), t('hero.just')].filter(Boolean).join(' ')
   const headingClassName = cn(
     'font-display font-bold uppercase leading-[0.92] tracking-[-0.035em]',
-    'text-[clamp(2.85rem,12vw,3.45rem)] sm:text-[3.7rem] lg:text-[4rem]',
+    'text-[3.45rem]',
   )
   const headingWrapperClassName = cn(
     'ltr:text-left rtl:ms-auto rtl:text-right',
-    'max-w-[30rem] lg:max-w-[44rem]',
+    'max-w-[30rem]',
   )
   const movementLineClassName = cn(
     'brush-text leading-[0.75] text-accent-foreground',
-    'text-[clamp(2.65rem,12vw,3.25rem)] sm:text-[3.45rem] lg:text-[4.15rem]',
+    'text-[3.25rem]',
   )
 
   return (
-    <section id="home" className="relative flex min-h-[700px] items-start overflow-visible px-7 pb-0 pt-52 lg:min-h-[760px] lg:px-12 lg:pt-60">
+    <section id="home" className="relative flex min-h-[700px] items-start overflow-visible px-7 pb-0 pt-52">
       <div className="absolute inset-0 z-0 overflow-hidden">
         <img
           src={`${assetBase}assets/${theme === 'dark' ? 'image_1.jpg' : 'image_3.jpg'}`}
@@ -61,7 +54,6 @@ export function HeroSection({ theme }: HeroSectionProps) {
           style={{
             objectPosition: imagePosition,
             '--hero-image-transform': imageTransform,
-            '--hero-image-transform-desktop': desktopImageTransform,
           } as CSSProperties}
         />
         <div className="absolute inset-0 z-[1] bg-[linear-gradient(90deg,rgba(250,248,245,0.97)_0%,rgba(250,248,245,0.52)_34%,rgba(250,248,245,0.02)_68%),linear-gradient(180deg,rgba(250,248,245,0)_0%,rgba(250,248,245,0)_42%,rgba(250,248,245,0.82)_67%,rgba(250,248,245,1)_80%,rgba(250,248,245,1)_100%)] rtl:bg-[linear-gradient(270deg,rgba(250,248,245,0.97)_0%,rgba(250,248,245,0.52)_34%,rgba(250,248,245,0.02)_68%),linear-gradient(180deg,rgba(250,248,245,0)_0%,rgba(250,248,245,0)_42%,rgba(250,248,245,0.82)_67%,rgba(250,248,245,1)_80%,rgba(250,248,245,1)_100%)] dark:bg-[linear-gradient(90deg,rgba(0,0,0,0.96)_0%,rgba(0,0,0,0.48)_34%,rgba(0,0,0,0.04)_70%),linear-gradient(180deg,rgba(0,0,0,0)_0%,rgba(0,0,0,0)_42%,rgba(0,0,0,0.86)_67%,rgba(0,0,0,1)_80%,rgba(0,0,0,1)_100%)] dark:rtl:bg-[linear-gradient(270deg,rgba(0,0,0,0.96)_0%,rgba(0,0,0,0.48)_34%,rgba(0,0,0,0.04)_70%),linear-gradient(180deg,rgba(0,0,0,0)_0%,rgba(0,0,0,0)_42%,rgba(0,0,0,0.86)_67%,rgba(0,0,0,1)_80%,rgba(0,0,0,1)_100%)]" />
@@ -82,6 +74,19 @@ export function HeroSection({ theme }: HeroSectionProps) {
               ))}
             </span>
           </h1>
+          {/* Quick jumps into each lesson group: on a long single column these beat a nav bar. */}
+          {/* One line on every width: tightened to fit, and swipeable edge to edge if a language runs long. */}
+          <nav className="-mx-7 mt-9 flex gap-1 overflow-x-auto px-7 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" aria-label={t('nav.lessons')}>
+            {lessonGroups.map((group) => (
+              <a
+                key={group.id}
+                href={`#group-${group.id}`}
+                className="shrink-0 whitespace-nowrap rounded-full border border-foreground/20 bg-background/40 px-2 py-1.5 font-display text-[0.62rem] font-bold uppercase tracking-[0.04em] text-foreground/85 backdrop-blur transition hover:border-accent-foreground hover:text-accent-foreground"
+              >
+                {t(`lessons.groupsShort.${group.id}`)}
+              </a>
+            ))}
+          </nav>
         </div>
       </div>
     </section>

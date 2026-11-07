@@ -1,54 +1,67 @@
+import { ArrowRight } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
+
+import { Reveal } from '@/components/ui/reveal'
+import { SectionHeading } from '@/components/ui/section-heading'
+import { lessonGroups } from '@/data/site'
+
+// Section numbering continues after the lesson groups and the "who is this for" spread.
+const sectionIndex = lessonGroups.length + 2
 
 export function PrivateLessonSection() {
   const { t } = useTranslation()
   const assetBase = import.meta.env.BASE_URL
-  const paragraphs = t('about.body').split('\n\n')
+  const [lead, ...paragraphs] = t('about.body').split('\n\n')
 
   return (
-    <section
-      id="private-lesson"
-      className="relative min-h-[430px] overflow-hidden px-7 pb-14 pt-8 text-foreground dark:text-white"
-    >
-      <img
-        src={`${assetBase}assets/image_2.jpg`}
-        alt=""
-        className="absolute inset-0 size-full object-cover object-[42%_center] grayscale lg:object-[50%_center]"
-      />
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,var(--background)_0%,rgba(250,248,245,0.12)_18%,rgba(250,248,245,0.03)_58%,var(--background)_100%),linear-gradient(90deg,var(--background)_0%,rgba(250,248,245,0.34)_28%,rgba(250,248,245,0.02)_68%)] dark:bg-[linear-gradient(180deg,var(--background)_0%,rgba(0,0,0,0.2)_18%,rgba(0,0,0,0.06)_58%,var(--background)_100%),linear-gradient(90deg,var(--background)_0%,rgba(0,0,0,0.56)_28%,rgba(0,0,0,0.06)_68%)]" />
+    <section id="private-lesson" className="relative px-5 pb-16 pt-4">
+      <Reveal>
+        <SectionHeading index={sectionIndex} title={t('about.title')} />
+      </Reveal>
 
-      <div className="relative z-10 flex min-h-[300px] flex-col justify-between gap-10">
-        <h2 className="max-w-[13rem] font-display text-[4.25rem] font-bold uppercase leading-[0.9] tracking-[-0.035em] lg:text-[3.55rem]">
-          {t('about.title')}
-        </h2>
-        <div className="max-w-[20rem] space-y-5 rtl:text-right">
-          <div className="space-y-4 text-sm font-semibold leading-7 text-foreground/92 dark:text-white/88">
-            {paragraphs.map((paragraph) => (
-              <p key={paragraph} className="whitespace-pre-line">
-                {paragraph}
-              </p>
-            ))}
-          </div>
-          <a
-            href="#lessons"
-            className="group grid grid-cols-[1fr_max-content] items-stretch rounded-md border border-accent-foreground/55 bg-accent-foreground/10 text-start shadow-[0_10px_30px_rgba(0,0,0,0.04)] backdrop-blur transition hover:-translate-y-0.5 hover:border-accent-foreground hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+      {/* Full-bleed portrait with the name set in outline across its foot. */}
+      <Reveal>
+        <figure className="relative -mx-5 aspect-[4/5] overflow-hidden">
+          <img src={`${assetBase}assets/image_2.jpg`} alt="" className="size-full object-cover object-[42%_center] grayscale" loading="lazy" />
+          <div className="absolute inset-0 bg-linear-to-b from-background/10 via-transparent to-background" />
+          <figcaption
+            aria-hidden="true"
+            className="text-outline absolute inset-x-5 bottom-2 font-display text-[4.5rem] font-bold uppercase leading-[0.85] tracking-[-0.02em]"
           >
-            <span className="flex flex-col justify-center px-4 py-3">
-              <span className="block font-display text-[1rem] font-bold uppercase leading-tight tracking-[0.08em] text-foreground/92">
-                {t('about.registrationCard.title')}
-              </span>
-              <span className="mt-1 block text-sm font-bold leading-6 text-muted-foreground">
-                {t('about.registrationCard.body')}
-              </span>
-            </span>
-            <span className="flex items-center justify-end border-s border-border/70 px-4">
-              <span className="rounded-sm border border-accent-foreground/65 px-3 py-2 font-display text-xs font-bold uppercase tracking-[0.1em] text-accent-foreground">
-                {t('about.registrationCard.cta')}
-              </span>
-            </span>
-          </a>
-        </div>
+            {t('hero.noLimits')}
+          </figcaption>
+        </figure>
+      </Reveal>
+
+      <Reveal>
+        <p className="mt-8 whitespace-pre-line font-display text-xl font-bold leading-snug text-foreground">{lead}</p>
+      </Reveal>
+
+      <div className="mt-6 space-y-5 border-s-2 border-accent-foreground/50 ps-4">
+        {paragraphs.map((paragraph) => (
+          <Reveal key={paragraph}>
+            <p className="whitespace-pre-line text-sm font-semibold leading-7 text-foreground/80">{paragraph}</p>
+          </Reveal>
+        ))}
       </div>
+
+      <Reveal>
+        <a
+          href="#lessons"
+          className="group mt-10 flex items-center justify-between gap-4 rounded-xl border border-accent-foreground/50 bg-accent-foreground/10 p-5 text-start transition hover:-translate-y-0.5 hover:border-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-foreground"
+        >
+          <span>
+            <span className="block font-display text-lg font-bold uppercase leading-tight tracking-[0.06em]">{t('about.registrationCard.title')}</span>
+            <span className="mt-1 block text-sm font-semibold leading-6 text-muted-foreground">{t('about.registrationCard.body')}</span>
+          </span>
+          <span
+            className="inline-flex size-12 shrink-0 items-center justify-center rounded-full bg-accent-foreground text-background transition-transform group-hover:scale-105"
+            aria-label={t('about.registrationCard.cta')}
+          >
+            <ArrowRight className="size-5 rtl:-scale-x-100" strokeWidth={2.4} aria-hidden="true" />
+          </span>
+        </a>
+      </Reveal>
     </section>
   )
 }

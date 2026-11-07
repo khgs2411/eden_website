@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 
+import { AmbientBackdrop } from '@/components/layout/ambient-backdrop'
 import { SiteFooter } from '@/components/layout/site-footer'
 import { SiteHeader } from '@/components/layout/site-header'
 import { HeroSection } from '@/components/sections/hero-section'
@@ -51,7 +52,10 @@ function App() {
   }, [menuOpen])
 
   return (
-    <main className="mx-auto min-h-screen max-w-[430px] overflow-hidden bg-background text-foreground shadow-[0_0_0_1px_var(--border),0_24px_80px_rgba(0,0,0,0.18)] sm:my-1 sm:rounded-[1.25rem] lg:max-w-[820px]">
+    <>
+    <AmbientBackdrop />
+    {/* Mobile-first by principle: the site is a phone-width column at every screen size. */}
+    <main className="relative z-10 mx-auto min-h-screen max-w-(--shell-width) overflow-hidden bg-background text-foreground shadow-[0_0_0_1px_var(--border),0_24px_80px_rgba(0,0,0,0.35)]">
       <SiteHeader
         drawerSide={drawerSide}
         menuOpen={menuOpen}
@@ -66,6 +70,7 @@ function App() {
       <PrivateLessonSection />
       <SiteFooter />
     </main>
+    </>
   )
 }
 

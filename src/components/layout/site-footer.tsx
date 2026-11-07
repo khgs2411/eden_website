@@ -22,41 +22,36 @@ function FacebookIcon({ className }: { className?: string }) {
   )
 }
 
+const socialLinkClassName =
+  'inline-flex size-11 items-center justify-center rounded-full border border-accent-foreground/45 text-accent-foreground transition hover:border-accent-foreground hover:bg-accent-foreground hover:text-background'
+
+// Sign-off: the name in outline, poster-size, then the social links.
 export function SiteFooter() {
   const { t } = useTranslation()
 
   return (
-    <footer className="border-t border-border/75 px-5 py-5">
-      <div className="mx-auto flex max-w-md items-center justify-center gap-5 text-center lg:max-w-[740px]">
-        <p className="font-display text-xs font-bold uppercase tracking-[0.22em] text-muted-foreground">
-          {t('footer.socialPrompt')}
-        </p>
+    <footer className="overflow-hidden border-t border-border/75 px-5 pb-8 pt-12">
+      <p aria-hidden="true" className="text-outline font-display text-[4.25rem] font-bold uppercase leading-[0.85] tracking-[-0.02em]">
+        {t('hero.noLimits')}
+        <br />
+        {t('hero.just')}
+      </p>
+      <div className="mt-10 flex items-center justify-between gap-4">
+        <p className="font-display text-xs font-bold uppercase tracking-[0.22em] text-muted-foreground">{t('footer.socialPrompt')}</p>
         <div className="flex items-center gap-2">
           <a
             href="https://www.instagram.com/edendafna?utm_source=qr&igsh=MW5scHlmMDB4ZmkyZw=="
             target="_blank"
             rel="noreferrer"
-            className="inline-flex size-9 items-center justify-center rounded-full border border-accent-foreground/45 text-accent-foreground transition hover:border-accent-foreground hover:bg-accent-foreground hover:text-background"
+            className={socialLinkClassName}
             aria-label={t('footer.instagram')}
           >
             <InstagramIcon className="size-4" />
           </a>
-          <a
-            href="https://www.tiktok.com/@eden.dafna?_r=1&_t=ZS-96bDqVrnEMJ"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex size-9 items-center justify-center rounded-full border border-accent-foreground/45 text-accent-foreground transition hover:border-accent-foreground hover:bg-accent-foreground hover:text-background"
-            aria-label={t('footer.tiktok')}
-          >
+          <a href="https://www.tiktok.com/@eden.dafna?_r=1&_t=ZS-96bDqVrnEMJ" target="_blank" rel="noreferrer" className={socialLinkClassName} aria-label={t('footer.tiktok')}>
             <Music2 className="size-4" />
           </a>
-          <a
-            href="https://www.facebook.com/share/1HuyxoqRKk/"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex size-9 items-center justify-center rounded-full border border-accent-foreground/45 text-accent-foreground transition hover:border-accent-foreground hover:bg-accent-foreground hover:text-background"
-            aria-label={t('footer.facebook')}
-          >
+          <a href="https://www.facebook.com/share/1HuyxoqRKk/" target="_blank" rel="noreferrer" className={socialLinkClassName} aria-label={t('footer.facebook')}>
             <FacebookIcon className="size-4" />
           </a>
         </div>

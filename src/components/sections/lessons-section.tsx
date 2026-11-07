@@ -2,38 +2,57 @@ import { useTranslation } from 'react-i18next'
 
 import { LessonCard } from '@/components/lessons/lesson-card'
 import { LessonFit } from '@/components/lessons/lesson-fit'
+import { LessonNotice } from '@/components/lessons/lesson-notice'
 import { LessonVideos } from '@/components/lessons/lesson-videos'
+import { Marquee } from '@/components/ui/marquee'
+import { Reveal } from '@/components/ui/reveal'
+import { SectionHeading } from '@/components/ui/section-heading'
 import { lessonGroups } from '@/data/site'
+
+// Untranslated style terms, so the band reads the same in every language.
+const marqueeItems = ['VOGUE NEW WAY', 'HIP-HOP', 'BALLROOM', 'WORKSHOPS'] as const
 
 export function LessonsSection() {
   const { t } = useTranslation()
 
   return (
-    <section id="lessons" className="relative z-20 -mt-72 bg-transparent px-6 pb-14 pt-20 lg:-mt-56 lg:px-12">
-      <div className="mx-auto max-w-md lg:max-w-2xl">
-        <div className="grid gap-12">
-          {lessonGroups.map((group) => {
-            const groupTitle = t(`lessons.groups.${group.id}`)
-            // A group made only of offer tiles sits two-up on desktop; schedule cards stay one per row.
-            const offersOnly = group.lessons.every((lesson) => 'kind' in lesson)
+    <section id="lessons" className="relative z-20 -mt-36 bg-transparent pb-16 pt-6">
+      <Marquee
+        items={marqueeItems}
+        className="-mx-4 -rotate-2 border-y border-accent-foreground/40 bg-background/80 py-2.5 font-display text-sm font-bold uppercase tracking-[0.3em] text-foreground/80 backdrop-blur"
+      />
 
-            return (
-              <div key={group.id}>
-                <h2 className="mb-8 text-center font-display text-[1.65rem] font-bold uppercase leading-none tracking-[0.28em]">
-                  {groupTitle}
-                </h2>
-                <div className={offersOnly ? 'grid gap-4 lg:grid-cols-2' : 'grid gap-2.5 lg:gap-4'}>
-                  {group.lessons.map((lesson, index) => (
-                    <LessonCard key={lesson.id} lesson={lesson} index={index} />
-                  ))}
-                </div>
-                <LessonVideos id={group.id} label={t(`lessons.videosCtaOverrides.${group.id}`, { defaultValue: t('lessons.videosCta', { title: groupTitle }) })} videos={group.videos} />
+      <div className="mt-14 grid gap-16 px-5">
+        {lessonGroups.map((group, groupIndex) => {
+          const groupTitle = t(`lessons.groups.${group.id}`)
+
+          return (
+            <div key={group.id} id={`group-${group.id}`} className="scroll-mt-20">
+              <Reveal>
+                <SectionHeading index={groupIndex + 1} title={groupTitle} />
+              </Reveal>
+              <div className="grid gap-3.5">
+                {group.lessons.map((lesson, index) => (
+                  <Reveal key={lesson.id} delay={index * 80}>
+                    <LessonCard lesson={lesson} index={index} />
+                  </Reveal>
+                ))}
               </div>
-            )
-          })}
-        </div>
+              {'notice' in group && (
+                <Reveal>
+                  <LessonNotice copy={group.notice.copy} href={group.notice.href} />
+                </Reveal>
+              )}
+              <LessonVideos
+                id={group.id}
+                label={t(`lessons.videosCtaOverrides.${group.id}`, { defaultValue: t('lessons.videosCta', { title: groupTitle }) })}
+                videos={group.videos}
+              />
+            </div>
+          )
+        })}
 
-        <LessonFit />
+        <LessonFit index={lessonGroups.length + 1} />
       </div>
     </section>
   )
