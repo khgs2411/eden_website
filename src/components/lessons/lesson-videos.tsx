@@ -15,10 +15,10 @@ type LessonVideosProps = {
 	videos: readonly LessonVideo[];
 };
 
-// Loading is staged: nothing is in the DOM while collapsed, opening fetches only posters
-// (preload="none"), and a video streams only once played.
+// Open by default. Loading is staged: nothing is in the DOM while collapsed, an open panel
+// fetches only posters (preload="none"), and a video streams only once played.
 export function LessonVideos({ id, label, videos }: LessonVideosProps) {
-	const [open, setOpen] = useState(false);
+	const [open, setOpen] = useState(true);
 	const panelId = `${id}-videos`;
 	const assetBase = import.meta.env.BASE_URL;
 
