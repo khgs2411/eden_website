@@ -5,7 +5,7 @@ export const navItems = [
 ] as const
 
 export const instagramUrl = 'https://www.instagram.com/edendafna?utm_source=qr&igsh=MW5scHlmMDB4ZmkyZw=='
-export const whatsappUrl = 'https://wa.me/972505555041'
+export const whatsappUrl = 'https://wa.me/972549847896'
 
 export const lessonGroups = [
   {
