@@ -11,6 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@class-kit/react": "git+ssh://git@github.com/khgs2411/class-kit-sdk.git#v0.1.26",
     "@fontsource/assistant": "^5.2.9",
     "@fontsource/caveat": "^5.2.8",
     "@fontsource/oswald": "^5.2.8",
