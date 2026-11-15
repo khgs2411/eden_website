@@ -5,7 +5,7 @@
     "": {
       "name": "eden_website",
       "dependencies": {
-        "@class-kit/react": "git+ssh://git@github.com/khgs2411/class-kit-sdk.git#v0.1.26",
+        "@class-kit/react": "git+ssh://git@github.com/khgs2411/class-kit-sdk.git#v0.1.28",
         "@fontsource/assistant": "^5.2.9",
         "@fontsource/caveat": "^5.2.8",
         "@fontsource/oswald": "^5.2.8",
@@ -76,7 +76,7 @@
 
     "@babel/types": ["@babel/types@7.29.0", "", { "dependencies": { "@babel/helper-string-parser": "^7.27.1", "@babel/helper-validator-identifier": "^7.28.5" } }, "sha512-LwdZHpScM4Qz8Xw2iKSzS+cfglZzJGvofQICy7W7v4caru4EaAmyUuO6BGrbyQ2mYV11W0U8j5mBhd14dd3B0A=="],
 
-    "@class-kit/react": ["@class-kit/react@git+ssh://git@github.com/khgs2411/class-kit-sdk.git#44647d7493e0eb4d02e48413397558bff4b47779", { "peerDependencies": { "@supabase/supabase-js": "^2.106.1", "react": "^19.2.6", "react-dom": "^19.2.6" } }, "44647d7493e0eb4d02e48413397558bff4b47779"],
+    "@class-kit/react": ["@class-kit/react@git+ssh://git@github.com/khgs2411/class-kit-sdk.git#68f2e2249ab9f4ba6128cca033ff9ca82ba1acf6", { "peerDependencies": { "@supabase/supabase-js": "^2.106.1", "react": "^19.2.6", "react-dom": "^19.2.6" } }, "68f2e2249ab9f4ba6128cca033ff9ca82ba1acf6"],
 
     "@emnapi/core": ["@emnapi/core@1.10.0", "", { "dependencies": { "@emnapi/wasi-threads": "1.2.1", "tslib": "^2.4.0" } }, "sha512-yq6OkJ4p82CAfPl0u9mQebQHKPJkY7WrIuk205cTYnYe+k2Z8YBh11FrbRG/H6ihirqcacOgl2BIO8oyMQLeXw=="],
 
