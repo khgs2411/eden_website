@@ -8,13 +8,9 @@ import "@fontsource/assistant/700.css";
 import "./index.css";
 import "./i18n";
 import App from "./App.tsx";
-import { ProductProvider } from "@class-kit/react";
-import { classKit } from "./lib/class-kit";
 
 createRoot(document.getElementById("root")!).render(
 	<StrictMode>
-		<ProductProvider client={classKit}>
-			<App />
-		</ProductProvider>
+		<App />
 	</StrictMode>,
 );

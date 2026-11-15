@@ -37,6 +37,7 @@ const resources = {
 					"issue": "משהו לא עובד"
 				},
 				"files": "צירוף קבצים",
+				"chooseFiles": "בחירת קבצים",
 				"filesHelp": "אפשר לבחור או להדביק תמונות ו-PDF, עד 10 MB לקובץ.",
 				"fileType": "אפשר לצרף רק PNG, JPEG, WebP או PDF.",
 				"fileSize": "הקובץ גדול מ-10 MB.",
@@ -223,6 +224,7 @@ const resources = {
 					"issue": "Something's broken"
 				},
 				"files": "Attachments",
+				"chooseFiles": "Choose files",
 				"filesHelp": "Choose or paste images and PDFs, up to 10 MB per file.",
 				"fileType": "Only PNG, JPEG, WebP or PDF files are supported.",
 				"fileSize": "This file exceeds 10 MB.",
@@ -405,6 +407,7 @@ const resources = {
 					"issue": "Что-то не работает"
 				},
 				"files": "Вложения",
+				"chooseFiles": "Выбрать файлы",
 				"filesHelp": "Выберите или вставьте изображения и PDF, до 10 MB на файл.",
 				"fileType": "Можно прикрепить только PNG, JPEG, WebP или PDF.",
 				"fileSize": "Размер файла превышает 10 MB.",

@@ -1,8 +1,5 @@
-import { useEffect, useState } from 'react'
-import { useProductContext } from '@class-kit/react'
-import { SignInSheet } from '@/features/feedback/sign-in-sheet'
-import { FeedbackManager } from '@/features/feedback/feedback-manager'
-import { ManagerMenu } from '@/features/feedback/manager-menu'
+import { Suspense, lazy, useCallback, useEffect, useState, type ReactNode } from 'react'
+import { manageHash, shouldLoadFeedback } from '@/features/feedback/activation'
 
 import { AmbientBackdrop } from '@/components/layout/ambient-backdrop'
 import { SiteFooter } from '@/components/layout/site-footer'
@@ -13,22 +10,34 @@ import { PrivateLessonSection } from '@/components/sections/private-lesson-secti
 import { useTheme } from '@/hooks/use-theme'
 import { getDrawerSide, getPreferredLocale, type DrawerSide } from '@/lib/locale'
 
+// Public visitors never download ClassKit: it loads only for #manage, a saved session, or an OAuth return.
+const FeedbackRoot = lazy(() => import('@/features/feedback/feedback-root'))
+
 function App() {
-  const { client, session, capabilities, loading } = useProductContext()
-  const isManager = !!client && !!session && !loading && capabilities.permissions.includes('product_change_requests.manage')
-  const [manageOpen, setManageOpen] = useState(() => window.location.hash === '#manage')
+  const [manageOpen, setManageOpen] = useState(() => window.location.hash === manageHash)
+  const [feedbackLoaded, setFeedbackLoaded] = useState(shouldLoadFeedback)
+  const [managerActions, setManagerActions] = useState<ReactNode>(null)
   useEffect(() => {
-    const update = () => setManageOpen(window.location.hash === '#manage')
+    const update = () => {
+      const open = window.location.hash === manageHash
+      setManageOpen(open)
+      if (open) setFeedbackLoaded(true)
+    }
     window.addEventListener('hashchange', update)
     return () => window.removeEventListener('hashchange', update)
   }, [])
-  function closeManage() {
+  const closeManage = useCallback(() => {
     window.history.replaceState(null, '', window.location.pathname + window.location.search)
     setManageOpen(false)
-  }
+  }, [])
   const { theme, toggleTheme } = useTheme()
   const [menuOpen, setMenuOpen] = useState(false)
   const [requestsOpen, setRequestsOpen] = useState(false)
+  const openRequests = useCallback(() => {
+    setMenuOpen(false)
+    setRequestsOpen(true)
+  }, [])
+  const closeRequests = useCallback(() => setRequestsOpen(false), [])
   const [drawerSide, setDrawerSide] = useState<DrawerSide>(() =>
     getDrawerSide(getPreferredLocale()),
   )
@@ -79,16 +88,28 @@ function App() {
         onMenuOpenChange={setMenuOpen}
         onThemeToggle={toggleTheme}
         theme={theme}
-        managerActions={isManager ? <ManagerMenu onRequests={() => { setMenuOpen(false); setRequestsOpen(true) }} /> : undefined}
+        managerActions={managerActions ?? undefined}
       />
-      {isManager && <FeedbackManager key={session.user.id} client={client} userId={session.user.id} theme={theme} menuOpen={menuOpen} requestsOpen={requestsOpen} onCloseRequests={() => setRequestsOpen(false)} />}
+      {feedbackLoaded && (
+        <Suspense fallback={null}>
+          <FeedbackRoot
+            theme={theme}
+            menuOpen={menuOpen}
+            requestsOpen={requestsOpen}
+            manageOpen={manageOpen}
+            onOpenRequests={openRequests}
+            onCloseRequests={closeRequests}
+            onCloseManage={closeManage}
+            onManagerActions={setManagerActions}
+          />
+        </Suspense>
+      )}
       <div className="bg-background">
         <HeroSection theme={theme} />
         <LessonsSection />
       </div>
       <PrivateLessonSection />
       <SiteFooter />
-      {client && manageOpen && !isManager && <SignInSheet onClose={closeManage} />}
     </main>
     </>
   )

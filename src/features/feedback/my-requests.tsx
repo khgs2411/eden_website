@@ -8,6 +8,8 @@ type ListState = { phase: "loading" | "loaded" | "error"; requests: ProductChang
 type ListEvent = { type: "loading" } | { type: "loaded"; requests: ProductChangeRequest[] } | { type: "error" };
 function transition(state: ListState, event: ListEvent): ListState {
 	if (event.type === "loaded") return { phase: "loaded", requests: event.requests.toSorted((a, b) => b.created_at.localeCompare(a.created_at)) };
+	// A refresh of an already loaded list keeps rows mounted, so an open row stays open.
+	if (event.type === "loading" && state.phase === "loaded") return state;
 	return { ...state, phase: event.type };
 }
 export function MyRequests({
@@ -86,7 +88,7 @@ export function MyRequests({
 										request={request}
 										api={api}
 										onEdit={onEdit}
-										onDeleted={() => setReload((value) => value + 1)}
+										onChanged={() => setReload((value) => value + 1)}
 									/>
 								))}
 							</div>

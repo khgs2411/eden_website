@@ -8,12 +8,12 @@ export function RequestRow({
 	request,
 	api,
 	onEdit,
-	onDeleted,
+	onChanged,
 }: {
 	request: ProductChangeRequest;
 	api: RequestsApi;
 	onEdit: (request: ProductChangeRequest) => void;
-	onDeleted: () => void;
+	onChanged: () => void;
 }) {
 	const { t, i18n } = useTranslation();
 	const uploads = useUploads(api);
@@ -39,7 +39,7 @@ export function RequestRow({
 		setFailed(false);
 		try {
 			await api.delete(request.id);
-			onDeleted();
+			onChanged();
 		} catch {
 			setFailed(true);
 		} finally {
@@ -78,7 +78,7 @@ export function RequestRow({
 						{t("feedback.delete")}
 					</button>
 				</div>
-				{adding && <Attachments uploads={uploads} locked={deleting} requestId={request.id} />}
+				{adding && <Attachments uploads={uploads} locked={deleting} requestId={request.id} onUploaded={onChanged} />}
 				{confirming && (
 					<div className="border-s-2 border-accent-foreground ps-3">
 						<p>{t("feedback.deleteConfirm")}</p>

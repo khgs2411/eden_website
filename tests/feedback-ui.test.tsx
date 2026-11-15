@@ -234,10 +234,12 @@ test("closing a pending save and reopening preserves the single submission", asy
 
 test("public and manager surfaces obey session and permission checks", async () => {
 	const { AppForTest, ContextForTest } = await (async () => {
-		const [{ default: AppForTest }, { ProductContext: ContextForTest }] = await Promise.all([import("../src/App"), import("@class-kit/react")]);
+		const [{ FeedbackLayer: AppForTest }, { ProductContext: ContextForTest }] = await Promise.all([import("../src/features/feedback/feedback-root"), import("@class-kit/react")]);
 		return { AppForTest, ContextForTest };
 	})();
 	Object.assign(globalThis, { MutationObserver: dom.MutationObserver });
+	const noop = () => {};
+	const layerProps = { theme: "dark", menuOpen: false, requestsOpen: false, manageOpen: false, onOpenRequests: noop, onCloseRequests: noop, onCloseManage: noop, onManagerActions: noop };
 	const base = {
 		client: { management: { changeRequests: {} } },
 		loading: false,
@@ -247,7 +249,7 @@ test("public and manager surfaces obey session and permission checks", async () 
 	} as unknown as import("@class-kit/react").ProductContextValue;
 	await render(
 		<ContextForTest.Provider value={base}>
-			<AppForTest />
+			<AppForTest {...layerProps} />
 		</ContextForTest.Provider>,
 	);
 	expect(host.textContent).not.toContain("Request a change");
@@ -256,7 +258,7 @@ test("public and manager surfaces obey session and permission checks", async () 
 	await act(async () =>
 		root.render(
 			<ContextForTest.Provider value={noPermission}>
-				<AppForTest />
+				<AppForTest {...layerProps} />
 			</ContextForTest.Provider>,
 		),
 	);
@@ -265,7 +267,7 @@ test("public and manager surfaces obey session and permission checks", async () 
 	await act(async () =>
 		root.render(
 			<ContextForTest.Provider value={manager}>
-				<AppForTest />
+				<AppForTest {...layerProps} />
 			</ContextForTest.Provider>,
 		),
 	);
@@ -273,7 +275,7 @@ test("public and manager surfaces obey session and permission checks", async () 
 	await act(async () =>
 		root.render(
 			<ContextForTest.Provider value={{ ...manager, client: null }}>
-				<AppForTest />
+				<AppForTest {...layerProps} />
 			</ContextForTest.Provider>,
 		),
 	);

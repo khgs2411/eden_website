@@ -1,9 +1,8 @@
-import { useProductContext } from "@class-kit/react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-export function ManagerMenu({ onRequests }: { onRequests: () => void }) {
-	const { signOut, error } = useProductContext();
+// Rendered inside the header drawer, outside ProductProvider, so auth arrives as props.
+export function ManagerMenu({ onRequests, onSignOut, authError }: { onRequests: () => void; onSignOut: () => Promise<void>; authError: boolean }) {
 	const { t } = useTranslation();
 	const [busy, setBusy] = useState(false);
 	const [failed, setFailed] = useState(false);
@@ -11,7 +10,7 @@ export function ManagerMenu({ onRequests }: { onRequests: () => void }) {
 		setBusy(true);
 		setFailed(false);
 		try {
-			await signOut();
+			await onSignOut();
 		} catch {
 			setFailed(true);
 		} finally {
@@ -26,7 +25,7 @@ export function ManagerMenu({ onRequests }: { onRequests: () => void }) {
 			<button className="feedback-action text-start" disabled={busy} onClick={() => void leave()}>
 				{t("feedback.signOut")}
 			</button>
-			{(error || failed) && <p role="alert">{t("feedback.authError")}</p>}
+			{(authError || failed) && <p role="alert">{t("feedback.authError")}</p>}
 		</div>
 	);
 }

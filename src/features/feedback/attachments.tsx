@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { acceptedTypes } from "./request-model";
 import type { useUploads } from "./use-uploads";
@@ -14,24 +15,30 @@ export function Attachments({
 	onUploaded?: () => void;
 }) {
 	const { t } = useTranslation();
+	const input = useRef<HTMLInputElement>(null);
 	return (
 		<div className="grid gap-3">
 			{!locked && (
-				<label className="grid gap-2 font-display">
-					<span>{t("feedback.files")}</span>
+				<div className="grid gap-2">
+					<span className="font-display">{t("feedback.files")}</span>
+					{/* The native input's labels are browser-localized, so it stays hidden behind a translated button. */}
 					<input
+						ref={input}
 						type="file"
 						multiple
+						hidden
 						accept={acceptedTypes.join(",")}
-						className="w-full min-w-0 text-sm file:me-2 file:border file:border-border file:bg-background file:p-2 file:text-foreground"
 						onChange={(event) => {
 							const added = uploads.add(Array.from(event.target.files ?? []));
 							event.target.value = "";
 							if (requestId) void Promise.all(added.map((item) => uploads.upload(requestId, item))).then(onUploaded);
 						}}
 					/>
+					<button type="button" className="feedback-action justify-self-start" onClick={() => input.current?.click()}>
+						{t("feedback.chooseFiles")}
+					</button>
 					<span className="text-sm text-muted-foreground">{t("feedback.filesHelp")}</span>
-				</label>
+				</div>
 			)}
 			{uploads.errors.map((error, index) => (
 				<p key={index} role="alert" className="break-words text-sm">

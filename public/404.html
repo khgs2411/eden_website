@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="he">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="robots" content="noindex" />
+		<title>Eden Dance</title>
+		<script>
+			// GitHub Pages serves this for unknown paths. The site routes by hash, so /manage becomes #manage
+			// and anything else returns to the home page.
+			(function () {
+				var path = window.location.pathname;
+				var manage = /\/manage\/?$/;
+				var base = manage.test(path) ? path.replace(manage, "/") : "/";
+				window.location.replace(base + (manage.test(path) ? "#manage" : ""));
+			})();
+		</script>
+	</head>
+	<body></body>
+</html>
