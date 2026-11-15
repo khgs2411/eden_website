@@ -17,7 +17,12 @@ describe("request validation and title", () => {
 });
 
 describe("saved request boundary", () => {
-	const initial: FormState = { draft: { description: "Please change this", type: "feature_request", context: { label: "Home" } }, phase: "editing", requestId: null, error: false };
+	const initial: FormState = {
+		draft: { description: "Please change this", type: "feature_request", context: { label: "Home" } },
+		phase: "editing",
+		requestId: null,
+		error: false,
+	};
 	test("cannot create again or mutate the draft after saving, even if uploads fail", () => {
 		const saving = formTransition(initial, { type: "submit" });
 		expect(formTransition(saving, { type: "submit" })).toBe(saving);
@@ -34,9 +39,20 @@ describe("saved request boundary", () => {
 		expect(formTransition(empty, { type: "submit" })).toBe(empty);
 	});
 	test("all draft storage operations tolerate unavailable storage", () => {
-		// Bun's test environment has no browser localStorage.
-		expect(readDraft("unavailable")).toBeNull();
-		expect(() => saveDraft("unavailable", initial.draft)).not.toThrow();
-		expect(() => saveDraft("unavailable", null)).not.toThrow();
+		const original = Object.getOwnPropertyDescriptor(globalThis, "localStorage");
+		Object.defineProperty(globalThis, "localStorage", {
+			configurable: true,
+			get() {
+				throw new Error("Storage denied");
+			},
+		});
+		try {
+			expect(readDraft("unavailable")).toBeNull();
+			expect(() => saveDraft("unavailable", initial.draft)).not.toThrow();
+			expect(() => saveDraft("unavailable", null)).not.toThrow();
+		} finally {
+			if (original) Object.defineProperty(globalThis, "localStorage", original);
+			else Reflect.deleteProperty(globalThis, "localStorage");
+		}
 	});
 });

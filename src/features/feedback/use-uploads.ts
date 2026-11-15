@@ -5,14 +5,15 @@ import { fileError, type Upload } from "./request-model";
 export type RequestsApi = ClassKitClient["management"]["changeRequests"];
 type UploadState = { files: Upload[]; errors: { name: string; reason: string }[] };
 type UploadEvent =
-	| { type: "add"; files: Upload[]; errors: UploadState["errors"] }
-	| { type: "remove"; id: number }
-	| { type: "status"; id: number; status: Upload["status"] };
+	{ type: "add"; files: Upload[]; errors: UploadState["errors"] } | { type: "remove"; id: number } | { type: "status"; id: number; status: Upload["status"] };
 export function uploadTransition(state: UploadState, event: UploadEvent): UploadState {
 	switch (event.type) {
-		case "add": return { files: [...state.files, ...event.files], errors: event.errors };
-		case "remove": return { ...state, files: state.files.filter((file) => file.id !== event.id) };
-		case "status": return { ...state, files: state.files.map((file) => file.id === event.id ? { ...file, status: event.status } : file) };
+		case "add":
+			return { files: [...state.files, ...event.files], errors: event.errors };
+		case "remove":
+			return { ...state, files: state.files.filter((file) => file.id !== event.id) };
+		case "status":
+			return { ...state, files: state.files.map((file) => (file.id === event.id ? { ...file, status: event.status } : file)) };
 	}
 }
 export function useUploads(api: RequestsApi) {
@@ -39,11 +40,16 @@ export function useUploads(api: RequestsApi) {
 			dispatch({ type: "status", id: item.id, status: "uploaded" });
 		} catch {
 			dispatch({ type: "status", id: item.id, status: "failed" });
-		} finally { inFlight.current.delete(item.id); }
+		} finally {
+			inFlight.current.delete(item.id);
+		}
 	}
 	function paste(event: ClipboardEvent) {
 		const files = Array.from(event.clipboardData.files);
-		if (files.length) { event.preventDefault(); add(files); }
+		if (files.length) {
+			event.preventDefault();
+			add(files);
+		}
 	}
 	return { ...state, add, upload, paste, remove: (id: number) => dispatch({ type: "remove", id }) };
 }

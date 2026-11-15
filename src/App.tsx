@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useProductContext } from '@class-kit/react'
 import { SignInSheet } from '@/features/feedback/sign-in-sheet'
 import { FeedbackManager } from '@/features/feedback/feedback-manager'
+import { ManagerMenu } from '@/features/feedback/manager-menu'
 
 import { AmbientBackdrop } from '@/components/layout/ambient-backdrop'
 import { SiteFooter } from '@/components/layout/site-footer'
@@ -27,6 +28,7 @@ function App() {
   }
   const { theme, toggleTheme } = useTheme()
   const [menuOpen, setMenuOpen] = useState(false)
+  const [requestsOpen, setRequestsOpen] = useState(false)
   const [drawerSide, setDrawerSide] = useState<DrawerSide>(() =>
     getDrawerSide(getPreferredLocale()),
   )
@@ -77,14 +79,15 @@ function App() {
         onMenuOpenChange={setMenuOpen}
         onThemeToggle={toggleTheme}
         theme={theme}
+        managerActions={isManager ? <ManagerMenu onRequests={() => { setMenuOpen(false); setRequestsOpen(true) }} /> : undefined}
       />
+      {isManager && <FeedbackManager key={session.user.id} client={client} userId={session.user.id} theme={theme} menuOpen={menuOpen} requestsOpen={requestsOpen} onCloseRequests={() => setRequestsOpen(false)} />}
       <div className="bg-background">
         <HeroSection theme={theme} />
         <LessonsSection />
       </div>
       <PrivateLessonSection />
       <SiteFooter />
-      {isManager && <FeedbackManager key={session.user.id} client={client} userId={session.user.id} theme={theme} menuOpen={menuOpen} />}
       {client && manageOpen && !isManager && <SignInSheet onClose={closeManage} />}
     </main>
     </>
