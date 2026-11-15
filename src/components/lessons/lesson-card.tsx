@@ -19,6 +19,9 @@ export function LessonCard({ lesson, index }: LessonCardProps) {
     // side-by-side tiles line up regardless of copy length.
     return (
       <a
+        data-feedback-section="lessons"
+        data-feedback-label={copy.title ?? copy.body.split('\n')[0]}
+        data-feedback-lesson={lesson.id}
         href={lesson.href}
         target="_blank"
         rel="noreferrer"
@@ -57,6 +60,9 @@ export function LessonCard({ lesson, index }: LessonCardProps) {
   // and the admission details beside it.
   return (
     <a
+      data-feedback-section="lessons"
+      data-feedback-label={`${style} — ${'day' in regularLesson ? t(`lessonDays.${regularLesson.day}`) : regularLesson.date}`}
+      data-feedback-lesson={lesson.id}
       href={regularLesson.signupUrl}
       target="_blank"
       rel="noreferrer"

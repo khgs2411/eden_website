@@ -270,3 +270,37 @@ body::after {
     transition: none;
   }
 }
+
+/* Feedback stays within the same phone column as the public site. */
+.feedback-sheet {
+  position: fixed;
+  inset: auto 0 0;
+  margin: 0 auto;
+  width: 100%;
+  max-width: var(--shell-width);
+  max-height: calc(100dvh - 4rem);
+  overflow-y: auto;
+  padding: 1.25rem;
+  padding-bottom: max(1.25rem, env(safe-area-inset-bottom));
+  border: 1px solid var(--border);
+  background: var(--background);
+  color: var(--foreground);
+}
+.feedback-sheet::backdrop { background: rgb(0 0 0 / 45%); }
+.feedback-action {
+  min-height: 2.75rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border);
+  font-family: var(--font-display);
+  overflow-wrap: anywhere;
+  cursor: pointer;
+}
+.feedback-action:focus-visible { outline: 2px solid var(--accent-foreground); outline-offset: 2px; }
+.feedback-action:disabled { opacity: 0.5; cursor: default; }
+.feedback-primary { background: var(--accent-foreground); color: var(--background); border-color: var(--accent-foreground); }
+.feedback-picking [data-feedback-section] { cursor: crosshair; }
+.feedback-picking [data-feedback-section]:is(:hover, :focus-visible) {
+  outline: 2px solid var(--accent-foreground);
+  outline-offset: -2px;
+}
+.feedback-picking [data-feedback-section]:has([data-feedback-section]:hover) { outline: none; }

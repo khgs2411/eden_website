@@ -33,7 +33,7 @@ For visual decisions, follow `docs/design-guide.md`.
 
 ## Testing Guidelines
 
-There is no dedicated test runner configured yet. For changes, run `npm run lint` and, when appropriate, `npm run build`. UI changes should be checked manually in Hebrew, English, and Russian, and in light/dark themes.
+Install dependencies with `bun install --frozen-lockfile` (SSH access to the private ClassKit SDK is required). `npm test` runs isolated Bun/happy-dom feedback tests with fake APIs. For changes, run `npm run lint` and, when appropriate, `npm run build`. UI changes should be checked manually in Hebrew, English, and Russian, and in light/dark themes; DOM tests do not verify browser layout or native dialog focus.
 
 ## Commit & Pull Request Guidelines
 

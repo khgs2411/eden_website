@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { Suspense, lazy, useCallback, useEffect, useState, type ReactNode } from 'react'
+import { manageHash, shouldLoadFeedback } from '@/features/feedback/activation'
 
 import { AmbientBackdrop } from '@/components/layout/ambient-backdrop'
 import { SiteFooter } from '@/components/layout/site-footer'
@@ -9,9 +10,34 @@ import { PrivateLessonSection } from '@/components/sections/private-lesson-secti
 import { useTheme } from '@/hooks/use-theme'
 import { getDrawerSide, getPreferredLocale, type DrawerSide } from '@/lib/locale'
 
+// Public visitors never download ClassKit: it loads only for #manage, a saved session, or an OAuth return.
+const FeedbackRoot = lazy(() => import('@/features/feedback/feedback-root'))
+
 function App() {
+  const [manageOpen, setManageOpen] = useState(() => window.location.hash === manageHash)
+  const [feedbackLoaded, setFeedbackLoaded] = useState(shouldLoadFeedback)
+  const [managerActions, setManagerActions] = useState<ReactNode>(null)
+  useEffect(() => {
+    const update = () => {
+      const open = window.location.hash === manageHash
+      setManageOpen(open)
+      if (open) setFeedbackLoaded(true)
+    }
+    window.addEventListener('hashchange', update)
+    return () => window.removeEventListener('hashchange', update)
+  }, [])
+  const closeManage = useCallback(() => {
+    window.history.replaceState(null, '', window.location.pathname + window.location.search)
+    setManageOpen(false)
+  }, [])
   const { theme, toggleTheme } = useTheme()
   const [menuOpen, setMenuOpen] = useState(false)
+  const [requestsOpen, setRequestsOpen] = useState(false)
+  const openRequests = useCallback(() => {
+    setMenuOpen(false)
+    setRequestsOpen(true)
+  }, [])
+  const closeRequests = useCallback(() => setRequestsOpen(false), [])
   const [drawerSide, setDrawerSide] = useState<DrawerSide>(() =>
     getDrawerSide(getPreferredLocale()),
   )
@@ -62,7 +88,22 @@ function App() {
         onMenuOpenChange={setMenuOpen}
         onThemeToggle={toggleTheme}
         theme={theme}
+        managerActions={managerActions ?? undefined}
       />
+      {feedbackLoaded && (
+        <Suspense fallback={null}>
+          <FeedbackRoot
+            theme={theme}
+            menuOpen={menuOpen}
+            requestsOpen={requestsOpen}
+            manageOpen={manageOpen}
+            onOpenRequests={openRequests}
+            onCloseRequests={closeRequests}
+            onCloseManage={closeManage}
+            onManagerActions={setManagerActions}
+          />
+        </Suspense>
+      )}
       <div className="bg-background">
         <HeroSection theme={theme} />
         <LessonsSection />

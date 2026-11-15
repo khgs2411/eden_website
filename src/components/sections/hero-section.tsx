@@ -45,7 +45,7 @@ export function HeroSection({ theme }: HeroSectionProps) {
   )
 
   return (
-    <section id="home" className="relative flex min-h-[700px] items-start overflow-visible px-7 pb-0 pt-52">
+    <section id="home" data-feedback-section="home" data-feedback-label={t('nav.home')} className="relative flex min-h-[700px] items-start overflow-visible px-7 pb-0 pt-52">
       <div className="absolute inset-0 z-0 overflow-hidden">
         <img
           src={`${assetBase}assets/${theme === 'dark' ? 'image_1.jpg' : 'image_3.jpg'}`}

@@ -30,7 +30,7 @@ export function SiteFooter() {
   const { t } = useTranslation()
 
   return (
-    <footer className="overflow-hidden border-t border-border/75 px-5 pb-8 pt-12">
+    <footer data-feedback-section="footer" data-feedback-label={t('feedback.footer')} className="overflow-hidden border-t border-border/75 px-5 pb-8 pt-12">
       <p aria-hidden="true" className="text-outline font-display text-[4.25rem] font-bold uppercase leading-[0.85] tracking-[-0.02em]">
         {t('hero.noLimits')}
         <br />

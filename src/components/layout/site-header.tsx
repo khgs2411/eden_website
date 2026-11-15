@@ -1,5 +1,5 @@
 import { Globe2, Menu, Moon, Sun, X } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { LanguageMenu } from '@/components/layout/language-menu'
@@ -16,6 +16,7 @@ type SiteHeaderProps = {
   onMenuOpenChange: (open: boolean) => void
   onThemeToggle: () => void
   theme: Theme
+  managerActions?: ReactNode
 }
 
 export function SiteHeader({
@@ -24,6 +25,7 @@ export function SiteHeader({
   onMenuOpenChange,
   onThemeToggle,
   theme,
+  managerActions,
 }: SiteHeaderProps) {
   const { t, i18n } = useTranslation()
   const [isScrolled, setIsScrolled] = useState(false)
@@ -98,7 +100,7 @@ export function SiteHeader({
             role="dialog"
             aria-modal="true"
             aria-label={t('menu.mobileLabel')}
-            className={`absolute top-0 flex h-full w-[min(82vw,22rem)] flex-col border-border bg-background shadow-2xl ${
+            className={`absolute top-0 flex h-full w-[min(82vw,22rem)] flex-col border-border bg-background shadow-2xl ${managerActions ? 'overflow-y-auto' : ''} ${
               drawerSide === 'right'
                 ? 'right-0 border-l animate-in slide-in-from-right'
                 : 'left-0 border-r animate-in slide-in-from-left'
@@ -136,6 +138,7 @@ export function SiteHeader({
                 </a>
               ))}
             </nav>
+            {managerActions}
 
             <div className="grid gap-3 border-t border-border p-4">
               <div className="rounded-md border border-border px-3 py-3">

@@ -8,9 +8,11 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "bun test --tsconfig-override ./tsconfig.app.json"
   },
   "dependencies": {
+    "@class-kit/react": "git+ssh://git@github.com/khgs2411/class-kit-sdk.git#v0.1.28",
     "@fontsource/assistant": "^5.2.9",
     "@fontsource/caveat": "^5.2.8",
     "@fontsource/oswald": "^5.2.8",
@@ -39,6 +41,7 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.6.0",
+    "happy-dom": "^21.0.4",
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.59.2",
     "vite": "^8.0.12"

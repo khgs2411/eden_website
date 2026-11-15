@@ -16,7 +16,7 @@ export function LessonsSection() {
   const { t } = useTranslation()
 
   return (
-    <section id="lessons" className="relative z-20 -mt-36 bg-transparent pb-16 pt-6">
+    <section id="lessons" data-feedback-section="lessons" data-feedback-label={t('nav.lessons')} className="relative z-20 -mt-36 bg-transparent pb-16 pt-6">
       <Marquee
         items={marqueeItems}
         className="-mx-4 -rotate-2 border-y border-accent-foreground/40 bg-background/80 py-2.5 font-display text-sm font-bold uppercase tracking-[0.3em] text-foreground/80 backdrop-blur"
@@ -27,7 +27,7 @@ export function LessonsSection() {
           const groupTitle = t(`lessons.groups.${group.id}`)
 
           return (
-            <div key={group.id} id={`group-${group.id}`} className="scroll-mt-20">
+            <div key={group.id} id={`group-${group.id}`} data-feedback-section={`group-${group.id}`} data-feedback-label={groupTitle} className="scroll-mt-20">
               <Reveal>
                 <SectionHeading index={groupIndex + 1} title={groupTitle} />
               </Reveal>
