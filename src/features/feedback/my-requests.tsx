@@ -49,10 +49,10 @@ export function MyRequests({
 	return (
 		<section className="px-5 pb-10 pt-24" aria-labelledby="feedback-requests-heading">
 			<div className="flex items-center justify-between gap-3">
-				<h2 ref={heading} tabIndex={-1} id="feedback-requests-heading" className="scroll-mt-20 font-display text-2xl font-bold">
+				<h2 ref={heading} tabIndex={-1} id="feedback-requests-heading" className="min-w-0 flex-1 scroll-mt-20 font-display text-2xl font-bold">
 					{t("feedback.myRequests")}
 				</h2>
-				<button className="feedback-action" onClick={onClose}>
+				<button className="feedback-action shrink-0 whitespace-nowrap" onClick={onClose}>
 					{t("feedback.close")}
 				</button>
 			</div>

@@ -89,7 +89,7 @@ export function RequestSheet({
 							<span className="min-w-0 flex-1 break-words">{label}</span>
 							<button
 								type="button"
-								className="feedback-action"
+								className="feedback-action shrink-0 whitespace-nowrap"
 								disabled={locked}
 								aria-label={t("feedback.removeSpot")}
 								onClick={() => {

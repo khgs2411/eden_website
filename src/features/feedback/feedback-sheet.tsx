@@ -28,10 +28,10 @@ export function FeedbackSheet({ title, children, onClose, open = true }: { title
 				onClose();
 			}}>
 			<header className="mb-5 flex items-center justify-between gap-4">
-				<h2 id={heading} className="font-display text-2xl font-bold">
+				<h2 id={heading} className="min-w-0 flex-1 font-display text-2xl font-bold">
 					{title}
 				</h2>
-				<button type="button" className="feedback-action" onClick={onClose}>
+				<button type="button" className="feedback-action shrink-0 whitespace-nowrap" onClick={onClose}>
 					{t("feedback.close")}
 				</button>
 			</header>

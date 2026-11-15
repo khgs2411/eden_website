@@ -62,7 +62,7 @@ export function PickMode({ onPick, onCancel, theme }: { onPick: (context: SpotCo
 				<button type="button" className="feedback-action flex-1" onClick={() => onPick(contextFor(null))}>
 					{t("feedback.noSpot")}
 				</button>
-				<button type="button" className="feedback-action" onClick={onCancel}>
+				<button type="button" className="feedback-action shrink-0 whitespace-nowrap" onClick={onCancel}>
 					{t("feedback.cancel")}
 				</button>
 			</div>
