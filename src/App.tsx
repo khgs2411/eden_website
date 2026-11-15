@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useProductContext } from '@class-kit/react'
 import { SignInSheet } from '@/features/feedback/sign-in-sheet'
+import { FeedbackManager } from '@/features/feedback/feedback-manager'
 
 import { AmbientBackdrop } from '@/components/layout/ambient-backdrop'
 import { SiteFooter } from '@/components/layout/site-footer'
@@ -83,6 +84,7 @@ function App() {
       </div>
       <PrivateLessonSection />
       <SiteFooter />
+      {isManager && <FeedbackManager key={session.user.id} client={client} userId={session.user.id} theme={theme} menuOpen={menuOpen} />}
       {client && manageOpen && !isManager && <SignInSheet onClose={closeManage} />}
     </main>
     </>

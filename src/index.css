@@ -298,3 +298,9 @@ body::after {
 .feedback-action:focus-visible { outline: 2px solid var(--accent-foreground); outline-offset: 2px; }
 .feedback-action:disabled { opacity: 0.5; cursor: default; }
 .feedback-primary { background: var(--accent-foreground); color: var(--background); border-color: var(--accent-foreground); }
+.feedback-picking [data-feedback-section] { cursor: crosshair; }
+.feedback-picking [data-feedback-section]:is(:hover, :focus-visible) {
+  outline: 2px solid var(--accent-foreground);
+  outline-offset: -2px;
+}
+.feedback-picking [data-feedback-section]:has([data-feedback-section]:hover) { outline: none; }

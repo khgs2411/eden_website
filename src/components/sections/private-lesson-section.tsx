@@ -14,7 +14,7 @@ export function PrivateLessonSection() {
   const [lead, ...paragraphs] = t('about.body').split('\n\n')
 
   return (
-    <section id="private-lesson" className="relative px-5 pb-16 pt-4">
+    <section id="private-lesson" data-feedback-section="private-lesson" data-feedback-label={t('nav.privateLesson')} className="relative px-5 pb-16 pt-4">
       <Reveal>
         <SectionHeading index={sectionIndex} title={t('about.title')} />
       </Reveal>
@@ -37,7 +37,7 @@ export function PrivateLessonSection() {
         <p className="mt-8 whitespace-pre-line font-display text-xl font-bold leading-snug text-foreground">{lead}</p>
       </Reveal>
 
-      <div className="mt-6 space-y-5 border-s-2 border-accent-foreground/50 ps-4">
+      <div data-feedback-section="about" data-feedback-label={t('about.title')} className="mt-6 space-y-5 border-s-2 border-accent-foreground/50 ps-4">
         {paragraphs.map((paragraph) => (
           <Reveal key={paragraph}>
             <p className="whitespace-pre-line text-sm font-semibold leading-7 text-foreground/80">{paragraph}</p>
