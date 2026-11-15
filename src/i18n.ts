@@ -13,6 +13,16 @@ export type LanguageCode = (typeof languages)[number]['code']
 const resources = {
 	he: {
 		translation: {
+			feedback: {
+				"signIn": "כניסה לניהול",
+				"google": "המשך עם Google",
+				"noAccess": "לחשבון הזה אין גישה לניהול האתר.",
+				"signOut": "יציאה מהחשבון",
+				"loading": "טוען…",
+				"close": "סגירה",
+				"retry": "ניסיון נוסף",
+				"authError": "לא הצלחנו להשלים את הפעולה. אפשר לנסות שוב."
+			},
 			brand: "",
 			language: { label: "בחירת שפה" },
 			theme: { toggle: "החלפת מצב תצוגה", current: "מצב תצוגה: {{mode}}", light: "בהיר", dark: "כהה" },
@@ -146,6 +156,16 @@ const resources = {
 	},
 	en: {
 		translation: {
+			feedback: {
+				"signIn": "Manager sign-in",
+				"google": "Continue with Google",
+				"noAccess": "This account has no access to manage this site.",
+				"signOut": "Sign out",
+				"loading": "Loading…",
+				"close": "Close",
+				"retry": "Retry",
+				"authError": "We could not complete that action. Please try again."
+			},
 			brand: "",
 			language: { label: "Choose language" },
 			theme: { toggle: "Toggle theme", current: "Display mode: {{mode}}", light: "Light", dark: "Dark" },
@@ -275,6 +295,16 @@ const resources = {
 	},
 	ru: {
 		translation: {
+			feedback: {
+				"signIn": "Вход для управляющего",
+				"google": "Продолжить с Google",
+				"noAccess": "У этого аккаунта нет доступа к управлению сайтом.",
+				"signOut": "Выйти",
+				"loading": "Загрузка…",
+				"close": "Закрыть",
+				"retry": "Повторить",
+				"authError": "Не удалось выполнить действие. Попробуйте ещё раз."
+			},
 			brand: "",
 			language: { label: "Выбрать язык" },
 			theme: { toggle: "Переключить тему", current: "Режим: {{mode}}", light: "Светлый", dark: "Темный" },

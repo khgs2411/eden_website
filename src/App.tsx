@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react'
+import { useProductContext } from '@class-kit/react'
+import { SignInSheet } from '@/features/feedback/sign-in-sheet'
 
 import { AmbientBackdrop } from '@/components/layout/ambient-backdrop'
 import { SiteFooter } from '@/components/layout/site-footer'
@@ -10,6 +12,18 @@ import { useTheme } from '@/hooks/use-theme'
 import { getDrawerSide, getPreferredLocale, type DrawerSide } from '@/lib/locale'
 
 function App() {
+  const { client, session, capabilities, loading } = useProductContext()
+  const isManager = !!client && !!session && !loading && capabilities.permissions.includes('product_change_requests.manage')
+  const [manageOpen, setManageOpen] = useState(() => window.location.hash === '#manage')
+  useEffect(() => {
+    const update = () => setManageOpen(window.location.hash === '#manage')
+    window.addEventListener('hashchange', update)
+    return () => window.removeEventListener('hashchange', update)
+  }, [])
+  function closeManage() {
+    window.history.replaceState(null, '', window.location.pathname + window.location.search)
+    setManageOpen(false)
+  }
   const { theme, toggleTheme } = useTheme()
   const [menuOpen, setMenuOpen] = useState(false)
   const [drawerSide, setDrawerSide] = useState<DrawerSide>(() =>
@@ -69,6 +83,7 @@ function App() {
       </div>
       <PrivateLessonSection />
       <SiteFooter />
+      {client && manageOpen && !isManager && <SignInSheet onClose={closeManage} />}
     </main>
     </>
   )
