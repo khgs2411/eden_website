@@ -100,7 +100,7 @@ export function SiteHeader({
             role="dialog"
             aria-modal="true"
             aria-label={t('menu.mobileLabel')}
-            className={`absolute top-0 flex h-full w-[min(82vw,22rem)] flex-col overflow-y-auto border-border bg-background shadow-2xl ${
+            className={`absolute top-0 flex h-full w-[min(82vw,22rem)] flex-col border-border bg-background shadow-2xl ${managerActions ? 'overflow-y-auto' : ''} ${
               drawerSide === 'right'
                 ? 'right-0 border-l animate-in slide-in-from-right'
                 : 'left-0 border-r animate-in slide-in-from-left'
