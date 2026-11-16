@@ -19,8 +19,6 @@ This is a Vite + React + TypeScript marketing site. Application code lives in `s
 - `npm run preview` serves the built `dist/` output locally.
 - `npm run lint` runs ESLint over the project.
 
-GitHub Pages deployment is configured in `.github/workflows/deploy-pages.yml` and deploys `dist/` from pushes to `master`.
-
 ## Coding Style & Naming Conventions
 
 Use TypeScript React components with clear PascalCase component names, e.g. `HeroSection`, `LessonCard`, `LessonsSection`. Keep component-specific logic local unless it is reused.
@@ -35,11 +33,9 @@ For visual decisions, follow `docs/design-guide.md`.
 
 Install dependencies with `bun install --frozen-lockfile` (SSH access to the private ClassKit SDK is required). `npm test` runs isolated Bun/happy-dom feedback tests with fake APIs. For changes, run `npm run lint` and, when appropriate, `npm run build`. UI changes should be checked manually in Hebrew, English, and Russian, and in light/dark themes; DOM tests do not verify browser layout or native dialog focus.
 
-## Commit & Pull Request Guidelines
+## Branching and deployment
 
-Recent commits use short descriptive subjects such as `Preserve line breaks in private lesson section copy` and `Default theme to dark and validate persisted theme values`. Keep commits focused and describe the user-visible change.
-
-Pull requests should include a concise summary, screenshots for visual changes, notes on affected languages/themes, and any deployment considerations such as GitHub Pages asset paths.
+A push to `master` deploys `dist/` to GitHub Pages through `.github/workflows/deploy-pages.yml`.
 
 Automated feature work must follow `docs/deployment/development-guideline.md`: use a feature branch, isolated worktree, `--no-ff` merge into `master`, push, then delete the worktree and branch.
 
