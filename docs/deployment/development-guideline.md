@@ -41,7 +41,7 @@ npm run build
 git status --short
 git add <specific-files>
 git commit -m "Describe the feature"
-cd /Users/liadgoren/Repositories/eden_website
+cd /Users/liadgoren/Repositories/customer_projects/eden_website
 git switch master
 git merge --no-ff feature/<short-description>
 git push origin master
