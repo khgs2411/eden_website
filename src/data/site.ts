@@ -23,7 +23,7 @@ export const lessonGroups = [
       {
         id: 'vogue-workshop-20-11',
         date: '20.11',
-        time: '11:30 - 13:00',
+        time: '11:00 - 12:30',
         style: 'vogueDanceWorkshop',
         styleSubtitle: 'hipHopClubPrice',
         location: 'shenkin17TelAviv',
