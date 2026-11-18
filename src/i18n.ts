@@ -152,6 +152,7 @@ const resources = {
 				beerYaakov: "באר יעקב",
 				shenkin17TelAviv: "שנקין 17 תל אביב",
 				bialik25StudioNaim: "ביאליק 25 - סטודיו נעים, רמת גן",
+				ginzburg3BeStreet: "\u2068BeStreet\u2069 גינצבורג 3, ראשל\"צ",
 			},
 			// Card copy writes "Hip\u2011Hop" (non-breaking hyphen) so narrow cards never split the brand name.
 			lessonStyles: {
@@ -164,6 +165,7 @@ const resources = {
 				// \u2068…\u2069 isolates the Latin brand name so "/ 150" keeps its place in RTL.
 				hipHopClubPrice: "75 ש״ח לחברות \u2068Hip\u2011Hop Club\u2069 / 150 ש״ח לחיצוניים",
 				ramatGanResidentPrice: "20 ש״ח לתושבי רמת גן | 40 ש״ח לתושבי חוץ",
+				beStreetAppPayment: "תשלום באפליקציית ביסטריט",
 				hipHopClubTrial: "בתאום שיעור נסיון ב Hip\u2011Hop Club",
 			},
 			lessonDays: {
@@ -337,6 +339,7 @@ const resources = {
 				beerYaakov: "Be'er Ya'akov",
 				shenkin17TelAviv: "17 Shenkin St, Tel Aviv",
 				bialik25StudioNaim: "25 Bialik St - Studio Na'im, Ramat Gan",
+				ginzburg3BeStreet: "BeStreet, 3 Ginzburg St, Rishon LeZion",
 			},
 			lessonStyles: {
 				techniqueWorkshop: "Technique Workshop",
@@ -347,6 +350,7 @@ const resources = {
 				earlyBirdPrice: "₪80 with advance registration",
 				hipHopClubPrice: "₪75 for Hip\u2011Hop Club members / ₪150 for non-members",
 				ramatGanResidentPrice: "₪20 for Ramat Gan residents | ₪40 for non-residents",
+				beStreetAppPayment: "Payment in the BeStreet app",
 				hipHopClubTrial: "Trial class by arrangement at Hip\u2011Hop Club",
 			},
 			lessonDays: {
@@ -520,6 +524,7 @@ const resources = {
 				beerYaakov: "Беэр-Яаков",
 				shenkin17TelAviv: "Шенкин 17, Тель-Авив",
 				bialik25StudioNaim: "Бялик 25 - студия Наим, Рамат-Ган",
+				ginzburg3BeStreet: "BeStreet, Гинцбург 3, Ришон-ле-Цион",
 			},
 			lessonStyles: {
 				techniqueWorkshop: "Воркшоп по технике",
@@ -530,6 +535,7 @@ const resources = {
 				earlyBirdPrice: "80 ₪ при предварительной записи",
 				hipHopClubPrice: "75 ₪ для участниц Hip\u2011Hop Club / 150 ₪ для остальных",
 				ramatGanResidentPrice: "20 ₪ для жителей Рамат-Гана | 40 ₪ для остальных",
+				beStreetAppPayment: "Оплата в приложении BeStreet",
 				hipHopClubTrial: "Пробное занятие по договоренности в Hip\u2011Hop Club",
 			},
 			lessonDays: {
