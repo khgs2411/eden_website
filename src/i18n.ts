@@ -194,6 +194,7 @@ const resources = {
 			},
 			footer: {
 				socialPrompt: "עקבו אחריי ברשתות",
+				creditPrefix: "נבנה על ידי",
 				instagram: "אינסטגרם",
 				tiktok: "טיקטוק",
 				facebook: "פייסבוק",
@@ -379,6 +380,7 @@ const resources = {
 			},
 			footer: {
 				socialPrompt: "Follow me on Social Media",
+				creditPrefix: "Made by",
 				instagram: "Instagram",
 				tiktok: "TikTok",
 				facebook: "Facebook",
@@ -564,6 +566,7 @@ const resources = {
 			},
 			footer: {
 				socialPrompt: "Следите за мной в соцсетях",
+				creditPrefix: "Сделано в",
 				instagram: "Instagram",
 				tiktok: "TikTok",
 				facebook: "Facebook",

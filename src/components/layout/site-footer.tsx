@@ -22,6 +22,14 @@ function FacebookIcon({ className }: { className?: string }) {
   )
 }
 
+function StudioMark({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 30 30" aria-hidden="true">
+      <path fill="currentColor" fillRule="evenodd" d="M0 0h30v30H0z M7 7.5h16v4h-6v11h-4v-11H7z" />
+    </svg>
+  )
+}
+
 const socialLinkClassName =
   'inline-flex size-11 items-center justify-center rounded-full border border-accent-foreground/45 text-accent-foreground transition hover:border-accent-foreground hover:bg-accent-foreground hover:text-background'
 
@@ -30,6 +38,7 @@ export function SiteFooter() {
   const { t } = useTranslation()
 
   return (
+    <>
     <footer data-feedback-section="footer" data-feedback-label={t('feedback.footer')} className="overflow-hidden border-t border-border/75 px-5 pb-8 pt-12">
       <p aria-hidden="true" className="text-outline font-display text-[4.25rem] font-bold uppercase leading-[0.85] tracking-[-0.02em]">
         {t('hero.noLimits')}
@@ -57,5 +66,19 @@ export function SiteFooter() {
         </div>
       </div>
     </footer>
+    <div className="flex justify-center px-5 pb-6 pt-4 text-[0.6875rem] text-muted-foreground">
+      <a
+        href="https://class-kit-studio.topsyde.quest/"
+        target="_blank"
+        rel="noopener"
+        className="group inline-flex min-h-6 items-center gap-[0.45em] whitespace-nowrap hover:underline hover:underline-offset-[0.25em] focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-current"
+      >
+        <StudioMark className="size-[1.05em] flex-none transition-transform duration-500 group-hover:[transform:rotateX(180deg)] group-focus-visible:[transform:rotateX(180deg)] motion-reduce:transition-none motion-reduce:group-hover:transform-none" />
+        <span>
+          {t('footer.creditPrefix')} <bdi dir="ltr">Topsyde Studios</bdi>
+        </span>
+      </a>
+    </div>
+    </>
   )
 }
