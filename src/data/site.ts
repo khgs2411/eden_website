@@ -41,7 +41,7 @@ export const lessonGroups = [
       {
         id: 'vogue-workshop-6-12',
         date: '6.12',
-        time: '19:00 - 20:15',
+        time: '19:45 - 21:00',
         style: 'vogueDanceWorkshop',
         styleSubtitle: 'beStreetAppPayment',
         location: 'ginzburg3BeStreet',
